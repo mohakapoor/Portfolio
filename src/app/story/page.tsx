@@ -212,7 +212,7 @@ export default function StoryPage() {
                 rel="noreferrer noopener"
               >
                 <h3 className="text-xl mb-2">Contact</h3>
-                <p className="text-dust-gray">Got a case for me? Let's talk.</p>
+                <p className="text-dust-gray">Got a case for me? Let’s talk.</p>
               </a>
               <a
                 className="glass-card p-6 block no-underline cursor-pointer"

@@ -18,14 +18,14 @@ export default function AutoRedirect({ href, delayMs = 5000 }: AutoRedirectProps
       if (alreadyRedirected) {
         return;
       }
-    } catch (_) {
+    } catch {
       // If sessionStorage is unavailable, proceed without the guard
     }
 
     const timer = window.setTimeout(() => {
       try {
         window.sessionStorage.setItem(storageKey, "true");
-      } catch (_) {
+      } catch {
         // ignore
       }
       router.push(href);
