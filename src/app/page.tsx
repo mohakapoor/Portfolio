@@ -13,7 +13,7 @@ export default function Home() {
         <p className="text-base sm:text-lg md:text-xl text-vintage-white mb-6 sm:mb-8 px-2">
           <Typewriter
             text="Machine Learning • AI Integration • Systems Development"
-            className="inline-flex items-center"
+            className="inline-block text-center"
             startDelayMs={1000}
             speedMs={55}
             afterBlinkMs={-1}
