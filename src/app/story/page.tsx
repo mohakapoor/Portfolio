@@ -7,6 +7,7 @@ export default function StoryPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [expandedCard, setExpandedCard] = useState<number | null>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [animatedSections, setAnimatedSections] = useState<Set<string>>(new Set());
 
   // Handle click outside to close expanded card
   useEffect(() => {
@@ -24,6 +25,37 @@ export default function StoryPage() {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [expandedCard]);
+
+  // Intersection Observer for animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const sectionId = entry.target.id;
+            if (!animatedSections.has(sectionId)) {
+              setAnimatedSections(prev => new Set(prev).add(sectionId));
+              
+              // Animate all cards in this section simultaneously with a slight delay
+              const cards = entry.target.querySelectorAll('.glass-card');
+              setTimeout(() => {
+                cards.forEach((card) => {
+                  card.classList.add('animate-in');
+                });
+              }, 250); // 250ms delay before starting animation
+            }
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
+
+    // Observe all sections
+    const sections = document.querySelectorAll('section[id]');
+    sections.forEach(section => observer.observe(section));
+
+    return () => observer.disconnect();
+  }, [animatedSections]);
 
   // Handle card click (mobile)
   const handleCardClick = (index: number) => {
@@ -77,22 +109,22 @@ export default function StoryPage() {
           <Link href="/" className="block py-2 hover:underline" onClick={() => setMenuOpen(false)}>Home</Link>
           <Link href="/story" className="block py-2 hover:underline" onClick={() => setMenuOpen(false)}>Story</Link>
           <div className="mt-4 text-dust-gray">On this page</div>
-                     <a href="#who-am-i" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Who Am I</a>
-           <a href="#featured" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Featured Projects</a>
-           <a href="#experience" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Experience</a>
-           <a href="#skills" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Skills</a>
-           <a href="#github" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>GitHub</a>
-           <a href="#contact" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Contact</a>
+          <a href="#who-am-i" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Who Am I</a>
+          <a href="#featured" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Featured Projects</a>
+          <a href="#experience" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Experience</a>
+          <a href="#skills" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Skills</a>
+          <a href="#github" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>GitHub</a>
+          <a href="#contact" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Contact</a>
         </nav>
       </aside>
 
       <section className="max-w-5xl mx-auto">
-        <header className="mb-10 text-center mt-5">
+        <header className="mb-10 text-center mt-5 animate-slide-down">
           <h1 className="newspaper-headline text-6xl md:text-7xl">My Story</h1>
         </header>
 
         <article className="space-y-10 leading-relaxed text-lg">
-          <section id="who-am-i" className="glass-card p-6">
+          <section id="who-am-i" className="glass-card p-6 animate-slide-left">
             <h2 className="newspaper-headline text-3xl mb-2">Who Am I</h2>
             <p className="text-dust-gray mb-4">
               I am an AI Integration Engineer & ML Practitioner. I build production-ready AI systems that bridge the gap between models and applications, specializing in MCP development, time-series forecasting, and scalable ML infrastructure. When I&apos;m not coding, you&apos;ll find me exploring new ML architectures or diving deep into time-series analysis.
@@ -100,12 +132,12 @@ export default function StoryPage() {
           </section>
 
           <section id="featured">
-            <h2 className="newspaper-headline text-3xl mb-4">Featured Projects</h2>
+            <h2 className="newspaper-headline text-3xl mb-4 animate-slide-right">Featured Projects</h2>
             <div className="grid gap-6 md:grid-cols-2">
               {/* Card 1,1 - Left column, expands right */}
               <div 
                 ref={(el) => { cardRefs.current[0] = el; }}
-                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer ${
+                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer opacity-0 translate-y-8 ${
                   expandedCard === 0 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'
                 }`}
                 onClick={() => handleCardClick(0)}
@@ -135,7 +167,7 @@ export default function StoryPage() {
               {/* Card 1,2 - Right column, expands left */}
               <div 
                 ref={(el) => { cardRefs.current[1] = el; }}
-                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer ${
+                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer opacity-0 translate-y-8 ${
                   expandedCard === 1 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'
                 }`}
                 onClick={() => handleCardClick(1)}
@@ -167,7 +199,7 @@ export default function StoryPage() {
               {/* Card 2,1 - Left column, expands right */}
               <div 
                 ref={(el) => { cardRefs.current[2] = el; }}
-                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer ${
+                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer opacity-0 translate-y-8 ${
                   expandedCard === 2 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'
                 }`}
                 onClick={() => handleCardClick(2)}
@@ -197,7 +229,7 @@ export default function StoryPage() {
               {/* Card 2,2 - Right column, expands left */}
               <div 
                 ref={(el) => { cardRefs.current[3] = el; }}
-                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer ${
+                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer opacity-0 translate-y-8 ${
                   expandedCard === 3 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'
                 }`}
                 onClick={() => handleCardClick(3)}
@@ -206,7 +238,7 @@ export default function StoryPage() {
                   <a href="https://github.com/mohakapoor/Nifty50TrendPrediction" target="_blank" rel="noreferrer noopener">Nifty50 Trend Prediction</a>
                 </h3>
                 <p className="text-dust-gray mb-3">Random Forest classifier predicting short‑term market trends using historical Yahoo Finance data.</p>
-                <div className={`${expandedCard === 3 ? 'block' : 'hidden group-hover:block'} text-dust-gray mb-3 text-sm leading-relaxed`}>
+                <div className={`${expandedCard === 2 ? 'block' : 'hidden group-hover:block'} text-dust-gray mb-3 text-sm leading-relaxed`}>
                   <ul className="list-disc pl-5 space-y-1">
                     <li>Ensemble-based Random Forest classification</li>
                     <li>Technical indicator feature engineering</li>
@@ -224,11 +256,11 @@ export default function StoryPage() {
           </section>
 
           <section id="experience">
-            <h2 className="newspaper-headline text-3xl mb-4">Experience</h2>
+            <h2 className="newspaper-headline text-3xl mb-4 animate-slide-left">Experience</h2>
             <div className="grid gap-6 md:grid-cols-2">
               <div 
                 ref={(el) => { cardRefs.current[4] = el; }}
-                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer ${
+                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer opacity-0 translate-y-8 ${
                   expandedCard === 4 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'
                 }`}
                 onClick={() => handleCardClick(4)}
@@ -246,7 +278,7 @@ export default function StoryPage() {
               </div>
               <div 
                 ref={(el) => { cardRefs.current[5] = el; }}
-                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer ${
+                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer opacity-0 translate-y-8 ${
                   expandedCard === 5 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'
                 }`}
                 onClick={() => handleCardClick(5)}
@@ -261,11 +293,11 @@ export default function StoryPage() {
                   </ul>
                 </div>
               </div>
-              <div className="glass-card p-5">
+              <div className="glass-card p-5 opacity-0 translate-y-8">
                 <h3 className="text-xl mb-1">OSDC — Member</h3>
                 <p className="text-dust-gray">Organized hackathons and open‑source events; collaborated on OSS contributions.</p>
               </div>
-              <div className="glass-card p-5">
+              <div className="glass-card p-5 opacity-0 translate-y-8">
                 <h3 className="text-xl mb-1">Social Media — Strategy & Marketing</h3>
                 <p className="text-dust-gray">Led strategy for two Instagram pages (55k & 17k followers), increasing engagement by 167%.</p>
               </div>
@@ -273,49 +305,49 @@ export default function StoryPage() {
           </section>
 
           <section id="skills">
-            <h2 className="newspaper-headline text-3xl mb-4">Skills & Technologies</h2>
+            <h2 className="newspaper-headline text-3xl mb-4 animate-slide-right">Skills & Technologies</h2>
             <div className="grid gap-6 md:grid-cols-2">
-                             <div className="glass-card p-5">
-                 <h3 className="text-xl mb-3">Machine Learning & AI</h3>
-                 <div className="flex flex-wrap gap-2">
-                   <span className="tag">Deep Learning</span>
-                   <span className="tag">Time-Series Forecasting</span>
-                   <span className="tag">CNN-LSTM</span>
-                   <span className="tag">Random Forest</span>
-                   <span className="tag">TensorFlow</span>
-                   <span className="tag">scikit-learn</span>
-                 </div>
-               </div>
-                                                                                                                       <div className="glass-card p-5">
-                   <h3 className="text-xl mb-3">Development & Infrastructure</h3>
-                   <div className="flex flex-wrap gap-2">
-                     <span className="tag">Python</span>
-                     <span className="tag">C++</span>
-                     <span className="tag">TypeScript</span>
-                     <span className="tag">MCP Development</span>
-                     <span className="tag">Cloudflare Workers</span>
-                     <span className="tag">Async Systems</span>
-                     <span className="tag">PostgreSQL</span>
-                     <span className="tag">REST APIs</span>
-                     <span className="tag">Django</span>
-                     <span className="tag">Docker</span>
-                   </div>
-                 </div>
-                <div className="glass-card p-5">
-                  <h3 className="text-xl mb-3">CI/CD</h3>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="tag">GitHub Actions</span>
-                    <span className="tag">CI/CD Pipelines</span>
-                    <span className="tag">Deployment Automation</span>
-                    <span className="tag">Workflow Orchestration</span>
-                  </div>
+              <div className="glass-card p-5 opacity-0 translate-y-8">
+                <h3 className="text-xl mb-3">Machine Learning & AI</h3>
+                <div className="flex flex-wrap gap-2">
+                  <span className="tag">Deep Learning</span>
+                  <span className="tag">Time-Series Forecasting</span>
+                  <span className="tag">CNN-LSTM</span>
+                  <span className="tag">Random Forest</span>
+                  <span className="tag">TensorFlow</span>
+                  <span className="tag">scikit-learn</span>
                 </div>
+              </div>
+              <div className="glass-card p-5 opacity-0 translate-y-8">
+                <h3 className="text-xl mb-3">Development & Infrastructure</h3>
+                <div className="flex flex-wrap gap-2">
+                  <span className="tag">Python</span>
+                  <span className="tag">C++</span>
+                  <span className="tag">TypeScript</span>
+                  <span className="tag">MCP Development</span>
+                  <span className="tag">Cloudflare Workers</span>
+                  <span className="tag">Async Systems</span>
+                  <span className="tag">PostgreSQL</span>
+                  <span className="tag">REST APIs</span>
+                  <span className="tag">Django</span>
+                  <span className="tag">Docker</span>
+                </div>
+              </div>
+              <div className="glass-card p-5 opacity-0 translate-y-8">
+                <h3 className="text-xl mb-3">CI/CD</h3>
+                <div className="flex flex-wrap gap-2">
+                  <span className="tag">GitHub Actions</span>
+                  <span className="tag">CI/CD Pipelines</span>
+                  <span className="tag">Deployment Automation</span>
+                  <span className="tag">Workflow Orchestration</span>
+                </div>
+              </div>
             </div>
           </section>
 
           <section id="github">
-            <h2 className="newspaper-headline text-3xl mb-4">GitHub</h2>
-            <div className="glass-card p-5">
+            <h2 className="newspaper-headline text-3xl mb-4 animate-slide-left">GitHub</h2>
+            <div className="glass-card p-5 opacity-0 translate-y-8">
               <div className="grid md:grid-cols-[220px,1fr] gap-6 items-center">
                 <a
                   href="https://github.com/mohakapoor"
@@ -335,19 +367,19 @@ export default function StoryPage() {
           </section>
 
           <section id="contact">
-            <h2 className="newspaper-headline text-3xl mb-4">Get in touch</h2>
+            <h2 className="newspaper-headline text-3xl mb-4 animate-slide-right">Get in touch</h2>
             <div className="grid gap-6 md:grid-cols-2">
               <a
-                className="glass-card p-6 block no-underline cursor-pointer"
+                className="glass-card p-6 block no-underline cursor-pointer opacity-0 translate-y-8"
                 href="mailto:contact.mohakapoor@gmail.com"
                 target="_blank"
                 rel="noreferrer noopener"
               >
                 <h3 className="text-xl mb-2">Contact</h3>
-                <p className="text-dust-gray">Got a case for me? Let’s talk.</p>
+                <p className="text-dust-gray">Got a case for me? Let&apos;s talk.</p>
               </a>
               <a
-                className="glass-card p-6 block no-underline cursor-pointer"
+                className="glass-card p-6 block no-underline cursor-pointer opacity-0 translate-y-8"
                 href="/MOHAK_KAPOOR_ML.pdf"
                 download="MOHAK_KAPOOR_ML.pdf"
               >
