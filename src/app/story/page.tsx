@@ -94,7 +94,7 @@ export default function StoryPage() {
           <section id="who-am-i" className="glass-card p-6">
             <h2 className="newspaper-headline text-3xl mb-2">Who Am I</h2>
             <p className="text-dust-gray mb-4">
-              I am an AI Integration Engineer & ML Practitioner. I build production-ready AI systems that bridge the gap between models and applications, specializing in MCP development, time-series forecasting, and scalable ML infrastructure. When I'm not coding, you'll find me exploring new ML architectures or diving deep into time-series analysis.
+              I am an AI Integration Engineer & ML Practitioner. I build production-ready AI systems that bridge the gap between models and applications, specializing in MCP development, time-series forecasting, and scalable ML infrastructure. When I&apos;m not coding, you&apos;ll find me exploring new ML architectures or diving deep into time-series analysis.
             </p>
           </section>
 
@@ -271,7 +271,45 @@ export default function StoryPage() {
             </div>
           </section>
 
-	      
+          <section id="skills">
+            <h2 className="newspaper-headline text-3xl mb-4">Skills & Technologies</h2>
+            <div className="grid gap-6 md:grid-cols-2">
+                             <div className="glass-card p-5">
+                 <h3 className="text-xl mb-3">Machine Learning & AI</h3>
+                 <div className="flex flex-wrap gap-2">
+                   <span className="tag">Deep Learning</span>
+                   <span className="tag">Time-Series Forecasting</span>
+                   <span className="tag">CNN-LSTM</span>
+                   <span className="tag">Random Forest</span>
+                   <span className="tag">TensorFlow</span>
+                   <span className="tag">scikit-learn</span>
+                 </div>
+               </div>
+                                                           <div className="glass-card p-5">
+                  <h3 className="text-xl mb-3">Development & Infrastructure</h3>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="tag">Python</span>
+                    <span className="tag">TypeScript</span>
+                    <span className="tag">MCP Development</span>
+                    <span className="tag">Cloudflare Workers</span>
+                    <span className="tag">Async Systems</span>
+                    <span className="tag">PostgreSQL</span>
+                    <span className="tag">REST APIs</span>
+                    <span className="tag">Django</span>
+                    <span className="tag">Docker</span>
+                  </div>
+                </div>
+                               <div className="glass-card p-5">
+                  <h3 className="text-xl mb-3">CI/CD & DevOps</h3>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="tag">GitHub Actions</span>
+                    <span className="tag">CI/CD Pipelines</span>
+                    <span className="tag">Deployment Automation</span>
+                    <span className="tag">Workflow Orchestration</span>
+                  </div>
+                </div>
+            </div>
+          </section>
 
           <section id="github">
             <h2 className="newspaper-headline text-3xl mb-4">GitHub</h2>
