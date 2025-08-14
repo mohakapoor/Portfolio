@@ -1,10 +1,38 @@
 'use client';
 import GitHubContributions from "@/components/GitHubContributions";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 
 export default function StoryPage() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [expandedCard, setExpandedCard] = useState<number | null>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Handle click outside to close expanded card
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (expandedCard !== null) {
+        const target = event.target as Node;
+        const expandedCardElement = cardRefs.current[expandedCard];
+        
+        if (expandedCardElement && !expandedCardElement.contains(target)) {
+          setExpandedCard(null);
+        }
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [expandedCard]);
+
+  // Handle card click (mobile)
+  const handleCardClick = (index: number) => {
+    if (expandedCard === index) {
+      setExpandedCard(null); // Close if already expanded
+    } else {
+      setExpandedCard(index); // Expand this card
+    }
+  };
 
   return (
     <main className="min-h-screen px-6 py-16">
@@ -89,13 +117,19 @@ export default function StoryPage() {
             <h2 className="newspaper-headline text-3xl mb-4">Featured Projects</h2>
             <div className="grid gap-6 md:grid-cols-2">
               {/* Card 1,1 - Left column, expands right */}
-              <div className="glass-card p-5 hover:scale-105 hover:z-10 transition-all duration-500 ease-in group">
+              <div 
+                ref={(el) => { cardRefs.current[0] = el; }}
+                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer ${
+                  expandedCard === 0 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'
+                }`}
+                onClick={() => handleCardClick(0)}
+              >
                 <h3 className="text-xl mb-2">CMFM v1.0 — Cross‑Market Index Forecasting</h3>
                 <p className="text-dust-gray mb-3">
                   Deep learning model predicting bid‑open prices using 7M rows of 1‑minute Dukascopy data.
                   MAPE: 3.1% (JP), 4.2% (UK), 12% (US) on 2025 test data.
                 </p>
-                <div className="hidden group-hover:block text-dust-gray mb-3 text-sm leading-relaxed">
+                <div className={`${expandedCard === 0 ? 'block' : 'hidden group-hover:block'} text-dust-gray mb-3 text-sm leading-relaxed`}>
                   <ul className="list-disc pl-5 space-y-1">
                     <li>CNN-LSTM architecture with self-attention mechanisms</li>
                     <li>Multi-currency support: JPY, GBP, USD pairs</li>
@@ -113,14 +147,20 @@ export default function StoryPage() {
               </div>
 
               {/* Card 1,2 - Right column, expands left */}
-              <div className="glass-card p-5 hover:scale-105 hover:z-10 transition-all duration-500 ease-in group">
+              <div 
+                ref={(el) => { cardRefs.current[1] = el; }}
+                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer ${
+                  expandedCard === 1 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'
+                }`}
+                onClick={() => handleCardClick(1)}
+              >
                 <h3 className="text-xl mb-2">
                   <a href="https://github.com/mohakapoor/HermesGPT" target="_blank" rel="noreferrer noopener">
                     HermesGPT — Automated Internship Outreach Bot
                   </a>
                 </h3>
                 <p className="text-dust-gray mb-3">AI‑powered personalized cold emails with Gmail API, email verification, and PostgreSQL tracking.</p>
-                <div className="hidden group-hover:block text-dust-gray mb-3 text-sm leading-relaxed">
+                <div className={`${expandedCard === 1 ? 'block' : 'hidden group-hover:block'} text-dust-gray mb-3 text-sm leading-relaxed`}>
                   <ul className="list-disc pl-5 space-y-1">
                     <li>Gemini AI integration for dynamic content generation</li>
                     <li>Automated email verification and deliverability checks</li>
@@ -139,12 +179,18 @@ export default function StoryPage() {
               </div>
 
               {/* Card 2,1 - Left column, expands right */}
-              <div className="glass-card p-5 hover:scale-105 hover:z-10 transition-all duration-500 ease-in group">
+              <div 
+                ref={(el) => { cardRefs.current[2] = el; }}
+                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer ${
+                  expandedCard === 2 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'
+                }`}
+                onClick={() => handleCardClick(2)}
+              >
                 <h3 className="text-xl mb-2">
                   <a href="https://github.com/mohakapoor/Solar-Energy-Generation-Prediction" target="_blank" rel="noreferrer noopener">Solar Power Generation Predictor</a>
                 </h3>
                 <p className="text-dust-gray mb-3">Weather‑aware ML to predict hourly generation, surfaced via a Django web front‑end for user inputs.</p>
-                <div className="hidden group-hover:block text-dust-gray mb-3 text-sm leading-relaxed">
+                <div className={`${expandedCard === 2 ? 'block' : 'hidden group-hover:block'} text-dust-gray mb-3 text-sm leading-relaxed`}>
                   <ul className="list-disc pl-5 space-y-1">
                     <li>Multi-variate time series forecasting model</li>
                     <li>Seasonal trend analysis and panel degradation modeling</li>
@@ -163,12 +209,18 @@ export default function StoryPage() {
               </div>
 
               {/* Card 2,2 - Right column, expands left */}
-              <div className="glass-card p-5 hover:scale-105 hover:z-10 transition-all duration-500 ease-in group">
+              <div 
+                ref={(el) => { cardRefs.current[3] = el; }}
+                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer ${
+                  expandedCard === 3 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'
+                }`}
+                onClick={() => handleCardClick(3)}
+              >
                 <h3 className="text-xl mb-2">
                   <a href="https://github.com/mohakapoor/Nifty50TrendPrediction" target="_blank" rel="noreferrer noopener">Nifty50 Trend Prediction</a>
                 </h3>
                 <p className="text-dust-gray mb-3">Random Forest classifier predicting short‑term market trends using historical Yahoo Finance data.</p>
-                <div className="hidden group-hover:block text-dust-gray mb-3 text-sm leading-relaxed">
+                <div className={`${expandedCard === 3 ? 'block' : 'hidden group-hover:block'} text-dust-gray mb-3 text-sm leading-relaxed`}>
                   <ul className="list-disc pl-5 space-y-1">
                     <li>Ensemble-based Random Forest classification</li>
                     <li>Technical indicator feature engineering</li>
