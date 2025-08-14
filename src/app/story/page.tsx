@@ -1,6 +1,7 @@
 'use client';
 import GitHubContributions from "@/components/GitHubContributions";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function StoryPage() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -10,18 +11,18 @@ export default function StoryPage() {
       {/* Hamburger button (story page only) */}
       <button
         aria-label="Open menu"
-        className="fixed top-4 left-4 z-20 p-2 rounded-md border border-[var(--spider-red)] bg-[var(--newsprint-gray)] text-[var(--vintage-white)] hover:bg-[var(--spider-red)] transition"
+        className="fixed top-5 left-4 sm:top-6 sm:left-6 z-60 p-3 rounded-md border border-[var(--spider-red)] bg-[var(--newsprint-gray)] text-[var(--vintage-white)] hover:bg-[var(--spider-red)] transition"
         onClick={() => setMenuOpen(true)}
       >
-        <span className="block w-6 h-0.5 bg-[var(--vintage-white)] mb-1" />
-        <span className="block w-6 h-0.5 bg-[var(--vintage-white)] mb-1" />
-        <span className="block w-6 h-0.5 bg-[var(--vintage-white)]" />
+        <span className="block w-7 h-[3px] bg-[var(--vintage-white)] mb-1" />
+        <span className="block w-7 h-[3px] bg-[var(--vintage-white)] mb-1" />
+        <span className="block w-7 h-[3px] bg-[var(--vintage-white)]" />
       </button>
 
       {/* Overlay */}
       {menuOpen && (
         <div
-          className="fixed inset-0 z-10 bg-black/50"
+          className="fixed inset-0 z-40 bg-black/50"
           onClick={() => setMenuOpen(false)}
           aria-hidden="true"
         />
@@ -29,7 +30,7 @@ export default function StoryPage() {
 
       {/* Left sidebar */}
       <aside
-        className={`fixed top-0 left-0 z-20 h-full w-72 glass-nav transform transition-transform duration-300 ${menuOpen ? "translate-x-0" : "-translate-x-full"}`}
+        className={`fixed top-0 left-0 z-50 h-full w-72 glass-nav transform transition-transform duration-300 ${menuOpen ? "translate-x-0" : "-translate-x-full"}`}
         role="dialog"
         aria-modal="true"
         aria-label="Story navigation"
@@ -45,8 +46,8 @@ export default function StoryPage() {
           </button>
         </div>
         <nav className="px-4 py-3 space-y-2">
-          <a href="/" className="block py-2 hover:underline" onClick={() => setMenuOpen(false)}>Home</a>
-          <a href="/story" className="block py-2 hover:underline" onClick={() => setMenuOpen(false)}>Story</a>
+          <Link href="/" className="block py-2 hover:underline" onClick={() => setMenuOpen(false)}>Home</Link>
+          <Link href="/story" className="block py-2 hover:underline" onClick={() => setMenuOpen(false)}>Story</Link>
           <div className="mt-4 text-dust-gray">On this page</div>
           <a href="#who-am-i" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Who Am I</a>
           <a href="#featured" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Featured Investigations</a>
