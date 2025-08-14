@@ -123,7 +123,7 @@ export default function StoryPage() {
           <h1 className="newspaper-headline text-6xl md:text-7xl">My Story</h1>
         </header>
 
-        <article className="space-y-10 leading-relaxed text-lg">
+        <article className="space-y-20 leading-relaxed text-lg">
           <section id="who-am-i" className="glass-card p-6 animate-slide-left">
             <h2 className="newspaper-headline text-3xl mb-2">Who Am I</h2>
             <p className="text-dust-gray mb-4">
@@ -132,7 +132,7 @@ export default function StoryPage() {
           </section>
 
           <section id="featured">
-            <h2 className="newspaper-headline text-3xl mb-4 animate-slide-right">Featured Projects</h2>
+            <h2 className="newspaper-headline text-3xl my-8 animate-slide-right">Featured Projects</h2>
             <div className="grid gap-6 md:grid-cols-2">
               {/* Card 1,1 - Left column, expands right */}
               <div 
@@ -238,7 +238,7 @@ export default function StoryPage() {
                   <a href="https://github.com/mohakapoor/Nifty50TrendPrediction" target="_blank" rel="noreferrer noopener">Nifty50 Trend Prediction</a>
                 </h3>
                 <p className="text-dust-gray mb-3">Random Forest classifier predicting short‑term market trends using historical Yahoo Finance data.</p>
-                <div className={`${expandedCard === 2 ? 'block' : 'hidden group-hover:block'} text-dust-gray mb-3 text-sm leading-relaxed`}>
+                <div className={`${expandedCard === 3 ? 'block' : 'hidden group-hover:block'} text-dust-gray mb-3 text-sm leading-relaxed`}>
                   <ul className="list-disc pl-5 space-y-1">
                     <li>Ensemble-based Random Forest classification</li>
                     <li>Technical indicator feature engineering</li>
@@ -256,7 +256,7 @@ export default function StoryPage() {
           </section>
 
           <section id="experience">
-            <h2 className="newspaper-headline text-3xl mb-4 animate-slide-left">Experience</h2>
+            <h2 className="newspaper-headline text-3xl my-8 animate-slide-left">Experience</h2>
             <div className="grid gap-6 md:grid-cols-2">
               <div 
                 ref={(el) => { cardRefs.current[4] = el; }}
@@ -305,7 +305,7 @@ export default function StoryPage() {
           </section>
 
           <section id="skills">
-            <h2 className="newspaper-headline text-3xl mb-4 animate-slide-right">Skills & Technologies</h2>
+            <h2 className="newspaper-headline text-3xl my-8 animate-slide-right">Skills & Technologies</h2>
             <div className="grid gap-6 md:grid-cols-2">
               <div className="glass-card p-5 opacity-0 translate-y-8">
                 <h3 className="text-xl mb-3">Machine Learning & AI</h3>
@@ -346,7 +346,7 @@ export default function StoryPage() {
           </section>
 
           <section id="github">
-            <h2 className="newspaper-headline text-3xl mb-4 animate-slide-left">GitHub</h2>
+            <h2 className="newspaper-headline text-3xl my-8 animate-slide-left">GitHub</h2>
             <div className="glass-card p-5 opacity-0 translate-y-8">
               <div className="grid md:grid-cols-[220px,1fr] gap-6 items-center">
                 <a
@@ -367,7 +367,7 @@ export default function StoryPage() {
           </section>
 
           <section id="contact">
-            <h2 className="newspaper-headline text-3xl mb-4 animate-slide-right">Get in touch</h2>
+            <h2 className="newspaper-headline text-3xl my-6 animate-slide-right">Get in touch</h2>
             <div className="grid gap-6 md:grid-cols-2">
               <a
                 className="glass-card p-6 block no-underline cursor-pointer opacity-0 translate-y-8"
