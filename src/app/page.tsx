@@ -8,7 +8,7 @@ export default function Home() {
         <h1 className="newspaper-headline text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-4 sm:mb-6">
           Mohak Kapoor
         </h1>
-        <p className="text-base sm:text-lg md:text-xl text-dust-gray mb-6 sm:mb-8 px-2">
+        <p className="text-base sm:text-lg md:text-xl text-vintage-white mb-6 sm:mb-8 px-2">
           <Typewriter
             text="Machine Learning • Time‑Series • DevOps"
             className="inline-flex items-center"

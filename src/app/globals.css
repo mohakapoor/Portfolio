@@ -142,7 +142,7 @@ html, body {
   position: absolute;
   inset: 0;
   background: url('/bg_portrait.png') center / cover no-repeat;
-  filter: blur(0px);
+  filter: blur(2px);
   transform: scale(1.06); /* cover edges after blur */
   z-index: 0;
 }
