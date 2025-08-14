@@ -106,25 +106,24 @@ export default function StoryPage() {
 
               <div className="glass-card p-5">
                 <h3 className="text-xl mb-2">
-                  <a href="https://github.com/mohakapoor/Nifty50TrendPrediction" target="_blank" rel="noreferrer noopener">
-                    Nifty50 Trend Prediction
+                  <a href="https://github.com/mohakapoor/HermesGPT" target="_blank" rel="noreferrer noopener">
+                    HermesGPT — Automated Internship Outreach Bot
                   </a>
                 </h3>
-                <p className="text-dust-gray mb-3">Random Forest classifier predicting short‑term market trends using historical Yahoo Finance data.</p>
+                <p className="text-dust-gray mb-3">AI‑powered personalized cold emails with Gmail API, email verification, and PostgreSQL tracking.</p>
                 <div className="flex flex-wrap gap-2">
                   <span className="tag">Python</span>
-                  <span className="tag">scikit‑learn</span>
-                  <span className="tag">Pandas</span>
-                  <span className="tag">NumPy</span>
-                  <span className="tag">yfinance</span>
+                  <span className="tag">Gmail API</span>
+                  <span className="tag">Gemini AI</span>
+                  <span className="tag">PostgreSQL</span>
+                  <span className="tag">SMTP</span>
+                  <span className="tag">Automation</span>
                 </div>
               </div>
 
               <div className="glass-card p-5">
                 <h3 className="text-xl mb-2">
-                  <a href="https://github.com/mohakapoor/Solar-Energy-Generation-Prediction" target="_blank" rel="noreferrer noopener">
-                    Solar Power Generation Predictor
-                  </a>
+                  <a href="https://github.com/mohakapoor/Solar-Energy-Generation-Prediction" target="_blank" rel="noreferrer noopener">Solar Power Generation Predictor</a>
                 </h3>
                 <p className="text-dust-gray mb-3">Weather‑aware ML to predict hourly generation, surfaced via a Django web front‑end for user inputs.</p>
                 <div className="flex flex-wrap gap-2">
@@ -139,22 +138,15 @@ export default function StoryPage() {
 
               <div className="glass-card p-5">
                 <h3 className="text-xl mb-2">
-                  <a
-                    href="https://github.com/mohakapoor/HermesGPT"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    HermesGPT — Automated Internship Outreach Bot
-                  </a>
+                  <a href="https://github.com/mohakapoor/Nifty50TrendPrediction" target="_blank" rel="noreferrer noopener">Nifty50 Trend Prediction</a>
                 </h3>
-                <p className="text-dust-gray mb-3">AI‑powered personalized cold emails with Gmail API, email verification, and PostgreSQL tracking.</p>
+                <p className="text-dust-gray mb-3">Random Forest classifier predicting short‑term market trends using historical Yahoo Finance data.</p>
                 <div className="flex flex-wrap gap-2">
                   <span className="tag">Python</span>
-                  <span className="tag">Gmail API</span>
-                  <span className="tag">Gemini AI</span>
-                  <span className="tag">PostgreSQL</span>
-                  <span className="tag">SMTP</span>
-                  <span className="tag">Automation</span>
+                  <span className="tag">scikit‑learn</span>
+                  <span className="tag">Pandas</span>
+                  <span className="tag">NumPy</span>
+                  <span className="tag">yfinance</span>
                 </div>
               </div>
             </div>
@@ -204,16 +196,33 @@ export default function StoryPage() {
                     alt="GitHub avatar of mohakapoor"
                     className="w-40 h-40 md:w-52 md:h-52 rounded-lg border border-[var(--spider-red)]/40 object-cover"
                   />
-                  <span className="mt-3 underline">github.com/mohakapoor</span>
                 </a>
                 <GitHubContributions username="mohakapoor" />
               </div>
             </div>
           </section>
 
-          <section id="contact" className="glass-card p-6">
-            <h2 className="newspaper-headline text-3xl mb-2">Contact</h2>
-            <p className="text-dust-gray">Want the full dossier? Download from the homepage or reach out at <span className="underline">contact.mohakapoor@gmail.com</span>.</p>
+          <section id="contact">
+            <h2 className="newspaper-headline text-3xl mb-4">Get in touch</h2>
+            <div className="grid gap-6 md:grid-cols-2">
+              <a
+                className="glass-card p-6 block no-underline cursor-pointer"
+                href="mailto:contact.mohakapoor@gmail.com"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                <h3 className="text-xl mb-2">Contact</h3>
+                <p className="text-dust-gray">Got a case for me? Let's talk.</p>
+              </a>
+              <a
+                className="glass-card p-6 block no-underline cursor-pointer"
+                href="/Mohak_Kapoor_ML_INTERN.pdf"
+                download="Mohak_Kapoor_ML_INTERN.pdf"
+              >
+                <h3 className="text-xl mb-2">Download Resume</h3>
+                <p className="text-dust-gray">Grab the dossier as a PDF.</p>
+              </a>
+            </div>
           </section>
         </article>
       </section>

@@ -28,7 +28,7 @@ export default function HeaderSocials(): React.ReactElement {
         </svg>
       </a>
       <a
-        href="https://instagram.com/"
+        href="https://www.instagram.com/isitmohak"
         target="_blank"
         rel="noreferrer noopener"
         aria-label="Instagram"
