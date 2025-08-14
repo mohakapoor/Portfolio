@@ -1,8 +1,61 @@
+'use client';
 import GitHubContributions from "@/components/GitHubContributions";
+import { useState } from "react";
 
 export default function StoryPage() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <main className="min-h-screen px-6 py-16">
+      {/* Hamburger button (story page only) */}
+      <button
+        aria-label="Open menu"
+        className="fixed top-4 left-4 z-20 p-2 rounded-md border border-[var(--spider-red)] bg-[var(--newsprint-gray)] text-[var(--vintage-white)] hover:bg-[var(--spider-red)] transition"
+        onClick={() => setMenuOpen(true)}
+      >
+        <span className="block w-6 h-0.5 bg-[var(--vintage-white)] mb-1" />
+        <span className="block w-6 h-0.5 bg-[var(--vintage-white)] mb-1" />
+        <span className="block w-6 h-0.5 bg-[var(--vintage-white)]" />
+      </button>
+
+      {/* Overlay */}
+      {menuOpen && (
+        <div
+          className="fixed inset-0 z-10 bg-black/50"
+          onClick={() => setMenuOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
+      {/* Left sidebar */}
+      <aside
+        className={`fixed top-0 left-0 z-20 h-full w-72 glass-nav transform transition-transform duration-300 ${menuOpen ? "translate-x-0" : "-translate-x-full"}`}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Story navigation"
+      >
+        <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--spider-red)]/40">
+          <span className="newspaper-headline text-2xl">Menu</span>
+          <button
+            aria-label="Close menu"
+            className="p-2 rounded-md border border-[var(--spider-red)] text-[var(--vintage-white)] hover:bg-[var(--spider-red)] transition"
+            onClick={() => setMenuOpen(false)}
+          >
+            ✕
+          </button>
+        </div>
+        <nav className="px-4 py-3 space-y-2">
+          <a href="/" className="block py-2 hover:underline" onClick={() => setMenuOpen(false)}>Home</a>
+          <a href="/story" className="block py-2 hover:underline" onClick={() => setMenuOpen(false)}>Story</a>
+          <div className="mt-4 text-dust-gray">On this page</div>
+          <a href="#who-am-i" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Who Am I</a>
+          <a href="#featured" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Featured Investigations</a>
+          <a href="#experience" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Experience</a>
+          <a href="#github" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>GitHub</a>
+          <a href="#contact" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Contact</a>
+        </nav>
+      </aside>
+
       <section className="max-w-5xl mx-auto">
         <header className="mb-10 text-center">
           <h1 className="newspaper-headline text-5xl md:text-6xl">The Full Story</h1>
@@ -10,8 +63,8 @@ export default function StoryPage() {
         </header>
 
         <article className="space-y-10 leading-relaxed text-lg">
-          <section className="glass-card p-6">
-            <h2 className="newspaper-headline text-3xl mb-2">Who I Am</h2>
+          <section id="who-am-i" className="glass-card p-6">
+            <h2 className="newspaper-headline text-3xl mb-2">Who Am I</h2>
             <p className="text-dust-gray">
               Mohak Kapoor — ML/DevOps practitioner. I turn messy data into clear signals:
               forecasting indices, predicting generation, and shipping reliable, production‑ready systems.
@@ -32,7 +85,7 @@ export default function StoryPage() {
             </div>
           </section>
 
-          <section>
+          <section id="featured">
             <h2 className="newspaper-headline text-3xl mb-4">Featured Investigations</h2>
             <div className="grid gap-6 md:grid-cols-2">
               <div className="glass-card p-5">
@@ -106,7 +159,7 @@ export default function StoryPage() {
             </div>
           </section>
 
-          <section>
+          <section id="experience">
             <h2 className="newspaper-headline text-3xl mb-4">Experience</h2>
             <div className="grid gap-6 md:grid-cols-2">
               <div className="glass-card p-5">
@@ -135,7 +188,7 @@ export default function StoryPage() {
 
 	      
 
-          <section>
+          <section id="github">
             <h2 className="newspaper-headline text-3xl mb-4">GitHub</h2>
             <div className="glass-card p-5">
               <div className="grid md:grid-cols-[220px,1fr] gap-6 items-center">
@@ -157,7 +210,7 @@ export default function StoryPage() {
             </div>
           </section>
 
-          <section className="glass-card p-6">
+          <section id="contact" className="glass-card p-6">
             <h2 className="newspaper-headline text-3xl mb-2">Contact</h2>
             <p className="text-dust-gray">Want the full dossier? Download from the homepage or reach out at <span className="underline">contact.mohakapoor@gmail.com</span>.</p>
           </section>
