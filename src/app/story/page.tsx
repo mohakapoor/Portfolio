@@ -285,22 +285,23 @@ export default function StoryPage() {
                    <span className="tag">scikit-learn</span>
                  </div>
                </div>
-                                                           <div className="glass-card p-5">
-                  <h3 className="text-xl mb-3">Development & Infrastructure</h3>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="tag">Python</span>
-                    <span className="tag">TypeScript</span>
-                    <span className="tag">MCP Development</span>
-                    <span className="tag">Cloudflare Workers</span>
-                    <span className="tag">Async Systems</span>
-                    <span className="tag">PostgreSQL</span>
-                    <span className="tag">REST APIs</span>
-                    <span className="tag">Django</span>
-                    <span className="tag">Docker</span>
-                  </div>
-                </div>
-                               <div className="glass-card p-5">
-                  <h3 className="text-xl mb-3">CI/CD & DevOps</h3>
+                                                                                                                       <div className="glass-card p-5">
+                   <h3 className="text-xl mb-3">Development & Infrastructure</h3>
+                   <div className="flex flex-wrap gap-2">
+                     <span className="tag">Python</span>
+                     <span className="tag">C++</span>
+                     <span className="tag">TypeScript</span>
+                     <span className="tag">MCP Development</span>
+                     <span className="tag">Cloudflare Workers</span>
+                     <span className="tag">Async Systems</span>
+                     <span className="tag">PostgreSQL</span>
+                     <span className="tag">REST APIs</span>
+                     <span className="tag">Django</span>
+                     <span className="tag">Docker</span>
+                   </div>
+                 </div>
+                <div className="glass-card p-5">
+                  <h3 className="text-xl mb-3">CI/CD</h3>
                   <div className="flex flex-wrap gap-2">
                     <span className="tag">GitHub Actions</span>
                     <span className="tag">CI/CD Pipelines</span>
