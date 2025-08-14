@@ -13,7 +13,8 @@
   --sepia-tone: #f4ecd8;
 }
 
-@theme inline {
+/* CSS custom properties for theme colors */
+:root {
   --color-background: var(--ink-black);
   --color-foreground: var(--vintage-white);
   --font-sans: var(--font-source-sans);
@@ -131,7 +132,7 @@ html, body {
 /* External ghchart image – no dimming so whites stay bright */
 .gh-chart { filter: none; }
 
-/* Noir hero with blurred background */
+/* Noir hero with responsive background images */
 .noir-hero {
   position: relative;
   overflow: hidden;
@@ -140,8 +141,15 @@ html, body {
   content: "";
   position: absolute;
   inset: 0;
-  background: url('/bg.png') center / cover no-repeat;
+  background: url('/bg_portrait.png') center / cover no-repeat;
   filter: blur(0px);
   transform: scale(1.06); /* cover edges after blur */
   z-index: 0;
+}
+
+/* Use landscape background for wider screens */
+@media (min-width: 768px) {
+  .noir-hero::before {
+    background: url('/bg_landscape.png') center / cover no-repeat;
+  }
 }
