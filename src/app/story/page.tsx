@@ -119,9 +119,9 @@ export default function StoryPage() {
       </aside>
 
       <section className="max-w-5xl mx-auto">
-        <header className="mb-10 text-center mt-5 animate-slide-down">
-          <h1 className="newspaper-headline text-6xl md:text-7xl">My Story</h1>
-        </header>
+                 <header className="mb-10 text-center mt-5 animate-slide-down">
+           <h1 className="newspaper-headline text-6xl md:text-7xl text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">My Story</h1>
+         </header>
 
         <article className="space-y-20 leading-relaxed text-lg">
           <section id="who-am-i" className="glass-card p-6 animate-slide-left">
