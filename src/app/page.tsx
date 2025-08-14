@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main className="noir-hero min-h-screen flex items-center justify-center px-4 sm:px-6 py-16 sm:py-20 relative">
-      <AutoRedirect href="/story" delayMs={5000} />
+      <AutoRedirect href="/story" delayMs={10000} />
       <section className="relative z-10 max-w-4xl w-full text-center">
         <h1 className="newspaper-headline text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-4 sm:mb-6">
           Mohak Kapoor

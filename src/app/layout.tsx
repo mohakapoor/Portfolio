@@ -6,6 +6,7 @@ import {
   Courier_Prime,
 } from "next/font/google";
 import "./globals.css";
+import HeaderSocials from "@/components/HeaderSocials";
 
 // Spider-Man Noir font stack
 const bebas = Bebas_Neue({
@@ -58,6 +59,7 @@ export default function RootLayout({
           "antialiased",
         ].join(" ")}
       >
+        <HeaderSocials />
         {children}
       </body>
     </html>
