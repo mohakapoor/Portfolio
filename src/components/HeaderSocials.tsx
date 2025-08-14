@@ -27,6 +27,7 @@ export default function HeaderSocials(): React.ReactElement {
           <path d="M4.983 3.5C4.983 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.483 1.12 2.483 2.5zM.5 8.25h4V23h-4V8.25zM8.5 8.25h3.834v2.008h.054c.534-1.013 1.84-2.083 3.787-2.083 4.05 0 4.795 2.666 4.795 6.136V23h-3.999v-6.54c0-1.56-.028-3.566-2.173-3.566-2.176 0-2.51 1.7-2.51 3.454V23H8.5V8.25z"/>
         </svg>
       </a>
+      {/* Instagram (disabled for now)
       <a
         href="https://www.instagram.com/isitmohak"
         target="_blank"
@@ -38,6 +39,7 @@ export default function HeaderSocials(): React.ReactElement {
           <path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm0 2h10c1.654 0 3 1.346 3 3v10c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654 1.346-3 3-3zm5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm6.5-.75a1.25 1.25 0 11-2.5 0 1.25 1.25 0 012.5 0z"/>
         </svg>
       </a>
+      */}
     </div>
   );
 }

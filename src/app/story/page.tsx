@@ -60,7 +60,6 @@ export default function StoryPage() {
       <section className="max-w-5xl mx-auto">
         <header className="mb-10 text-center">
           <h1 className="newspaper-headline text-5xl md:text-6xl">The Full Story</h1>
-          <p className="text-dust-gray mt-2">A case file in the Spider‑Man Noir universe</p>
         </header>
 
         <article className="space-y-10 leading-relaxed text-lg">
