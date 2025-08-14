@@ -77,11 +77,12 @@ export default function StoryPage() {
           <Link href="/" className="block py-2 hover:underline" onClick={() => setMenuOpen(false)}>Home</Link>
           <Link href="/story" className="block py-2 hover:underline" onClick={() => setMenuOpen(false)}>Story</Link>
           <div className="mt-4 text-dust-gray">On this page</div>
-          <a href="#who-am-i" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Who Am I</a>
-          <a href="#featured" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Featured Projects</a>
-          <a href="#experience" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Experience</a>
-          <a href="#github" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>GitHub</a>
-          <a href="#contact" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Contact</a>
+                     <a href="#who-am-i" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Who Am I</a>
+           <a href="#featured" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Featured Projects</a>
+           <a href="#experience" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Experience</a>
+           <a href="#skills" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Skills</a>
+           <a href="#github" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>GitHub</a>
+           <a href="#contact" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Contact</a>
         </nav>
       </aside>
 
