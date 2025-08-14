@@ -1,26 +1,147 @@
 @import "tailwindcss";
 
+/* Spider-Man Noir theme variables */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ink-black: #0d0d0d;
+  --charcoal: #1a1a1a;
+  --newsprint-gray: #2a2a2a;
+  --smoke: #404040;
+  --vintage-white: #f5f5dc;
+  --dust-gray: #8c8c8c;
+  --spider-red: #cc2936;
+  --deep-crimson: #8b0000;
+  --sepia-tone: #f4ecd8;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--ink-black);
+  --color-foreground: var(--vintage-white);
+  --font-sans: var(--font-source-sans);
+  --font-mono: var(--font-courier);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html, body {
+  background: var(--ink-black);
+  color: var(--vintage-white);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Global typographic defaults */
+.newspaper-headline {
+  font-family: var(--font-bebas);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Cursor bar used by the React Typewriter component */
+.cursor-bar {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 2px;
+  background-color: var(--spider-red);
+  animation: blink 1s step-end infinite;
+}
+
+/* Spider-Noir button utility */
+.spider-noir-button {
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: var(--newsprint-gray);
+  color: var(--vintage-white);
+  border-color: var(--spider-red);
+  transition: all 200ms ease-in-out;
+}
+.spider-noir-button:hover {
+  background: var(--spider-red);
+  box-shadow: 0 0 20px rgba(204, 41, 54, 0.35);
+}
+
+/* Color utilities */
+.text-dust-gray { color: var(--dust-gray); }
+
+/* Glassmorphism cards */
+.glass-card {
+  position: relative;
+  background: color-mix(in oklab, var(--newsprint-gray) 65%, transparent);
+  background-color: rgba(255,255,255,0.03);
+  border: 1px solid rgba(204, 41, 54, 0.25);
+  border-radius: 12px;
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.05) inset,
+    0 0 0 1px rgba(255,255,255,0.03) inset,
+    0 10px 24px rgba(0,0,0,0.45),
+    0 20px 60px rgba(0,0,0,0.35);
+  transition: transform 220ms ease, box-shadow 220ms ease, background-color 220ms ease;
+  overflow: hidden;
+}
+.glass-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.02) 40%, rgba(0,0,0,0.0));
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+.glass-card:hover {
+  transform: translateY(-3px);
+  background-color: rgba(255,255,255,0.06);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.06) inset,
+    0 0 0 1px rgba(255,255,255,0.04) inset,
+    0 18px 36px rgba(0,0,0,0.5),
+    0 28px 70px rgba(0,0,0,0.38);
+}
+
+.tag {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border: 1px solid rgba(204, 41, 54, 0.4);
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--vintage-white);
+  background: rgba(204,41,54,0.08);
+}
+
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* GitHub contribution heatmap (noir colors) */
+.gh-grid { display: grid; gap: 3px; }
+.gh-week { display: grid; grid-template-rows: repeat(7, 12px); gap: 3px; }
+.gh-cell { width: 12px; height: 12px; border-radius: 2px; background: #0f0f0f; }
+.gh-l0 { background: #0f0f0f; }
+.gh-l1 { background: #332428; box-shadow: inset 0 0 0 1px rgba(204,41,54,0.15); }
+.gh-l2 { background: #56252d; }
+.gh-l3 { background: #7a2b34; }
+.gh-l4 { background: #cc2936; }
+
+/* External ghchart image – no dimming so whites stay bright */
+.gh-chart { filter: none; }
+
+/* Noir hero with blurred background */
+.noir-hero {
+  position: relative;
+  overflow: hidden;
+}
+.noir-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url('/bg.png') center / cover no-repeat;
+  filter: blur(0px);
+  transform: scale(1.06); /* cover edges after blur */
+  z-index: 0;
 }
