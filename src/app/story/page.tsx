@@ -240,10 +240,16 @@ export default function StoryPage() {
           <section id="experience">
             <h2 className="newspaper-headline text-3xl mb-4">Experience</h2>
             <div className="grid gap-6 md:grid-cols-2">
-              <div className="glass-card p-5 hover:scale-105 hover:z-10 transition-all duration-500 ease-in group cursor-pointer">
+              <div 
+                ref={(el) => { cardRefs.current[4] = el; }}
+                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer ${
+                  expandedCard === 4 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'
+                }`}
+                onClick={() => handleCardClick(4)}
+              >
                 <h3 className="text-xl mb-1">HumanizeIQ — AI Intern Integrations</h3>
                 <p className="text-dust-gray mb-3">Developed Model Context Protocol (MCP) servers using Cloudflare Workers for AI-powered image and document generation, with async processing and R2 bucket storage.</p>
-                <div className="hidden group-hover:block text-dust-gray mb-3 text-sm leading-relaxed">
+                <div className={`${expandedCard === 4 ? 'block' : 'hidden group-hover:block'} text-dust-gray mb-3 text-sm leading-relaxed`}>
                   <ul className="list-disc pl-5 space-y-1">
                     <li>Developed Model Context Protocol (MCP) servers using Cloudflare Workers for AI-powered image and document generation, with async processing and R2 bucket storage.</li>
                     <li>Built scalable MCP infrastructure that returns immediate job IDs and processes generation requests in the background, implementing polling-based result retrieval.</li>
@@ -252,10 +258,16 @@ export default function StoryPage() {
                   </ul>
                 </div>
               </div>
-              <div className="glass-card p-5 hover:scale-105 hover:z-10 transition-all duration-500 ease-in group cursor-pointer">
+              <div 
+                ref={(el) => { cardRefs.current[5] = el; }}
+                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer ${
+                  expandedCard === 5 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'
+                }`}
+                onClick={() => handleCardClick(5)}
+              >
                 <h3 className="text-xl mb-1">JPMorgan Chase & Co. — Quant Research Virtual</h3>
                 <p className="text-dust-gray mb-3">Analyzed a loan book to estimate probability of default; transformed FICO scores into categorical features with dynamic programming.</p>
-                <div className="hidden group-hover:block text-dust-gray mb-3 text-sm leading-relaxed">
+                <div className={`${expandedCard === 5 ? 'block' : 'hidden group-hover:block'} text-dust-gray mb-3 text-sm leading-relaxed`}>
                   <ul className="list-disc pl-5 space-y-1">
                     <li>Applied quantitative research methods in a simulated banking environment for loan default analysis</li>
                     <li>Used dynamic programming to convert FICO scores into categorical data, enhancing default prediction model robustness</li>
