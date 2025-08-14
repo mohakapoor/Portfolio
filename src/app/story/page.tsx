@@ -86,8 +86,8 @@ export default function StoryPage() {
       </aside>
 
       <section className="max-w-5xl mx-auto">
-        <header className="mb-10 text-center">
-          <h1 className="newspaper-headline text-5xl md:text-6xl">The Full Story</h1>
+        <header className="mb-10 text-center mt-5">
+          <h1 className="newspaper-headline text-6xl md:text-7xl">My Story</h1>
         </header>
 
         <article className="space-y-10 leading-relaxed text-lg">
@@ -240,18 +240,28 @@ export default function StoryPage() {
           <section id="experience">
             <h2 className="newspaper-headline text-3xl mb-4">Experience</h2>
             <div className="grid gap-6 md:grid-cols-2">
-              <div className="glass-card p-5">
-                <h3 className="text-xl mb-1">HumanizeIQ — DevOps & Backend Intern</h3>
-                <ul className="list-disc pl-5 text-dust-gray space-y-1">
-                  <li>Built CI/CD pipelines with GitHub Actions and Docker.</li>
-                  <li>Developed webhook APIs backed by PostgreSQL with robust data handling.</li>
-                  <li>Filtered 88k+ incoming records to 5.1k valid; archived the rest for audit.</li>
-                  <li>Contributed to Helm‑based container orchestration.</li>
-                </ul>
+              <div className="glass-card p-5 hover:scale-105 hover:z-10 transition-all duration-500 ease-in group cursor-pointer">
+                <h3 className="text-xl mb-1">HumanizeIQ — AI Intern Integrations</h3>
+                <p className="text-dust-gray mb-3">Developed Model Context Protocol (MCP) servers using Cloudflare Workers for AI-powered image and document generation, with async processing and R2 bucket storage.</p>
+                <div className="hidden group-hover:block text-dust-gray mb-3 text-sm leading-relaxed">
+                  <ul className="list-disc pl-5 space-y-1">
+                    <li>Developed Model Context Protocol (MCP) servers using Cloudflare Workers for AI-powered image and document generation, with async processing and R2 bucket storage.</li>
+                    <li>Built scalable MCP infrastructure that returns immediate job IDs and processes generation requests in the background, implementing polling-based result retrieval.</li>
+                    <li>Integrated MCP tools with LLM chat systems, enabling seamless generation workflows for various document types with embedded AI-generated content.</li>
+                    <li>Implemented robust async job management with status tracking & result fetching for production AI tools.</li>
+                  </ul>
+                </div>
               </div>
-              <div className="glass-card p-5">
+              <div className="glass-card p-5 hover:scale-105 hover:z-10 transition-all duration-500 ease-in group cursor-pointer">
                 <h3 className="text-xl mb-1">JPMorgan Chase & Co. — Quant Research Virtual</h3>
-                <p className="text-dust-gray">Analyzed a loan book to estimate probability of default; transformed FICO scores into categorical features with dynamic programming.</p>
+                <p className="text-dust-gray mb-3">Analyzed a loan book to estimate probability of default; transformed FICO scores into categorical features with dynamic programming.</p>
+                <div className="hidden group-hover:block text-dust-gray mb-3 text-sm leading-relaxed">
+                  <ul className="list-disc pl-5 space-y-1">
+                    <li>Applied quantitative research methods in a simulated banking environment for loan default analysis</li>
+                    <li>Used dynamic programming to convert FICO scores into categorical data, enhancing default prediction model robustness</li>
+                    <li>Developed a natural gas price prediction model using SARIMA time series analysis</li>
+                  </ul>
+                </div>
               </div>
               <div className="glass-card p-5">
                 <h3 className="text-xl mb-1">OSDC — Member</h3>
@@ -301,8 +311,8 @@ export default function StoryPage() {
               </a>
               <a
                 className="glass-card p-6 block no-underline cursor-pointer"
-                href="/Mohak_Kapoor_ML_INTERN.pdf"
-                download="Mohak_Kapoor_ML_INTERN.pdf"
+                href="/MOHAK_KAPOOR_ML.pdf"
+                download="MOHAK_KAPOOR_ML.pdf"
               >
                 <h3 className="text-xl mb-2">Download Resume</h3>
                 <p className="text-dust-gray">Grab the dossier as a PDF.</p>

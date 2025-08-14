@@ -39,8 +39,12 @@ const courier = Courier_Prime({
 });
 
 export const metadata: Metadata = {
-  title: "Mohak Kapoor | Quantitative Detective",
+  title: "Mohak Kapoor | ML ENGINEER",
   description: "Investigating market mysteries with machine learning.",
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({

@@ -28,8 +28,8 @@ export default function Home() {
           </Link>
           <a
             className="spider-noir-button px-4 sm:px-6 py-2.5 sm:py-3 border-2 w-full sm:w-auto text-sm sm:text-base"
-            href="/Mohak_Kapoor_ML_INTERN.pdf"
-            download="Mohak_Kapoor_ML_INTERN.pdf"
+            href="/MOHAK_KAPOOR_ML.pdf"
+            download="MOHAK_KAPOOR_ML.pdf"
           >
             Download Dossier
           </a>
