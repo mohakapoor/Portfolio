@@ -11,7 +11,7 @@ export default function StoryPage() {
       {/* Hamburger button (story page only) */}
       <button
         aria-label="Open menu"
-        className="fixed top-5 left-4 sm:top-6 sm:left-6 z-60 p-3 rounded-md border border-[var(--spider-red)] bg-[var(--newsprint-gray)] text-[var(--vintage-white)] hover:bg-[var(--spider-red)] transition"
+        className="fixed top-5 left-4 sm:top-6 sm:left-6 z-30 p-3 rounded-md border border-[var(--spider-red)] bg-[var(--newsprint-gray)] text-[var(--vintage-white)] hover:bg-[var(--spider-red)] transition"
         onClick={() => setMenuOpen(true)}
       >
         <span className="block w-7 h-[3px] bg-[var(--vintage-white)] mb-1" />
@@ -22,7 +22,7 @@ export default function StoryPage() {
       {/* Overlay */}
       {menuOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/50"
+          className="fixed inset-0 z-50 bg-black/50"
           onClick={() => setMenuOpen(false)}
           aria-hidden="true"
         />
@@ -30,7 +30,7 @@ export default function StoryPage() {
 
       {/* Left sidebar */}
       <aside
-        className={`fixed top-0 left-0 z-50 h-full w-72 glass-nav transform transition-transform duration-300 ${menuOpen ? "translate-x-0" : "-translate-x-full"}`}
+        className={`fixed top-0 left-0 z-60 h-full w-72 glass-nav transform transition-transform duration-300 ${menuOpen ? "translate-x-0" : "-translate-x-full"}`}
         role="dialog"
         aria-modal="true"
         aria-label="Story navigation"
