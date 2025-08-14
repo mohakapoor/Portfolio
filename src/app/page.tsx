@@ -7,12 +7,12 @@ export default function Home() {
     <main className="noir-hero min-h-screen flex items-center justify-center px-4 sm:px-6 py-16 sm:py-20 relative">
       <AutoRedirect href="/story" delayMs={10000} />
       <section className="relative z-10 max-w-4xl w-full text-center">
-        <h1 className="newspaper-headline text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-4 sm:mb-6">
+        <h1 className="newspaper-headline text-5xl sm:text-6xl md:text-7-5xl lg:text-8xl mb-4 sm:mb-6 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">
           Mohak Kapoor
         </h1>
         <p className="text-base sm:text-lg md:text-xl text-vintage-white mb-6 sm:mb-8 px-2">
           <Typewriter
-            text="Machine Learning • Time‑Series • DevOps"
+            text="Machine Learning • AI Integration • Systems Development"
             className="inline-flex items-center"
             startDelayMs={1000}
             speedMs={55}
@@ -21,13 +21,13 @@ export default function Home() {
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 px-4">
           <Link
-            className="spider-noir-button px-4 sm:px-6 py-2.5 sm:py-3 border-2 w-full sm:w-auto text-sm sm:text-base"
+            className="spider-noir-button px-6 sm:px-8 py-3 sm:py-4 border-2 w-full sm:w-auto text-lg sm:text-xl"
             href="/story"
           >
             Read the full story
           </Link>
           <a
-            className="spider-noir-button px-4 sm:px-6 py-2.5 sm:py-3 border-2 w-full sm:w-auto text-sm sm:text-base"
+            className="spider-noir-button px-6 sm:px-8 py-3 sm:py-4 border-2 w-full sm:w-auto text-lg sm:text-xl"
             href="/MOHAK_KAPOOR_ML.pdf"
             download="MOHAK_KAPOOR_ML.pdf"
           >

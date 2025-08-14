@@ -33,6 +33,12 @@ html, body {
   letter-spacing: 0.08em;
 }
 
+/* Custom text sizes */
+.text-7-5xl {
+  font-size: 90px;
+  line-height: 1;
+}
+
 /* Cursor bar used by the React Typewriter component */
 .cursor-bar {
   display: inline-block;

@@ -93,24 +93,9 @@ export default function StoryPage() {
         <article className="space-y-10 leading-relaxed text-lg">
           <section id="who-am-i" className="glass-card p-6">
             <h2 className="newspaper-headline text-3xl mb-2">Who Am I</h2>
-            <p className="text-dust-gray">
-              Mohak Kapoor — ML/DevOps practitioner. I turn messy data into clear signals:
-              forecasting indices, predicting generation, and shipping reliable, production‑ready systems.
+            <p className="text-dust-gray mb-4">
+              I am an AI Integration Engineer & ML Practitioner. I build production-ready AI systems that bridge the gap between models and applications, specializing in MCP development, time-series forecasting, and scalable ML infrastructure. When I'm not coding, you'll find me exploring new ML architectures or diving deep into time-series analysis.
             </p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              <span className="tag">Time‑Series</span>
-              <span className="tag">Regression</span>
-              <span className="tag">Classification</span>
-              <span className="tag">TensorFlow</span>
-              <span className="tag">scikit‑learn</span>
-              <span className="tag">Pandas</span>
-              <span className="tag">NumPy</span>
-              <span className="tag">Polars</span>
-              <span className="tag">Docker</span>
-              <span className="tag">GitHub Actions</span>
-              <span className="tag">PostgreSQL</span>
-              <span className="tag">REST APIs</span>
-            </div>
           </section>
 
           <section id="featured">
