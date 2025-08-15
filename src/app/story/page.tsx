@@ -173,13 +173,21 @@ export default function StoryPage() {
                   Deep learning model predicting bid‑open prices using 7M rows of 1‑minute Dukascopy data.
                   MAPE: 3.1% (JP), 4.2% (UK), 12% (US) on 2025 test data.
                 </p>
-                <div className={`${expandedCard === 0 ? 'block' : 'hidden group-hover:block'} text-dust-gray mb-3 text-sm leading-relaxed`}>
-                  <ul className="list-disc pl-5 space-y-1">
-                    <li>CNN-LSTM architecture with self-attention mechanisms</li>
-                    <li>Multi-currency support: JPY, GBP, USD pairs</li>
-                    <li>High-frequency 1-minute data processing</li>
-                    <li>Real-time inference pipeline</li>
-                  </ul>
+                <div
+                  className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-700 ease-in ${
+                    expandedCard === 0
+                      ? 'grid-rows-[1fr] opacity-100'
+                      : 'grid-rows-[0fr] opacity-0 group-hover:grid-rows-[1fr] group-hover:opacity-100'
+                  }`}
+                >
+                  <div className="min-h-0 text-dust-gray mb-3 text-sm leading-relaxed">
+                    <ul className="list-disc pl-5 space-y-1">
+                      <li>CNN-LSTM architecture with self-attention mechanisms</li>
+                      <li>Multi-currency support: JPY, GBP, USD pairs</li>
+                      <li>High-frequency 1-minute data processing</li>
+                      <li>Real-time inference pipeline</li>
+                    </ul>
+                  </div>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <span className="tag">Python</span>
@@ -204,13 +212,21 @@ export default function StoryPage() {
                   </a>
                 </h3>
                 <p className="text-dust-gray mb-3">AI‑powered personalized cold emails with Gmail API, email verification, and PostgreSQL tracking.</p>
-                <div className={`${expandedCard === 1 ? 'block' : 'hidden group-hover:block'} text-dust-gray mb-3 text-sm leading-relaxed`}>
-                  <ul className="list-disc pl-5 space-y-1">
-                    <li>Gemini AI integration for dynamic content generation</li>
-                    <li>Automated email verification and deliverability checks</li>
-                    <li>Response rate analytics and engagement tracking</li>
-                    <li>Customizable email templates and personalization</li>
-                  </ul>
+                <div
+                  className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-700 ease-in ${
+                    expandedCard === 1
+                      ? 'grid-rows-[1fr] opacity-100'
+                      : 'grid-rows-[0fr] opacity-0 group-hover:grid-rows-[1fr] group-hover:opacity-100'
+                  }`}
+                >
+                  <div className="min-h-0 text-dust-gray mb-3 text-sm leading-relaxed">
+                    <ul className="list-disc pl-5 space-y-1">
+                      <li>Gemini AI integration for dynamic content generation</li>
+                      <li>Automated email verification and deliverability checks</li>
+                      <li>Response rate analytics and engagement tracking</li>
+                      <li>Customizable email templates and personalization</li>
+                    </ul>
+                  </div>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <span className="tag">Python</span>
@@ -234,13 +250,21 @@ export default function StoryPage() {
                   <a href="https://github.com/mohakapoor/Solar-Energy-Generation-Prediction" target="_blank" rel="noreferrer noopener">Solar Power Generation Predictor</a>
                 </h3>
                 <p className="text-dust-gray mb-3">Weather‑aware ML to predict hourly generation, surfaced via a Django web front‑end for user inputs.</p>
-                <div className={`${expandedCard === 2 ? 'block' : 'hidden group-hover:block'} text-dust-gray mb-3 text-sm leading-relaxed`}>
-                  <ul className="list-disc pl-5 space-y-1">
-                    <li>Multi-variate time series forecasting model</li>
-                    <li>Seasonal trend analysis and panel degradation modeling</li>
-                    <li>Real-time weather data integration via OpenWeatherMap API</li>
-                    <li>User-configurable prediction parameters</li>
-                  </ul>
+                <div
+                  className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-700 ease-in ${
+                    expandedCard === 2
+                      ? 'grid-rows-[1fr] opacity-100'
+                      : 'grid-rows-[0fr] opacity-0 group-hover:grid-rows-[1fr] group-hover:opacity-100'
+                  }`}
+                >
+                  <div className="min-h-0 text-dust-gray mb-3 text-sm leading-relaxed">
+                    <ul className="list-disc pl-5 space-y-1">
+                      <li>Multi-variate time series forecasting model</li>
+                      <li>Seasonal trend analysis and panel degradation modeling</li>
+                      <li>Real-time weather data integration via OpenWeatherMap API</li>
+                      <li>User-configurable prediction parameters</li>
+                    </ul>
+                  </div>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <span className="tag">TensorFlow</span>
@@ -264,11 +288,19 @@ export default function StoryPage() {
                   <a href="https://github.com/mohakapoor/Nifty50TrendPrediction" target="_blank" rel="noreferrer noopener">Nifty50 Trend Prediction</a>
                 </h3>
                 <p className="text-dust-gray mb-3">Random Forest classifier predicting short‑term market trends using historical Yahoo Finance data.</p>
-                <div className={`${expandedCard === 3 ? 'block' : 'hidden group-hover:block'} text-dust-gray mb-3 text-sm leading-relaxed`}>
-                  <ul className="list-disc pl-5 space-y-1">
-                    <li>Ensemble-based Random Forest classification</li>
-                    <li>Technical indicator feature engineering</li>
-                  </ul>
+                <div
+                  className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-700 ease-in ${
+                    expandedCard === 3
+                      ? 'grid-rows-[1fr] opacity-100'
+                      : 'grid-rows-[0fr] opacity-0 group-hover:grid-rows-[1fr] group-hover:opacity-100'
+                  }`}
+                >
+                  <div className="min-h-0 text-dust-gray mb-3 text-sm leading-relaxed">
+                    <ul className="list-disc pl-5 space-y-1">
+                      <li>Ensemble-based Random Forest classification</li>
+                      <li>Technical indicator feature engineering</li>
+                    </ul>
+                  </div>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <span className="tag">Python</span>
@@ -293,14 +325,22 @@ export default function StoryPage() {
                  >
                 <h3 className="text-xl mb-1">HumanizeIQ — AI Intern Integrations</h3>
                 <p className="text-dust-gray mb-3">Developed Model Context Protocol (MCP) servers using Cloudflare Workers for AI-powered image and document generation, with async processing and R2 bucket storage.</p>
-                <div className={`${expandedCard === 4 ? 'block' : 'hidden group-hover:block'} text-dust-gray mb-3 text-sm leading-relaxed`}>
-                  <ul className="list-disc pl-5 space-y-1">
-                    <li>Developed Model Context Protocol (MCP) servers using Cloudflare Workers for AI-powered image and document generation, with async processing and R2 bucket storage.</li>
-                    <li>Built scalable MCP infrastructure that returns immediate job IDs and processes generation requests in the background, implementing polling-based result retrieval.</li>
-                    <li>Integrated MCP tools with LLM chat systems, enabling seamless generation workflows for various document types with embedded AI-generated content.</li>
-                    <li>Implemented robust async job management with status tracking & result fetching for production AI tools.</li>
-                  </ul>
-                </div>
+                                 <div
+                   className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-700 ease-in ${
+                     expandedCard === 4
+                       ? 'grid-rows-[1fr] opacity-100'
+                       : 'grid-rows-[0fr] opacity-0 group-hover:grid-rows-[1fr] group-hover:opacity-100'
+                   }`}
+                 >
+                   <div className="min-h-0 text-dust-gray mb-3 text-sm leading-relaxed">
+                     <ul className="list-disc pl-5 space-y-1">
+                       <li>Developed Model Context Protocol (MCP) servers using Cloudflare Workers for AI-powered image and document generation, with async processing and R2 bucket storage.</li>
+                       <li>Built scalable MCP infrastructure that returns immediate job IDs and processes generation requests in the background, implementing polling-based result retrieval.</li>
+                       <li>Integrated MCP tools with LLM chat systems, enabling seamless generation workflows for various document types with embedded AI-generated content.</li>
+                       <li>Implemented robust async job management with status tracking & result fetching for production AI tools.</li>
+                     </ul>
+                   </div>
+                 </div>
               </div>
                                                                                                                        <div 
                    ref={(el) => { cardRefs.current[5] = el; }}
@@ -311,13 +351,21 @@ export default function StoryPage() {
                  >
                 <h3 className="text-xl mb-1">JPMorgan Chase & Co. — Quant Research Virtual</h3>
                 <p className="text-dust-gray mb-3">Analyzed a loan book to estimate probability of default; transformed FICO scores into categorical features with dynamic programming.</p>
-                <div className={`${expandedCard === 5 ? 'block' : 'hidden group-hover:block'} text-dust-gray mb-3 text-sm leading-relaxed`}>
-                  <ul className="list-disc pl-5 space-y-1">
-                    <li>Applied quantitative research methods in a simulated banking environment for loan default analysis</li>
-                    <li>Used dynamic programming to convert FICO scores into categorical data, enhancing default prediction model robustness</li>
-                    <li>Developed a natural gas price prediction model using SARIMA time series analysis</li>
-                  </ul>
-                </div>
+                                 <div
+                   className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-700 ease-in ${
+                     expandedCard === 5
+                       ? 'grid-rows-[1fr] opacity-100'
+                       : 'grid-rows-[0fr] opacity-0 group-hover:grid-rows-[1fr] group-hover:opacity-100'
+                   }`}
+                 >
+                   <div className="min-h-0 text-dust-gray mb-3 text-sm leading-relaxed">
+                     <ul className="list-disc pl-5 space-y-1">
+                       <li>Applied quantitative research methods in a simulated banking environment for loan default analysis</li>
+                       <li>Used dynamic programming to convert FICO scores into categorical data, enhancing default prediction model robustness</li>
+                       <li>Developed a natural gas price prediction model using SARIMA time series analysis</li>
+                     </ul>
+                   </div>
+                 </div>
               </div>
                                                            <div className="glass-card p-5">
                   <h3 className="text-xl mb-1">OSDC — Member</h3>
