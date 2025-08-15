@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio - Spider-Man Noir Theme
 
-## Getting Started
+A modern, responsive portfolio website built with Next.js and Tailwind CSS, featuring a Spider-Man Noir aesthetic.
 
-First, run the development server:
+## 🌐 Live Site
 
+**Deployed at:** [Your deployment URL here]
+
+## 🚀 Quick Start
+
+1. **Clone the repository**
+   ```bash
+   git clone [your-repo-url]
+   cd portfolio-noir
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Run development server**
+   ```bash
+   npm run dev
+   ```
+
+4. **Open in browser**
+   Navigate to `http://localhost:3000`
+
+## 🛠️ Build & Deploy
+
+**Build for production:**
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Start production server:**
+```bash
+npm start
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📁 Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+portfolio-noir/
+├── src/
+│   ├── app/           # Next.js App Router pages
+│   ├── components/    # React components
+│   └── styles/        # Global styles and CSS
+├── public/            # Static assets
+└── package.json       # Dependencies and scripts
+```
 
-## Learn More
+## 🎨 Features
 
-To learn more about Next.js, take a look at the following resources:
+- Responsive design for all devices
+- Interactive card animations
+- Mobile-friendly navigation
+- Dark theme with Spider-Man Noir aesthetic
+- Smooth scrolling and transitions
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📱 Pages
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Home** - Landing page with auto-redirect
+- **Story** - Detailed portfolio with interactive sections
+  - Featured Projects
+  - Experience
+  - Skills & Technologies
+  - GitHub integration
+  - Contact information
 
-## Deploy on Vercel
+## 🔧 Tech Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Framework:** Next.js 14 (App Router)
+- **Styling:** Tailwind CSS
+- **Language:** TypeScript
+- **Deployment:** [Your deployment platform]
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📄 License
+
+[Your license information]
+
+---
+
+**Note:** Update the deployment URL and repository information as needed.

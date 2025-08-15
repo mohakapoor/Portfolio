@@ -26,7 +26,18 @@ export default function StoryPage() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [expandedCard]);
 
-  // Intersection Observer for animations
+
+
+  // Handle card click (mobile)
+  const handleCardClick = (index: number) => {
+    if (expandedCard === index) {
+      setExpandedCard(null); // Close if already expanded
+    } else {
+      setExpandedCard(index); // Expand this card
+    }
+  };
+
+  // Enhanced Intersection Observer for animations
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -50,21 +61,36 @@ export default function StoryPage() {
       { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
     );
 
-    // Observe all sections
+    // Observe all sections with IDs
     const sections = document.querySelectorAll('section[id]');
     sections.forEach(section => observer.observe(section));
+
+    // Also observe the main article for any cards that might not be in sections
+    const article = document.querySelector('article');
+    if (article) {
+      observer.observe(article);
+    }
 
     return () => observer.disconnect();
   }, [animatedSections]);
 
-  // Handle card click (mobile)
-  const handleCardClick = (index: number) => {
-    if (expandedCard === index) {
-      setExpandedCard(null); // Close if already expanded
-    } else {
-      setExpandedCard(index); // Expand this card
-    }
-  };
+  // Immediate visibility + Fallback: Make all cards visible immediately and after 3 seconds
+  useEffect(() => {
+    // Make all cards visible immediately to prevent disappearing
+    const allCards = document.querySelectorAll('.glass-card');
+    allCards.forEach((card) => {
+      card.classList.add('animate-in');
+    });
+
+    // Also keep the 3-second fallback as backup
+    const fallbackTimer = setTimeout(() => {
+      allCards.forEach((card) => {
+        card.classList.add('animate-in');
+      });
+    }, 3000);
+
+    return () => clearTimeout(fallbackTimer);
+  }, []);
 
   return (
     <main className="min-h-screen px-6 py-16">
@@ -135,13 +161,13 @@ export default function StoryPage() {
             <h2 className="newspaper-headline text-3xl my-8 animate-slide-right">Featured Projects</h2>
             <div className="grid gap-6 md:grid-cols-2">
               {/* Card 1,1 - Left column, expands right */}
-              <div 
-                ref={(el) => { cardRefs.current[0] = el; }}
-                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer opacity-0 translate-y-8 ${
-                  expandedCard === 0 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'
-                }`}
-                onClick={() => handleCardClick(0)}
-              >
+                             <div 
+                 ref={(el) => { cardRefs.current[0] = el; }}
+                 className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer ${
+                   expandedCard === 0 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'
+                 }`}
+                 onClick={() => handleCardClick(0)}
+               >
                 <h3 className="text-xl mb-2">CMFM v1.0 — Cross‑Market Index Forecasting</h3>
                 <p className="text-dust-gray mb-3">
                   Deep learning model predicting bid‑open prices using 7M rows of 1‑minute Dukascopy data.
@@ -165,13 +191,13 @@ export default function StoryPage() {
               </div>
 
               {/* Card 1,2 - Right column, expands left */}
-              <div 
-                ref={(el) => { cardRefs.current[1] = el; }}
-                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer opacity-0 translate-y-8 ${
-                  expandedCard === 1 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'
-                }`}
-                onClick={() => handleCardClick(1)}
-              >
+                             <div 
+                 ref={(el) => { cardRefs.current[1] = el; }}
+                 className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer ${
+                   expandedCard === 1 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'
+                 }`}
+                 onClick={() => handleCardClick(1)}
+               >
                 <h3 className="text-xl mb-2">
                   <a href="https://github.com/mohakapoor/HermesGPT" target="_blank" rel="noreferrer noopener">
                     HermesGPT — Automated Internship Outreach Bot
@@ -197,13 +223,13 @@ export default function StoryPage() {
               </div>
 
               {/* Card 2,1 - Left column, expands right */}
-              <div 
-                ref={(el) => { cardRefs.current[2] = el; }}
-                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer opacity-0 translate-y-8 ${
-                  expandedCard === 2 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'
-                }`}
-                onClick={() => handleCardClick(2)}
-              >
+                             <div 
+                 ref={(el) => { cardRefs.current[2] = el; }}
+                 className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer ${
+                   expandedCard === 2 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'
+                 }`}
+                 onClick={() => handleCardClick(2)}
+               >
                 <h3 className="text-xl mb-2">
                   <a href="https://github.com/mohakapoor/Solar-Energy-Generation-Prediction" target="_blank" rel="noreferrer noopener">Solar Power Generation Predictor</a>
                 </h3>
@@ -227,13 +253,13 @@ export default function StoryPage() {
               </div>
 
               {/* Card 2,2 - Right column, expands left */}
-              <div 
-                ref={(el) => { cardRefs.current[3] = el; }}
-                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer opacity-0 translate-y-8 ${
-                  expandedCard === 3 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'
-                }`}
-                onClick={() => handleCardClick(3)}
-              >
+                             <div 
+                 ref={(el) => { cardRefs.current[3] = el; }}
+                 className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer ${
+                   expandedCard === 3 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'
+                 }`}
+                 onClick={() => handleCardClick(3)}
+               >
                 <h3 className="text-xl mb-2">
                   <a href="https://github.com/mohakapoor/Nifty50TrendPrediction" target="_blank" rel="noreferrer noopener">Nifty50 Trend Prediction</a>
                 </h3>
@@ -258,13 +284,13 @@ export default function StoryPage() {
           <section id="experience">
             <h2 className="newspaper-headline text-3xl my-8 animate-slide-left">Experience</h2>
             <div className="grid gap-6 md:grid-cols-2">
-              <div 
-                ref={(el) => { cardRefs.current[4] = el; }}
-                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer opacity-0 translate-y-8 ${
-                  expandedCard === 4 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'
-                }`}
-                onClick={() => handleCardClick(4)}
-              >
+                                                                                                                       <div 
+                   ref={(el) => { cardRefs.current[4] = el; }}
+                   className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer ${
+                     expandedCard === 4 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'
+                   }`}
+                   onClick={() => handleCardClick(4)}
+                 >
                 <h3 className="text-xl mb-1">HumanizeIQ — AI Intern Integrations</h3>
                 <p className="text-dust-gray mb-3">Developed Model Context Protocol (MCP) servers using Cloudflare Workers for AI-powered image and document generation, with async processing and R2 bucket storage.</p>
                 <div className={`${expandedCard === 4 ? 'block' : 'hidden group-hover:block'} text-dust-gray mb-3 text-sm leading-relaxed`}>
@@ -276,13 +302,13 @@ export default function StoryPage() {
                   </ul>
                 </div>
               </div>
-              <div 
-                ref={(el) => { cardRefs.current[5] = el; }}
-                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer opacity-0 translate-y-8 ${
-                  expandedCard === 5 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'
-                }`}
-                onClick={() => handleCardClick(5)}
-              >
+                                                                                                                       <div 
+                   ref={(el) => { cardRefs.current[5] = el; }}
+                   className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer ${
+                     expandedCard === 5 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'
+                   }`}
+                   onClick={() => handleCardClick(5)}
+                 >
                 <h3 className="text-xl mb-1">JPMorgan Chase & Co. — Quant Research Virtual</h3>
                 <p className="text-dust-gray mb-3">Analyzed a loan book to estimate probability of default; transformed FICO scores into categorical features with dynamic programming.</p>
                 <div className={`${expandedCard === 5 ? 'block' : 'hidden group-hover:block'} text-dust-gray mb-3 text-sm leading-relaxed`}>
@@ -293,62 +319,62 @@ export default function StoryPage() {
                   </ul>
                 </div>
               </div>
-              <div className="glass-card p-5 opacity-0 translate-y-8">
-                <h3 className="text-xl mb-1">OSDC — Member</h3>
-                <p className="text-dust-gray">Organized hackathons and open‑source events; collaborated on OSS contributions.</p>
-              </div>
-              <div className="glass-card p-5 opacity-0 translate-y-8">
-                <h3 className="text-xl mb-1">Social Media — Strategy & Marketing</h3>
-                <p className="text-dust-gray">Led strategy for two Instagram pages (55k & 17k followers), increasing engagement by 167%.</p>
-              </div>
+                                                           <div className="glass-card p-5">
+                  <h3 className="text-xl mb-1">OSDC — Member</h3>
+                  <p className="text-dust-gray">Organized hackathons and open‑source events; collaborated on OSS contributions.</p>
+                </div>
+                <div className="glass-card p-5">
+                  <h3 className="text-xl mb-1">Social Media — Strategy & Marketing</h3>
+                  <p className="text-dust-gray">Led strategy for two Instagram pages (55k & 17k followers), increasing engagement by 167%.</p>
+                </div>
             </div>
           </section>
 
           <section id="skills">
             <h2 className="newspaper-headline text-3xl my-8 animate-slide-right">Skills & Technologies</h2>
-            <div className="grid gap-6 md:grid-cols-2">
-              <div className="glass-card p-5 opacity-0 translate-y-8">
-                <h3 className="text-xl mb-3">Machine Learning & AI</h3>
-                <div className="flex flex-wrap gap-2">
-                  <span className="tag">Deep Learning</span>
-                  <span className="tag">Time-Series Forecasting</span>
-                  <span className="tag">CNN-LSTM</span>
-                  <span className="tag">Random Forest</span>
-                  <span className="tag">TensorFlow</span>
-                  <span className="tag">scikit-learn</span>
+                                                   <div className="grid gap-6 md:grid-cols-2">
+                <div className="glass-card p-5">
+                  <h3 className="text-xl mb-3">Machine Learning & AI</h3>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="tag">Deep Learning</span>
+                    <span className="tag">Time-Series Forecasting</span>
+                    <span className="tag">CNN-LSTM</span>
+                    <span className="tag">Random Forest</span>
+                    <span className="tag">TensorFlow</span>
+                    <span className="tag">scikit-learn</span>
+                  </div>
+                </div>
+                <div className="glass-card p-5">
+                  <h3 className="text-xl mb-3">Development & Infrastructure</h3>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="tag">Python</span>
+                    <span className="tag">C++</span>
+                    <span className="tag">TypeScript</span>
+                    <span className="tag">MCP Development</span>
+                    <span className="tag">Cloudflare Workers</span>
+                    <span className="tag">Async Systems</span>
+                    <span className="tag">PostgreSQL</span>
+                    <span className="tag">REST APIs</span>
+                    <span className="tag">Django</span>
+                    <span className="tag">Docker</span>
+                  </div>
+                </div>
+                <div className="glass-card p-5">
+                  <h3 className="text-xl mb-3">CI/CD</h3>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="tag">GitHub Actions</span>
+                    <span className="tag">CI/CD Pipelines</span>
+                    <span className="tag">Deployment Automation</span>
+                    <span className="tag">Workflow Orchestration</span>
+                  </div>
                 </div>
               </div>
-              <div className="glass-card p-5 opacity-0 translate-y-8">
-                <h3 className="text-xl mb-3">Development & Infrastructure</h3>
-                <div className="flex flex-wrap gap-2">
-                  <span className="tag">Python</span>
-                  <span className="tag">C++</span>
-                  <span className="tag">TypeScript</span>
-                  <span className="tag">MCP Development</span>
-                  <span className="tag">Cloudflare Workers</span>
-                  <span className="tag">Async Systems</span>
-                  <span className="tag">PostgreSQL</span>
-                  <span className="tag">REST APIs</span>
-                  <span className="tag">Django</span>
-                  <span className="tag">Docker</span>
-                </div>
-              </div>
-              <div className="glass-card p-5 opacity-0 translate-y-8">
-                <h3 className="text-xl mb-3">CI/CD</h3>
-                <div className="flex flex-wrap gap-2">
-                  <span className="tag">GitHub Actions</span>
-                  <span className="tag">CI/CD Pipelines</span>
-                  <span className="tag">Deployment Automation</span>
-                  <span className="tag">Workflow Orchestration</span>
-                </div>
-              </div>
-            </div>
           </section>
 
           <section id="github">
             <h2 className="newspaper-headline text-3xl my-8 animate-slide-left">GitHub</h2>
-            <div className="glass-card p-5 opacity-0 translate-y-8">
-              <div className="grid md:grid-cols-[220px,1fr] gap-6 items-center">
+                                                   <div className="glass-card p-5">
+                <div className="grid md:grid-cols-[220px,1fr] gap-6 items-center">
                 <a
                   href="https://github.com/mohakapoor"
                   target="_blank"
@@ -368,25 +394,25 @@ export default function StoryPage() {
 
           <section id="contact">
             <h2 className="newspaper-headline text-3xl my-6 animate-slide-right">Get in touch</h2>
-            <div className="grid gap-6 md:grid-cols-2">
-              <a
-                className="glass-card p-6 block no-underline cursor-pointer opacity-0 translate-y-8"
-                href="mailto:contact.mohakapoor@gmail.com"
-                target="_blank"
-                rel="noreferrer noopener"
-              >
-                <h3 className="text-xl mb-2">Contact</h3>
-                <p className="text-dust-gray">Got a case for me? Let&apos;s talk.</p>
-              </a>
-              <a
-                className="glass-card p-6 block no-underline cursor-pointer opacity-0 translate-y-8"
-                href="/MOHAK_KAPOOR_ML.pdf"
-                download="MOHAK_KAPOOR_ML.pdf"
-              >
-                <h3 className="text-xl mb-2">Download Resume</h3>
-                <p className="text-dust-gray">Grab the dossier as a PDF.</p>
-              </a>
-            </div>
+                                                   <div className="grid gap-6 md:grid-cols-2">
+                <a
+                  className="glass-card p-6 block no-underline cursor-pointer"
+                  href="mailto:contact.mohakapoor@gmail.com"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  <h3 className="text-xl mb-2">Contact</h3>
+                  <p className="text-dust-gray">Got a case for me? Let&apos;s talk.</p>
+                </a>
+                <a
+                  className="glass-card p-6 block no-underline cursor-pointer"
+                  href="/MOHAK_KAPOOR_ML.pdf"
+                  download="MOHAK_KAPOOR_ML.pdf"
+                >
+                  <h3 className="text-xl mb-2">Download Resume</h3>
+                  <p className="text-dust-gray">Grab the dossier as a PDF.</p>
+                </a>
+              </div>
           </section>
         </article>
       </section>
