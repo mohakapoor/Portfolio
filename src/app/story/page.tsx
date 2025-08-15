@@ -382,7 +382,7 @@ export default function StoryPage() {
             <h2 className="newspaper-headline text-3xl my-8 animate-slide-right">Skills & Technologies</h2>
                                                    <div className="grid gap-6 md:grid-cols-2">
                 <div className="glass-card p-5">
-                  <h3 className="text-xl mb-3">Machine Learning & AI</h3>
+                  <h3 className="text-xl mb-3">Machine Learning</h3>
                   <div className="flex flex-wrap gap-2">
                     <span className="tag">Deep Learning</span>
                     <span className="tag">Time-Series Forecasting</span>
