@@ -31,7 +31,7 @@ export default function Home() {
             href="/MOHAK_KAPOOR_ML.pdf"
             download="MOHAK_KAPOOR_ML.pdf"
           >
-            Download Dossier
+            Download Resume
           </a>
         </div>
       </section>

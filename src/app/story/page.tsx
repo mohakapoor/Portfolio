@@ -410,7 +410,7 @@ export default function StoryPage() {
                   download="MOHAK_KAPOOR_ML.pdf"
                 >
                   <h3 className="text-xl mb-2">Download Resume</h3>
-                  <p className="text-dust-gray">Grab the dossier as a PDF.</p>
+                  <p className="text-dust-gray">Grab the Resume as a PDF.</p>
                 </a>
               </div>
           </section>
