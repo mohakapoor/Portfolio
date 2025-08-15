@@ -153,7 +153,7 @@ export default function StoryPage() {
           <section id="who-am-i" className="glass-card p-6 animate-slide-left">
             <h2 className="newspaper-headline text-3xl mb-2">Who Am I</h2>
             <p className="text-dust-gray mb-4">
-              I am an AI Integration Engineer & ML Practitioner. I build production-ready AI systems that bridge the gap between models and applications, specializing in MCP development, time-series forecasting, and scalable ML infrastructure. When I&apos;m not coding, you&apos;ll find me exploring new ML architectures or diving deep into time-series analysis.
+            I am an AI Integration Engineer & ML Enthusiast. I build production-grade AI systems that close the gap between models and applications, with a focus on MCP development, time-series forecasting, Computer Vision, and scalable ML Systems. I like to build quick prototypes and test new ideas.
             </p>
           </section>
 
