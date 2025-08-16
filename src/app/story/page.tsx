@@ -324,7 +324,7 @@ export default function StoryPage() {
                    onClick={() => handleCardClick(4)}
                  >
                 <h3 className="text-xl mb-1">HumanizeIQ — AI Intern Integrations</h3>
-                <p className="text-dust-gray mb-3">Developed Model Context Protocol (MCP) servers using Cloudflare Workers for AI-powered image and document generation, with async processing and R2 bucket storage.</p>
+                <p className="text-dust-gray mb-3">Developed MCP infrastructure and AI workflow orchestration for recruiter call analysis, building scalable systems with Cloudflare Workers and multi-model AI integration.</p>
                                  <div
                    className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-700 ease-in ${
                      expandedCard === 4
@@ -334,10 +334,10 @@ export default function StoryPage() {
                  >
                    <div className="min-h-0 text-dust-gray mb-3 text-sm leading-relaxed">
                      <ul className="list-disc pl-5 space-y-1">
-                       <li>Developed Model Context Protocol (MCP) servers using Cloudflare Workers for AI-powered image and document generation, with async processing and R2 bucket storage.</li>
-                       <li>Built scalable MCP infrastructure that returns immediate job IDs and processes generation requests in the background, implementing polling-based result retrieval.</li>
-                       <li>Integrated MCP tools with LLM chat systems, enabling seamless generation workflows for various document types with embedded AI-generated content.</li>
-                       <li>Implemented robust async job management with status tracking & result fetching for production AI tools.</li>
+                       <li>Developed two specialized MCP servers using Cloudflare Workers: image generation and multimodal document generation (text + images), with async processing and R2 bucket storage.</li>
+                       <li>Built scalable MCP infrastructure implementing background processing, result retrieval, and integration with LLM chat systems.</li>
+                       <li>Designed AI-powered workflow orchestration for recruiter call analysis using Gemini and GPT-4 models, automating report generation and email distribution.</li>
+                       <li>Set up APIs for report storage, email distribution, and call event handling to support the recruiter analysis workflow.</li>
                      </ul>
                    </div>
                  </div>
