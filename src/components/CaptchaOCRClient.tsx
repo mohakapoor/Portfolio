@@ -1,7 +1,5 @@
     "use client";
 
-    import { useState } from "react";
-
     export default function CaptchaOCRClient() {
         return (
             <div className="max-w-4xl mx-auto">
@@ -21,11 +19,9 @@
                     {/* Demo Notice */}
                     <div className="text-center p-4 bg-[var(--spider-red)]/10 rounded-lg border border-[var(--spider-red)]/30">
                         <p className="text-sm text-[var(--spider-red)]">
-                            🚧 Embedding is under development. Click "Live Demo" for the real system!
+                            🚧 Embedding is under development. Click &quot;Live Demo&quot; for the real system!
                         </p>
                     </div>
-
-                    
                 </div>
             </div>
         );
