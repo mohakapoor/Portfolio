@@ -285,9 +285,9 @@ export default function StoryPage() {
                  onClick={() => handleCardClick(3)}
                >
                 <h3 className="text-xl mb-2">
-                  <a href="https://github.com/mohakapoor/Nifty50TrendPrediction" target="_blank" rel="noreferrer noopener">Nifty50 Trend Prediction</a>
+                  <a href="https://github.com/mohakapoor/CaptchaOCR" target="_blank" rel="noreferrer noopener">CaptchaOCR — CAPTCHA Recognition System</a>
                 </h3>
-                <p className="text-dust-gray mb-3">Random Forest classifier predicting short‑term market trends using historical Yahoo Finance data.</p>
+                <p className="text-dust-gray mb-3">End-to-end CAPTCHA text recognition using custom CRNN architecture with CTC loss, achieving 96%+ character accuracy through synthetic data generation and deep learning.</p>
                 <div
                   className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-700 ease-in ${
                     expandedCard === 3
@@ -297,17 +297,31 @@ export default function StoryPage() {
                 >
                   <div className="min-h-0 text-dust-gray mb-3 text-sm leading-relaxed">
                     <ul className="list-disc pl-5 space-y-1">
-                      <li>Ensemble-based Random Forest classification</li>
-                      <li>Technical indicator feature engineering</li>
+                      <li>CNN + BiLSTM architecture with Connectionist Temporal Classification</li>
+                      <li>Synthetic CAPTCHA generation for robust training data</li>
+                      <li>Real-time inference with GPU acceleration and deployment on Hugging Face</li>
+                      <li>Comprehensive training pipeline with early stopping and performance metrics</li>
                     </ul>
+                    <div className="mt-4 text-center my-2">
+                      <a
+                        href="https://huggingface.co/spaces/mohakapoor/captchaOCR"
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className="spider-noir-button px-6 py-2 border-2 text-lg rounded-lg"
+                      >
+                        View Live Demo
+                      </a>
+                    </div>
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <span className="tag">Python</span>
-                  <span className="tag">scikit‑learn</span>
-                  <span className="tag">Pandas</span>
-                  <span className="tag">NumPy</span>
-                  <span className="tag">yfinance</span>
+                  <span className="tag">PyTorch</span>
+                  <span className="tag">CNN-LSTM</span>
+                  <span className="tag">CTC Loss</span>
+                  <span className="tag">Computer Vision</span>
+                  <span className="tag">Deep Learning</span>
+                  <span className="tag">Hugging Face</span>
                 </div>
               </div>
             </div>
