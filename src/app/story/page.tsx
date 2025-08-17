@@ -305,14 +305,22 @@ export default function StoryPage() {
                       <li>Comprehensive training pipeline with early stopping and performance metrics</li>
                     </ul>
                     <div className="mt-4 text-center my-2">
-                      <a
-                        href="https://huggingface.co/spaces/mohakapoor/captchaOCR"
-                        target="_blank"
-                        rel="noreferrer noopener"
-                        className="spider-noir-button px-6 py-2 border-2 text-lg rounded-lg"
-                      >
-                        View Live Demo
-                      </a>
+                      <div className="flex gap-4 justify-center">
+                        <a
+                          href="https://huggingface.co/spaces/mohakapoor/captchaOCR"
+                          target="_blank"
+                          rel="noreferrer noopener"
+                          className="spider-noir-button px-6 py-2 border-2 text-lg rounded-lg"
+                        >
+                          Live Demo
+                        </a>
+                        <a
+                          href="/project/CaptchaOCR"
+                          className="spider-noir-button px-6 py-2 border-2 text-lg rounded-lg bg-[var(--spider-red)]/10 hover:bg-[var(--spider-red)]/20"
+                        >
+                          Read More
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
