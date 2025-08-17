@@ -9,7 +9,13 @@ export default function GitHubContributions({ username }: GitHubContributionsPro
       <img
         src={`https://ghchart.rshah.org/cc2936/${username}`}
         alt={`GitHub contribution chart for ${username}`}
-        className="gh-chart w-full h-auto object-contain min-w-[600px]"
+        referrerPolicy="no-referrer"
+        style={{
+          minWidth: '600px',
+          width: '100%',
+          height: 'auto',
+          display: 'block'
+        }}
       />
     </div>
   );
