@@ -4,7 +4,7 @@ A modern, responsive portfolio website built with Next.js and Tailwind CSS, feat
 
 ## 🌐 Live Site
 
-**Deployed at:** ![https://www.mohakapoor.in]
+**Deployed at:** https://www.mohakapoor.in
 
 ## 🚀 Quick Start
 
