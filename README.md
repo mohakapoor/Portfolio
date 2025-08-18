@@ -6,39 +6,6 @@ A modern, responsive portfolio website built with Next.js and Tailwind CSS, feat
 
 **Deployed at:** https://www.mohakapoor.in
 
-## 🚀 Quick Start
-
-1. **Clone the repository**
-   ```bash
-   git clone [your-repo-url]
-   cd portfolio-noir
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Run development server**
-   ```bash
-   npm run dev
-   ```
-
-4. **Open in browser**
-   Navigate to `http://localhost:3000`
-
-## 🛠️ Build & Deploy
-
-**Build for production:**
-```bash
-npm run build
-```
-
-**Start production server:**
-```bash
-npm start
-```
-
 ## 📁 Project Structure
 
 ```
