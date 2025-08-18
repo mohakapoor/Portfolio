@@ -1,6 +1,6 @@
-# Portfolio - Spider-Man Noir Theme
+# Mohak Kapoor Porfolio Website
 
-A modern, responsive portfolio website built with Next.js and Tailwind CSS, featuring a Spider-Man Noir aesthetic.
+A modern, responsive portfolio website built with Next.js and Tailwind CSS.
 
 ## 🌐 Live Site
 
