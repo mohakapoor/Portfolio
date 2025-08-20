@@ -4,12 +4,7 @@
       return (
         <div className="max-w-4xl mx-auto">
           <div className="space-y-6">
-            {/* Demo Notice */}
-            <div className="text-center p-4 bg-[var(--spider-red)]/10 rounded-lg border border-[var(--spider-red)]/30">
-              <p className="text-sm text-[var(--spider-red)]">
-                🚧 Embedding is under development. Click "Live Demo" for the real system!
-              </p>
-            </div>
+
 
             {/* Direct Hugging Face Space Integration */}
             <div className="glass-card p-6" style={{ transform: 'none' }}>
