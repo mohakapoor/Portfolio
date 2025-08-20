@@ -1,6 +1,5 @@
 'use client';
 import Link from "next/link";
-import CaptchaOCRClient from "@/components/CaptchaOCRClient";
 import { useState, useEffect } from "react";
 
 export default function CaptchaOCRProjectPage() {
@@ -230,6 +229,14 @@ export default function CaptchaOCRProjectPage() {
                   >
                     View Source Code
                   </a>
+                  <a
+                    href="https://huggingface.co/spaces/mohakapoor/captchaOCR"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="spider-noir-button px-6 py-3 border-2 text-lg rounded-lg inline-block ml-4"
+                  >
+                    Live Demo
+                  </a>
                 </div>
               </div>
             </div>
@@ -239,15 +246,15 @@ export default function CaptchaOCRProjectPage() {
                  {/* Live Demo Section */}
                    <section id="live-demo" className="max-w-5xl mx-auto mb-12">
             <h2 className="newspaper-headline text-3xl mb-8 animate-slide-left">Live Demo</h2>
-            <div className="glass-card p-5">
-              <p className="text-[var(--dust-gray)] mb-6 leading-relaxed">
-                Try out the CAPTCHA recognition system below. Generate a CAPTCHA image and see the tool in action!
-              </p>
-              
-              {/* Native CaptchaOCR Client Component */}
-              <div className="flex justify-center">
-                <CaptchaOCRClient />
-              </div>
+            <div className="glass-card p-[10px]">
+              {/* Hugging Face Space iframe */}
+              <iframe
+                src="https://mohakapoor-captchaocr.hf.space"
+                frameBorder="0"
+                width="100%"
+                height="800"
+                className="w-full"
+              ></iframe>
             </div>
           </section>
 
