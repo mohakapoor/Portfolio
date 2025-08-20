@@ -27,7 +27,7 @@
                   src="https://mohakapoor-captchaocr.hf.space"
                   frameBorder="0"
                   width="850"
-                  height="450"
+                  height="500"
                   className="mx-auto"
                 ></iframe>
               </div>

@@ -230,9 +230,7 @@ export default function StoryPage() {
                      <div className="mt-4 text-center my-2">
                        <div className="flex gap-4 justify-center">
                          <a
-                           href="https://huggingface.co/spaces/mohakapoor/captchaOCR"
-                           target="_blank"
-                           rel="noreferrer noopener"
+                           href="/project/CaptchaOCR#live-demo"
                            className="spider-noir-button px-6 py-2 border-2 text-lg rounded-lg"
                          >
                            Live Demo

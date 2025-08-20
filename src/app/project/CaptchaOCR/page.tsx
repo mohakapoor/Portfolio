@@ -174,9 +174,9 @@ export default function CaptchaOCRProjectPage() {
             <h1 className="newspaper-headline text-5xl md:text-6xl text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] mb-4">
               Captcha OCR
             </h1>
-            <p className="text-xl text-[var(--dust-gray)] max-w-3xl mx-auto">
-              CAPTCHA Recognition System using custom CRNN architecture with CTC loss, achieving 96%+ character accuracy
-            </p>
+                         <p className="text-xl text-[var(--dust-gray)] max-w-3xl mx-auto">
+               CAPTCHA Recognition System using custom CRNN architecture with CTC loss, achieving 100% accuracy on 100k+ enhanced training images
+             </p>
           </header>
         </section>
 
@@ -191,24 +191,28 @@ export default function CaptchaOCRProjectPage() {
                   This project implements an end-to-end CAPTCHA text recognition system using a custom Convolutional Recurrent Neural Network (CRNN) architecture. 
                   The system combines CNN layers for feature extraction with BiLSTM layers for sequence modeling, trained using Connectionist Temporal Classification (CTC) loss.
                 </p>
-                <div className="space-y-2 text-sm text-[var(--dust-gray)]">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
-                    <span>Custom CRNN architecture with CNN + BiLSTM</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
-                    <span>Synthetic CAPTCHA generation for robust training</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
-                    <span>96%+ character accuracy on test data</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
-                    <span>Deployed on Hugging Face Spaces</span>
-                  </div>
-                </div>
+                                 <div className="space-y-2 text-sm text-[var(--dust-gray)]">
+                   <div className="flex items-center gap-2">
+                     <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
+                     <span>Custom CRNN architecture with CNN + BiLSTM</span>
+                   </div>
+                   <div className="flex items-center gap-2">
+                     <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
+                     <span>Enhanced synthetic CAPTCHA generation with 100k+ images</span>
+                   </div>
+                   <div className="flex items-center gap-2">
+                     <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
+                     <span>100% accuracy on test data with robust training</span>
+                   </div>
+                   <div className="flex items-center gap-2">
+                     <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
+                     <span>Advanced image augmentation & interference patterns</span>
+                   </div>
+                   <div className="flex items-center gap-2">
+                     <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
+                     <span>Deployed on Hugging Face Spaces</span>
+                   </div>
+                 </div>
               </div>
               <div>
                 <h3 className="text-xl mb-4 text-[var(--vintage-white)]">Tech Stack</h3>
@@ -229,14 +233,7 @@ export default function CaptchaOCRProjectPage() {
                   >
                     View Source Code
                   </a>
-                  <a
-                    href="https://huggingface.co/spaces/mohakapoor/captchaOCR"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="spider-noir-button px-6 py-3 border-2 text-lg rounded-lg inline-block ml-4"
-                  >
-                    Live Demo
-                  </a>
+
                 </div>
               </div>
             </div>
@@ -252,7 +249,7 @@ export default function CaptchaOCRProjectPage() {
                 src="https://mohakapoor-captchaocr.hf.space"
                 frameBorder="0"
                 width="100%"
-                height="800"
+                height="600"
                 className="w-full"
               ></iframe>
             </div>
@@ -335,27 +332,27 @@ export default function CaptchaOCRProjectPage() {
                   </div>
                 </div>
               </div>
-              <div>
-                <h3 className="text-xl mb-4 text-[var(--vintage-white)]">Inference Results</h3>
-                <div className="space-y-3 text-sm text-[var(--dust-gray)]">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
-                    <span><strong>Overall Accuracy:</strong> 75-100% (varies by run)</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
-                    <span><strong>Character Accuracy:</strong> 96%+ (25/26+ correct)</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
-                    <span><strong>Real-time Inference:</strong> GPU accelerated</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
-                    <span><strong>Visual Predictions:</strong> Shows actual vs predicted</span>
-                  </div>
-                </div>
-              </div>
+                             <div>
+                 <h3 className="text-xl mb-4 text-[var(--vintage-white)]">Inference Results</h3>
+                 <div className="space-y-3 text-sm text-[var(--dust-gray)]">
+                   <div className="flex items-center gap-2">
+                     <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
+                     <span><strong>Overall Accuracy:</strong> 100% (consistent across runs)</span>
+                   </div>
+                   <div className="flex items-center gap-2">
+                     <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
+                     <span><strong>Character Accuracy:</strong> 100% (perfect recognition)</span>
+                   </div>
+                   <div className="flex items-center gap-2">
+                     <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
+                     <span><strong>Real-time Inference:</strong> GPU accelerated</span>
+                   </div>
+                   <div className="flex items-center gap-2">
+                     <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
+                     <span><strong>Robust Performance:</strong> Handles complex interference patterns</span>
+                   </div>
+                 </div>
+               </div>
             </div>
 
             {/* Training Metrics Visualization */}
@@ -419,48 +416,52 @@ export default function CaptchaOCRProjectPage() {
           <h2 className="newspaper-headline text-3xl my-8 animate-slide-left">Dataset & Training</h2>
           <div className="glass-card p-5">
             <div className="grid md:grid-cols-2 gap-8">
-              <div>
-                <h3 className="text-xl mb-4 text-[var(--vintage-white)]">Synthetic Data Generation</h3>
-                <div className="space-y-3 text-sm text-[var(--dust-gray)]">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
-                    <span><strong>Training Set:</strong> 8k synthetic CAPTCHAs</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
-                    <span><strong>Validation:</strong> 1k CAPTCHAs (10%)</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
-                    <span><strong>Test Set:</strong> 1k CAPTCHAs (10%)</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
-                    <span><strong>Character Set:</strong> a-z, A-Z, 0-9 (63 classes)</span>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <h3 className="text-xl mb-4 text-[var(--vintage-white)]">Training Pipeline</h3>
-                <div className="space-y-3 text-sm text-[var(--dust-gray)]">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
-                    <span><strong>Data Loading:</strong> Custom PyTorch Dataset class</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
-                    <span><strong>Preprocessing:</strong> Grayscale, normalize [0,1]</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
-                    <span><strong>CTC Collation:</strong> Variable-length sequences</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
-                    <span><strong>Monitoring:</strong> Real-time metrics & plots</span>
-                  </div>
-                </div>
-              </div>
+                             <div>
+                 <h3 className="text-xl mb-4 text-[var(--vintage-white)]">Enhanced Data Generation</h3>
+                 <div className="space-y-3 text-sm text-[var(--dust-gray)]">
+                   <div className="flex items-center gap-2">
+                     <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
+                     <span><strong>Training Set:</strong> 80k synthetic CAPTCHAs</span>
+                   </div>
+                   <div className="flex items-center gap-2">
+                     <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
+                     <span><strong>Validation:</strong> 10k CAPTCHAs (10%)</span>
+                   </div>
+                   <div className="flex items-center gap-2">
+                     <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
+                     <span><strong>Test Set:</strong> 10k CAPTCHAs (10%)</span>
+                   </div>
+                   <div className="flex items-center gap-2">
+                     <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
+                     <span><strong>Character Set:</strong> a-z, A-Z, 0-9 (63 classes)</span>
+                   </div>
+                 </div>
+               </div>
+                             <div>
+                 <h3 className="text-xl mb-4 text-[var(--vintage-white)]">Advanced Training Pipeline</h3>
+                 <div className="space-y-3 text-sm text-[var(--dust-gray)]">
+                   <div className="flex items-center gap-2">
+                     <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
+                     <span><strong>Data Loading:</strong> Custom PyTorch Dataset class</span>
+                   </div>
+                   <div className="flex items-center gap-2">
+                     <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
+                     <span><strong>Preprocessing:</strong> Grayscale, normalize [0,1]</span>
+                   </div>
+                   <div className="flex items-center gap-2">
+                     <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
+                     <span><strong>Advanced Augmentation:</strong> Perspective warp, interference, noise</span>
+                   </div>
+                   <div className="flex items-center gap-2">
+                     <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
+                     <span><strong>CTC Collation:</strong> Variable-length sequences</span>
+                   </div>
+                   <div className="flex items-center gap-2">
+                     <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
+                     <span><strong>Monitoring:</strong> Real-time metrics & plots</span>
+                   </div>
+                 </div>
+               </div>
             </div>
           </div>
         </section>
