@@ -337,11 +337,11 @@ export default function CaptchaOCRProjectPage() {
                  <div className="space-y-3 text-sm text-[var(--dust-gray)]">
                    <div className="flex items-center gap-2">
                      <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
-                     <span><strong>Overall Accuracy:</strong> 94%+ (consistent across runs)</span>
+                     <span><strong>Overall Accuracy:</strong> 94%+ </span>
                    </div>
                    <div className="flex items-center gap-2">
                      <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
-                     <span><strong>Character Accuracy:</strong> 98.8%+ (perfect recognition)</span>
+                     <span><strong>Character Accuracy:</strong> 98.8%+</span>
                    </div>
                    <div className="flex items-center gap-2">
                      <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
