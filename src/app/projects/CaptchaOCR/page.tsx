@@ -76,7 +76,7 @@ export default function CaptchaOCRProjectPage() {
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [lightboxOpen]);
+  }, [lightboxOpen, previousImage, nextImage, closeLightbox]);
 
   return (
     <>

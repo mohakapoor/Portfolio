@@ -52,9 +52,9 @@ export default function ProjectsPage() {
               const readmeData = await readmeResponse.json();
               return { ...repo, readme: readmeData.firstParagraph };
             }
-          } catch (error) {
-            console.log(`Could not fetch README for ${repo.name}`);
-          }
+        } catch {
+          console.log(`Could not fetch README for ${repo.name}`);
+        }
           return repo;
         })
       );
@@ -111,13 +111,6 @@ export default function ProjectsPage() {
     );
   };
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
-  };
 
   return (
     <main className="min-h-screen px-6 py-16">

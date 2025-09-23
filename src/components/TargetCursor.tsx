@@ -162,7 +162,7 @@ export default function TargetCursor({
         document.body.style.cursor = originalCursor;
       }
     };
-  }, [targetSelector, spinDuration, hideDefaultCursor, isMounted, isMobile]);
+  }, [targetSelector, spinDuration, hideDefaultCursor, color, isMounted, isMobile]);
 
   // Don't render anything until mounted or if on mobile
   if (!isMounted || isMobile) return null;

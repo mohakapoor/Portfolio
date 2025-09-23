@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 // In-memory cache
-let cachedRepos: any = null;
+let cachedRepos: unknown[] | null = null;
 let lastFetchTime = 0;
 const CACHE_DURATION = 1000 * 60 * 60; // 1 hour
 
