@@ -160,7 +160,21 @@ export default function StoryPage() {
           </section>
 
           <section id="featured">
-            <h2 className="newspaper-headline text-3xl my-8 animate-slide-right">Featured Projects</h2>
+            <div className="flex items-baseline justify-between my-8">
+              <h2 className="newspaper-headline text-3xl animate-slide-right">Featured Projects</h2>
+              <Link 
+                href="/projects"
+                className="newspaper-headline text-3xl text-[var(--dust-gray)] hover:text-[var(--spider-red)] transition-colors duration-200 animate-slide-left group flex-shrink-0"
+              >
+                <span className="flex items-center gap-1">
+                  VIEW ALL PROJECTS
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="group-hover:translate-x-1 transition-transform duration-200">
+                    <path d="M5 12h14" />
+                    <path d="M12 5l7 7-7 7" />
+                  </svg>
+                </span>
+              </Link>
+            </div>
             <div className="grid gap-6 md:grid-cols-2">
                              {/* Card 1,1 - Left column, expands right */}
                               <div 
