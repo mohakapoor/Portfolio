@@ -53,7 +53,7 @@ export default function ProjectsPage() {
               return { ...repo, readme: readmeData.firstParagraph };
             }
         } catch {
-          console.log(`Could not fetch README for ${repo.name}`);
+          // Could not fetch README
         }
           return repo;
         })
@@ -61,9 +61,9 @@ export default function ProjectsPage() {
       
       setRepos(reposWithReadme);
       setFilteredRepos(reposWithReadme);
-    } catch (error) {
-      console.error('Error fetching repositories:', error);
-    } finally {
+      } catch {
+        // Error fetching repositories
+      } finally {
       setLoading(false);
       setRefreshing(false);
     }
