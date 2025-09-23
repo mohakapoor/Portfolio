@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 // In-memory cache for README files
-const readmeCache = new Map<string, { content: any; timestamp: number }>();
+const readmeCache = new Map<string, { content: unknown; timestamp: number }>();
 const CACHE_DURATION = 1000 * 60 * 60; // 1 hour
 
 export async function GET(

@@ -1,6 +1,6 @@
 'use client';
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 export default function CaptchaOCRProjectPage() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -35,30 +35,30 @@ export default function CaptchaOCRProjectPage() {
     setTimeout(() => setLightboxVisible(true), 10);
   };
 
-  const closeLightbox = () => {
+  const closeLightbox = useCallback(() => {
     setLightboxVisible(false);
     // Wait for animation to complete before hiding
     setTimeout(() => {
       setLightboxOpen(false);
       setSelectedImageIndex(0);
     }, 300);
-  };
+  }, []);
 
-  const nextImage = () => {
+  const nextImage = useCallback(() => {
     setImageTransition('right');
     setTimeout(() => {
       setSelectedImageIndex((prev) => (prev + 1) % images.length);
       setImageTransition('none');
     }, 500);
-  };
+  }, [images.length]);
 
-  const previousImage = () => {
+  const previousImage = useCallback(() => {
     setImageTransition('left');
     setTimeout(() => {
       setSelectedImageIndex((prev) => (prev - 1 + images.length) % images.length);
       setImageTransition('none');
     }, 500);
-  };
+  }, [images.length]);
 
   // Keyboard navigation
   useEffect(() => {

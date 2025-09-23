@@ -68,7 +68,7 @@ export async function GET(request: Request) {
     const repos = await response.json();
 
     // Filter out forked repos and focus on original projects
-    const originalRepos = repos.filter((repo: any) => !repo.fork);
+    const originalRepos = repos.filter((repo: { fork?: boolean }) => !repo.fork);
 
     // Update cache
     cachedRepos = originalRepos;
