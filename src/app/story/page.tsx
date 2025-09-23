@@ -135,7 +135,7 @@ export default function StoryPage() {
           <Link href="/" className="block py-2 hover:underline" onClick={() => setMenuOpen(false)}>Home</Link>
           <Link href="/story" className="block py-2 hover:underline" onClick={() => setMenuOpen(false)}>Story</Link>
           <div className="mt-4 text-dust-gray">Projects</div>
-          <Link href="/project/CaptchaOCR" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>CaptchaOCR</Link>
+          <Link href="/projects/CaptchaOCR" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>CaptchaOCR</Link>
           <div className="mt-4 text-dust-gray">On this page</div>
           <a href="#who-am-i" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Who Am I</a>
           <a href="#featured" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Featured Projects</a>
@@ -230,13 +230,13 @@ export default function StoryPage() {
                      <div className="mt-4 text-center my-2">
                        <div className="flex gap-4 justify-center">
                          <a
-                           href="/project/CaptchaOCR#live-demo"
+                           href="/projects/CaptchaOCR#live-demo"
                            className="spider-noir-button px-6 py-2 border-2 text-lg rounded-lg"
                          >
                            Live Demo
                          </a>
                          <a
-                           href="/project/CaptchaOCR"
+                           href="/projects/CaptchaOCR"
                            className="spider-noir-button px-6 py-2 border-2 text-lg rounded-lg bg-[var(--spider-red)]/10 hover:bg-[var(--spider-red)]/20"
                          >
                            Read More

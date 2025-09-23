@@ -148,6 +148,7 @@ export default function CaptchaOCRProjectPage() {
           <nav className="px-4 py-3 space-y-2">
             <Link href="/" className="block py-2 hover:underline" onClick={() => setMenuOpen(false)}>Home</Link>
             <Link href="/story" className="block py-2 hover:underline" onClick={() => setMenuOpen(false)}>Story</Link>
+            <Link href="/projects" className="block py-2 hover:underline" onClick={() => setMenuOpen(false)}>Projects</Link>
             <div className="mt-4 text-dust-gray">On this page</div>
             <a href="#project-details" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Project Details</a>
             <a href="#technical-architecture" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Technical Architecture</a>
@@ -157,14 +158,14 @@ export default function CaptchaOCRProjectPage() {
           </nav>
         </aside>
 
-        {/* Back to Story button */}
+        {/* Back to Projects button */}
         <div className="max-w-5xl mx-auto mb-8">
           <Link 
-            href="/story" 
+            href="/projects" 
             className="inline-flex items-center gap-2 text-[var(--vintage-white)] hover:text-[var(--spider-red)] transition-colors duration-200"
           >
             <span>←</span>
-            <span>Back to Story</span>
+            <span>Back to Projects</span>
           </Link>
         </div>
 
