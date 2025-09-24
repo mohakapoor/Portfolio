@@ -76,12 +76,32 @@ export async function GET(request: Request) {
       !exclusionTopics.some(topic => repo.topics?.includes(topic))
     );
 
-    // Update cache
-    cachedRepos = filteredRepos;
+    // Fetch language statistics for each repo (limit to prevent rate limiting)
+    const reposWithLanguages = await Promise.all(
+      filteredRepos.slice(0, 15).map(async (repo: any) => {
+        try {
+          const langResponse = await fetch(
+            `https://api.github.com/repos/${username}/${repo.name}/languages`,
+            { headers }
+          );
+          
+          if (langResponse.ok) {
+            const languages = await langResponse.json();
+            return { ...repo, languages };
+          }
+        } catch {
+          // Language fetch failed, keep repo without languages
+        }
+        return repo;
+      })
+    );
+
+    // Update cache with language-enriched repos
+    cachedRepos = reposWithLanguages;
     lastFetchTime = now;
     
-    console.log(`Fetched ${filteredRepos.length} repos from GitHub API (${originalRepos.length - filteredRepos.length} excluded)`);
-    return NextResponse.json(filteredRepos);
+    console.log(`Fetched ${reposWithLanguages.length} repos from GitHub API (${originalRepos.length - filteredRepos.length} excluded)`);
+    return NextResponse.json(reposWithLanguages);
   } catch (error) {
     console.error('Error fetching GitHub repos:', error);
     

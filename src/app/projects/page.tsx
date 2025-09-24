@@ -10,6 +10,7 @@ interface GitHubRepo {
   homepage: string | null;
   updated_at: string;
   language: string | null;
+  languages?: { [key: string]: number };
   topics: string[];
   stargazers_count: number;
   forks_count: number;
@@ -24,6 +25,48 @@ export default function ProjectsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [refreshing, setRefreshing] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
+
+  // Get top languages for a repo, filtering out low-impact languages
+  const getTopLanguages = (repo: GitHubRepo): string[] => {
+    if (!repo.languages) return repo.language ? [repo.language] : [];
+    
+    // Languages to deprioritize (usually config/markup)
+    const lowPriorityLanguages = ['CSS', 'HTML', 'SCSS', 'Less', 'Stylus', 'Dockerfile', 'Makefile', 'Shell', 'PowerShell'];
+    
+    // Convert languages object to array and sort by usage
+    const languageEntries = Object.entries(repo.languages)
+      .map(([lang, bytes]) => ({ lang, bytes, percentage: 0 }));
+    
+    const totalBytes = languageEntries.reduce((sum, { bytes }) => sum + bytes, 0);
+    
+    // Calculate percentages and filter
+    const processedLanguages = languageEntries
+      .map(({ lang, bytes }) => ({
+        lang,
+        bytes,
+        percentage: (bytes / totalBytes) * 100
+      }))
+      // Filter out languages with < 5% unless they're the only ones
+      .filter(({ lang, percentage }) => 
+        percentage >= 5 || languageEntries.length <= 3
+      )
+      // Sort by percentage, but boost important languages
+      .sort((a, b) => {
+        const aIsLowPriority = lowPriorityLanguages.includes(a.lang);
+        const bIsLowPriority = lowPriorityLanguages.includes(b.lang);
+        
+        // If one is low priority and other isn't, prioritize the non-low-priority
+        if (aIsLowPriority && !bIsLowPriority) return 1;
+        if (!aIsLowPriority && bIsLowPriority) return -1;
+        
+        // Otherwise sort by percentage
+        return b.percentage - a.percentage;
+      })
+      .slice(0, 3)
+      .map(({ lang }) => lang);
+    
+    return processedLanguages.length > 0 ? processedLanguages : (repo.language ? [repo.language] : []);
+  };
 
   // Category mapping based on GitHub topics
   const categoryMapping = {
@@ -367,13 +410,17 @@ export default function ProjectsPage() {
 
                 {/* Bottom section with consistent positioning */}
                 <div className="mt-auto space-y-3">
-                  {/* Language indicator */}
+                  {/* Language indicators */}
                   <div>
-                    {repo.language && (
-                      <span className="flex items-center gap-2 text-xs text-[var(--dust-gray)]">
-                        <span className="w-3 h-3 rounded-full bg-[var(--spider-red)]"></span>
-                        {repo.language}
-                      </span>
+                    {getTopLanguages(repo).length > 0 && (
+                      <div className="flex flex-wrap items-center gap-3">
+                        {getTopLanguages(repo).map((lang, index) => (
+                          <span key={lang} className="flex items-center gap-1.5 text-xs text-[var(--dust-gray)]">
+                            <span className="w-2.5 h-2.5 rounded-full bg-[var(--spider-red)]"></span>
+                            {lang}
+                          </span>
+                        ))}
+                      </div>
                     )}
                   </div>
 
