@@ -4,6 +4,51 @@ import { NextResponse } from 'next/server';
 const readmeCache = new Map<string, { content: unknown; timestamp: number }>();
 const CACHE_DURATION = 1000 * 60 * 60; // 1 hour
 
+// Helper function to extract first meaningful paragraph from README
+function extractFirstParagraph(content: string): string | null {
+  const lines = content.split('\n');
+  let inYamlFrontmatter = false;
+  let inCodeBlock = false;
+  
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+    
+    // Skip YAML frontmatter (--- to ---)
+    if (line === '---') {
+      if (i === 0 || inYamlFrontmatter) {
+        inYamlFrontmatter = !inYamlFrontmatter;
+        continue;
+      }
+    }
+    
+    if (inYamlFrontmatter) {
+      continue;
+    }
+    
+    // Skip code blocks (``` to ```)
+    if (line.startsWith('```')) {
+      inCodeBlock = !inCodeBlock;
+      continue;
+    }
+    
+    if (inCodeBlock) {
+      continue;
+    }
+    
+    // Skip empty lines, headers, and images
+    if (!line || line.startsWith('#') || line.startsWith('![') || line.startsWith('<!--')) {
+      continue;
+    }
+    
+    // Found first meaningful paragraph
+    if (line.length > 10) { // Ensure it's substantial
+      return line.slice(0, 200);
+    }
+  }
+  
+  return null;
+}
+
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ repo: string }> }
@@ -57,12 +102,8 @@ export async function GET(
     // Decode base64 content
     const readmeContent = Buffer.from(readmeData.content, 'base64').toString('utf-8');
     
-    // Extract first meaningful paragraph (skip headers and empty lines)
-    const firstParagraph = readmeContent
-      .split('\n')
-      .find(line => line.trim() && !line.startsWith('#') && !line.startsWith('!['))
-      ?.trim()
-      .slice(0, 200);
+    // Extract first meaningful paragraph (skip frontmatter, code blocks, headers, and empty lines)
+    const firstParagraph = extractFirstParagraph(readmeContent);
 
     const result = {
       content: readmeContent,

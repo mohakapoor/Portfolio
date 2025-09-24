@@ -272,7 +272,7 @@ export default function ProjectsPage() {
                   </Link>
                 )}
                 
-                <h3 className="text-xl mb-3 pr-10">
+                <h3 className="text-2xl mb-3 pr-10">
                   <a 
                     href={repo.html_url} 
                     target="_blank" 
@@ -284,7 +284,7 @@ export default function ProjectsPage() {
                 </h3>
                 
                 <div className="flex-grow mb-4">
-                  <p className="text-[var(--dust-gray)] text-sm leading-relaxed min-h-[60px]">
+                  <p className="text-[var(--dust-gray)] text-base leading-relaxed min-h-[60px]">
                     {repo.readme || repo.description || "No description available"}
                   </p>
                 </div>
