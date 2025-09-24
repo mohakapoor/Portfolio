@@ -7,6 +7,7 @@ interface GitHubRepo {
   name: string;
   description: string | null;
   html_url: string;
+  homepage: string | null;
   updated_at: string;
   language: string | null;
   topics: string[];
@@ -20,9 +21,68 @@ export default function ProjectsPage() {
   const [repos, setRepos] = useState<GitHubRepo[]>([]);
   const [filteredRepos, setFilteredRepos] = useState<GitHubRepo[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [refreshing, setRefreshing] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+
+  // Category mapping based on GitHub topics
+  const categoryMapping = {
+    "ML & AI": [
+      "machine-learning", "deep-learning", "artificial-intelligence", "ai",
+      "neural-networks", "pytorch", "tensorflow", "computer-vision", "ocr",
+      "nlp", "data-science", "predictive-analytics", "classification",
+      "regression", "crnn", "lstm", "cnn", "rnn", "ctc-loss"
+    ],
+    "Web Development": [
+      "web-development", "frontend", "backend", "react", "nextjs", "javascript",
+      "typescript", "html", "css", "tailwind", "responsive", "portfolio",
+      "website", "web-app", "dashboard", "monitoring"
+    ],
+    "Systems & Applications": [
+      "cpp", "c++", "desktop-application", "system", "application",
+      "management-system", "hospital", "cli", "automation", "tools"
+    ],
+    "Data Science": [
+      "jupyter", "notebook", "data-analysis", "visualization", "pandas",
+      "numpy", "matplotlib", "seaborn", "finance", "stock-prediction",
+      "healthcare", "medical", "energy", "solar"
+    ]
+  };
+
+  // Function to determine category based on topics and language
+  const getProjectCategory = (repo: GitHubRepo): string => {
+    const allKeywords = [...repo.topics, repo.language?.toLowerCase() || ""];
+    
+    for (const [category, keywords] of Object.entries(categoryMapping)) {
+      if (keywords.some(keyword => 
+        allKeywords.some(topic => 
+          topic.toLowerCase().includes(keyword.toLowerCase()) ||
+          keyword.toLowerCase().includes(topic.toLowerCase())
+        )
+      )) {
+        return category;
+      }
+    }
+    
+    // Fallback based on language
+    if (repo.language) {
+      const lang = repo.language.toLowerCase();
+      if (["python"].includes(lang) && repo.topics.length === 0) return "Data Science";
+      if (["javascript", "typescript", "html", "css"].includes(lang)) return "Web Development";
+      if (["c++", "c"].includes(lang)) return "Systems & Applications";
+    }
+    
+    return "Other";
+  };
+
+  // Get unique categories from repos
+  const getAvailableCategories = (): string[] => {
+    const categories = new Set<string>();
+    repos.forEach(repo => {
+      categories.add(getProjectCategory(repo));
+    });
+    return ["All", ...Array.from(categories).sort()];
+  };
 
   // Fetch GitHub repos
   const fetchRepos = async (forceRefresh = false) => {
@@ -78,12 +138,15 @@ export default function ProjectsPage() {
     fetchRepos(true);
   };
 
-  // Get all unique topics for filtering
-  const allTopics = Array.from(new Set(repos.flatMap(repo => repo.topics))).sort();
 
-  // Filter repos based on search term and selected tags
+  // Filter repos based on search term and category
   useEffect(() => {
     let filtered = repos;
+
+    // Filter by category
+    if (selectedCategory !== "All") {
+      filtered = filtered.filter(repo => getProjectCategory(repo) === selectedCategory);
+    }
 
     // Filter by search term
     if (searchTerm) {
@@ -93,23 +156,9 @@ export default function ProjectsPage() {
       );
     }
 
-    // Filter by selected tags
-    if (selectedTags.length > 0) {
-      filtered = filtered.filter(repo =>
-        selectedTags.some(tag => repo.topics.includes(tag))
-      );
-    }
-
     setFilteredRepos(filtered);
-  }, [repos, searchTerm, selectedTags]);
+  }, [repos, searchTerm, selectedCategory]);
 
-  const toggleTag = (tag: string) => {
-    setSelectedTags(prev =>
-      prev.includes(tag)
-        ? prev.filter(t => t !== tag)
-        : [...prev, tag]
-    );
-  };
 
 
   return (
@@ -184,6 +233,31 @@ export default function ProjectsPage() {
 
         {/* Search and Filter Controls */}
         <div className="mb-8 glass-card p-6 hover:!transform-none hover:!scale-100">
+          {/* Category Filters */}
+          <div className="mb-6">
+            <h3 className="text-lg mb-3 text-[var(--vintage-white)]">Categories</h3>
+            <div className="flex flex-wrap gap-2">
+              {getAvailableCategories().map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    selectedCategory === category
+                      ? 'bg-[var(--spider-red)] text-[var(--vintage-white)] shadow-lg'
+                      : 'bg-[var(--newsprint-gray)] text-[var(--dust-gray)] border border-[var(--spider-red)]/40 hover:bg-[var(--spider-red)]/20 hover:text-[var(--vintage-white)]'
+                  }`}
+                >
+                  {category}
+                  {category !== "All" && (
+                    <span className="ml-2 text-xs opacity-75">
+                      ({repos.filter(repo => getProjectCategory(repo) === category).length})
+                    </span>
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+
           {/* Search Bar with Refresh Button */}
           <div className="mb-6 flex gap-3">
             <input
@@ -216,27 +290,6 @@ export default function ProjectsPage() {
             </button>
           </div>
 
-          {/* Topic Tags Filter */}
-          {allTopics.length > 0 && (
-            <div>
-              <h3 className="text-lg font-semibold text-[var(--vintage-white)] mb-3">Filter by Topics</h3>
-              <div className="flex flex-wrap gap-2">
-                {allTopics.map(topic => (
-                  <button
-                    key={topic}
-                    onClick={() => toggleTag(topic)}
-                    className={`tag cursor-pointer transition-all duration-200 ${
-                      selectedTags.includes(topic)
-                        ? 'bg-[var(--spider-red)] border-[var(--spider-red)]'
-                        : 'hover:bg-[var(--spider-red)]/20'
-                    }`}
-                  >
-                    {topic}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
 
           {/* Results count */}
           <div className="mt-4 text-sm text-[var(--dust-gray)]">
@@ -257,12 +310,14 @@ export default function ProjectsPage() {
           <div className="grid gap-6 md:grid-cols-2">
             {filteredRepos.map((repo) => (
               <div key={repo.id} className="glass-card p-5 hover:!transform-none hover:!scale-100 relative flex flex-col h-full min-h-[280px]">
-                {/* View Details button for CaptchaOCR only */}
-                {repo.name === "CaptchaOCR" && (
+                {/* Live Demo button - only show if there's a homepage URL */}
+                {repo.homepage && (
                   <Link
-                    href="/projects/CaptchaOCR"
+                    href={repo.homepage}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="absolute top-4 right-4 p-2 rounded-lg bg-[var(--spider-red)]/20 border border-[var(--spider-red)]/40 text-[var(--vintage-white)] hover:bg-[var(--spider-red)] hover:scale-105 transition-all duration-200 group"
-                    title="View detailed project page"
+                    title="View live demo"
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="group-hover:rotate-12 transition-transform duration-200">
                       <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
@@ -317,16 +372,12 @@ export default function ProjectsPage() {
                     </div>
                   )}
 
-                  {/* Topics */}
-                  {repo.topics.length > 0 && (
-                    <div className="flex flex-wrap gap-2">
-                      {repo.topics.map(topic => (
-                        <span key={topic} className="tag">
-                          {topic}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+                  {/* Category Badge - Bottom Right */}
+                  <div className="flex justify-end">
+                    <span className="px-2 py-1 text-xs font-medium bg-[var(--spider-red)]/20 text-[var(--spider-red)] rounded border border-[var(--spider-red)]/40">
+                      {getProjectCategory(repo)}
+                    </span>
+                  </div>
                 </div>
               </div>
             ))}
@@ -340,7 +391,7 @@ export default function ProjectsPage() {
             <button
               onClick={() => {
                 setSearchTerm("");
-                setSelectedTags([]);
+                setSelectedCategory("All");
               }}
               className="mt-4 spider-noir-button px-6 py-2 border-2 rounded-lg"
             >
