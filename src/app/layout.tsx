@@ -7,6 +7,7 @@ import {
 } from "next/font/google";
 import "./globals.css";
 import HeaderSocials from "@/components/HeaderSocials";
+import { Analytics } from '@vercel/analytics/react';
 
 // Spider-Man Noir font stack
 const bebas = Bebas_Neue({
@@ -65,6 +66,7 @@ export default function RootLayout({
       >
         <HeaderSocials />
         {children}
+        <Analytics />
       </body>
     </html>
   );
