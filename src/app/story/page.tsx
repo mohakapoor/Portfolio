@@ -134,8 +134,7 @@ export default function StoryPage() {
         <nav className="px-4 py-3 space-y-2">
           <Link href="/" className="block py-2 hover:underline" onClick={() => setMenuOpen(false)}>Home</Link>
           <Link href="/story" className="block py-2 hover:underline" onClick={() => setMenuOpen(false)}>Story</Link>
-          <div className="mt-4 text-dust-gray">Projects</div>
-          <Link href="/projects/CaptchaOCR" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>CaptchaOCR</Link>
+          <Link href="/projects" className="block py-2 hover:underline" onClick={() => setMenuOpen(false)}>Projects</Link>
           <div className="mt-4 text-dust-gray">On this page</div>
           <a href="#who-am-i" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Who Am I</a>
           <a href="#featured" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Featured Projects</a>
