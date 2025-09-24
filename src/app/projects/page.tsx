@@ -307,7 +307,7 @@ export default function ProjectsPage() {
 
         {/* Projects Grid */}
         {!loading && (
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {filteredRepos.map((repo) => (
               <div key={repo.id} className="glass-card p-5 hover:!transform-none hover:!scale-100 relative flex flex-col h-full min-h-[280px]">
                 {/* Live Demo button - only show if there's a homepage URL */}
