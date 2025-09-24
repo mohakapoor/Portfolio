@@ -43,7 +43,7 @@ function extractFirstParagraph(content: string): string | null {
     // Found first meaningful paragraph
     if (line.length > 10) { // Ensure it's substantial
       // Clean up markdown formatting
-      let cleanLine = line
+      const cleanLine = line
         // Remove bold/italic: **text** or *text*
         .replace(/\*\*(.*?)\*\*/g, '$1')
         .replace(/\*(.*?)\*/g, '$1')

@@ -47,7 +47,7 @@ export default function ProjectsPage() {
         percentage: (bytes / totalBytes) * 100
       }))
       // Filter out languages with < 5% unless they're the only ones
-      .filter(({ lang, percentage }) => 
+      .filter(({ percentage }) => 
         percentage >= 5 || languageEntries.length <= 3
       )
       // Sort by percentage, but boost important languages
@@ -221,7 +221,7 @@ export default function ProjectsPage() {
     }
 
     setFilteredRepos(filtered);
-  }, [repos, searchTerm, selectedCategory]);
+  }, [repos, searchTerm, selectedCategory, getProjectCategory]);
 
 
 
@@ -414,7 +414,7 @@ export default function ProjectsPage() {
                   <div>
                     {getTopLanguages(repo).length > 0 && (
                       <div className="flex flex-wrap items-center gap-3">
-                        {getTopLanguages(repo).map((lang, index) => (
+                        {getTopLanguages(repo).map((lang) => (
                           <span key={lang} className="flex items-center gap-1.5 text-xs text-[var(--dust-gray)]">
                             <span className="w-2.5 h-2.5 rounded-full bg-[var(--spider-red)]"></span>
                             {lang}

@@ -78,7 +78,7 @@ export async function GET(request: Request) {
 
     // Fetch language statistics for each repo (limit to prevent rate limiting)
     const reposWithLanguages = await Promise.all(
-      filteredRepos.slice(0, 15).map(async (repo: any) => {
+      filteredRepos.slice(0, 15).map(async (repo: { name: string; [key: string]: unknown }) => {
         try {
           const langResponse = await fetch(
             `https://api.github.com/repos/${username}/${repo.name}/languages`,
