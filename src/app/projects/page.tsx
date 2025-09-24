@@ -137,7 +137,7 @@ export default function ProjectsPage() {
     }
     
     return "Other";
-  }, [categoryMapping]);
+  }, []);
 
   // Get unique categories from repos
   const getAvailableCategories = (): string[] => {
