@@ -42,7 +42,22 @@ function extractFirstParagraph(content: string): string | null {
     
     // Found first meaningful paragraph
     if (line.length > 10) { // Ensure it's substantial
-      return line.slice(0, 200);
+      // Clean up markdown formatting
+      let cleanLine = line
+        // Remove bold/italic: **text** or *text*
+        .replace(/\*\*(.*?)\*\*/g, '$1')
+        .replace(/\*(.*?)\*/g, '$1')
+        // Remove inline code: `code`
+        .replace(/`([^`]+)`/g, '$1')
+        // Remove links: [text](url) -> text
+        .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+        // Remove remaining markdown characters
+        .replace(/[#*_`~]/g, '')
+        // Clean up extra spaces
+        .replace(/\s+/g, ' ')
+        .trim();
+      
+      return cleanLine.slice(0, 200);
     }
   }
   

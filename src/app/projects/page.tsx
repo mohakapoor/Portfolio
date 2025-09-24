@@ -30,22 +30,43 @@ export default function ProjectsPage() {
     "ML & AI": [
       "machine-learning", "deep-learning", "artificial-intelligence", "ai",
       "neural-networks", "pytorch", "tensorflow", "computer-vision", "ocr",
-      "nlp", "data-science", "predictive-analytics", "classification",
-      "regression", "crnn", "lstm", "cnn", "rnn", "ctc-loss"
+      "nlp", "natural-language-processing", "classification", "regression", 
+      "crnn", "lstm", "cnn", "rnn", "ctc-loss", "model-training"
     ],
     "Web Development": [
       "web-development", "frontend", "backend", "react", "nextjs", "javascript",
       "typescript", "html", "css", "tailwind", "responsive", "portfolio",
-      "website", "web-app", "dashboard", "monitoring"
-    ],
-    "Systems & Applications": [
-      "cpp", "c++", "desktop-application", "system", "application",
-      "management-system", "hospital", "cli", "automation", "tools"
+      "website", "web-app", "dashboard", "monitoring", "full-stack"
     ],
     "Data Science": [
       "jupyter", "notebook", "data-analysis", "visualization", "pandas",
       "numpy", "matplotlib", "seaborn", "finance", "stock-prediction",
-      "healthcare", "medical", "energy", "solar"
+      "healthcare", "medical", "energy", "solar", "analytics", "statistics"
+    ],
+    "Mobile Development": [
+      "mobile", "android", "ios", "react-native", "flutter", "swift",
+      "kotlin", "mobile-app", "cross-platform", "native"
+    ],
+    "DevOps & Cloud": [
+      "devops", "docker", "kubernetes", "aws", "azure", "gcp", "cloud",
+      "deployment", "ci-cd", "infrastructure", "terraform", "ansible"
+    ],
+    "Game Development": [
+      "game", "unity", "unreal", "gaming", "3d", "2d", "gamedev",
+      "graphics", "simulation", "entertainment"
+    ],
+    "Blockchain & Crypto": [
+      "blockchain", "crypto", "ethereum", "bitcoin", "smart-contracts",
+      "web3", "defi", "nft", "solidity", "cryptocurrency"
+    ],
+    "Systems & Applications": [
+      "cpp", "c++", "desktop-application", "system", "application",
+      "management-system", "hospital", "cli", "automation", "tools",
+      "embedded", "low-level"
+    ],
+    "Security & Privacy": [
+      "security", "cybersecurity", "encryption", "privacy", "penetration-testing",
+      "vulnerability", "auth", "authentication", "cryptography"
     ]
   };
 
