@@ -289,7 +289,7 @@ export default function ProjectsPage() {
             My Projects
           </h1>
           <p className="text-xl text-[var(--dust-gray)] mt-4 max-w-3xl mx-auto">
-            Live projects pulled directly from GitHub with automatic updates
+            Adventures in Code & Data
           </p>
         </header>
 
@@ -478,7 +478,7 @@ export default function ProjectsPage() {
 
                   {/* Category Badge - Bottom Right */}
                   <div className="flex justify-end">
-                    <span className="px-2 py-1 text-xs font-medium bg-[var(--spider-red)]/20 text-[var(--spider-red)] rounded border border-[var(--spider-red)]/40">
+                    <span className="px-2 py-1 text-xs font-medium bg-[var(--spider-red)]/20 text-gray-200 rounded border border-[var(--spider-red)]/40">
                       {getProjectCategory(repo)}
                     </span>
                   </div>
