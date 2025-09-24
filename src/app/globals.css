@@ -246,6 +246,15 @@ html, body {
 .gh-l1 { background: #332428; box-shadow: inset 0 0 0 1px rgba(204,41,54,0.15); }
 .gh-l2 { background: #56252d; }
 .gh-l3 { background: #7a2b34; }
+
+/* Hide scrollbars for horizontal scroll */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;             /* Chrome, Safari, Opera */
+}
 .gh-l4 { background: #cc2936; }
 
 /* GitHub contributions grid (API-based) */

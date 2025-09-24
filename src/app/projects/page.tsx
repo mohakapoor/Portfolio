@@ -297,24 +297,46 @@ export default function ProjectsPage() {
         <div className="mb-8 glass-card p-6 hover:!transform-none hover:!scale-100">
           {/* Category Filters */}
           <div className="mb-6">
-            <h3 className="text-lg mb-3 text-[var(--vintage-white)]">Categories</h3>
-            <div className="flex flex-wrap gap-2">
+            <h3 className="text-lg mb-3 text-[var(--vintage-white)]">CATEGORIES</h3>
+            {/* Mobile: Horizontal scroll, Desktop: Flex wrap */}
+            <div className="flex gap-2 overflow-x-auto scrollbar-hide md:flex-wrap md:overflow-visible pb-2">
               {getAvailableCategories().map((category) => (
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  className={`px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap flex-shrink-0 transition-all duration-200 ${
                     selectedCategory === category
                       ? 'bg-[var(--spider-red)] text-[var(--vintage-white)] shadow-lg'
                       : 'bg-[var(--newsprint-gray)] text-[var(--dust-gray)] border border-[var(--spider-red)]/40 hover:bg-[var(--spider-red)]/20 hover:text-[var(--vintage-white)]'
                   }`}
                 >
-                  {category}
-                  {category !== "All" && (
-                    <span className="ml-2 text-xs opacity-75">
-                      ({repos.filter(repo => getProjectCategory(repo) === category).length})
-                    </span>
-                  )}
+                  <span className="md:hidden">
+                    {/* Mobile: Short names */}
+                    {category === "ML & AI" ? "ML & AI" :
+                     category === "Web Development" ? "Web Dev" :
+                     category === "Data Science" ? "Data Sci" :
+                     category === "Systems & Applications" ? "Systems" :
+                     category === "Mobile Development" ? "Mobile" :
+                     category === "DevOps & Cloud" ? "DevOps" :
+                     category === "Game Development" ? "Games" :
+                     category === "Blockchain & Crypto" ? "Crypto" :
+                     category === "Security & Privacy" ? "Security" :
+                     category}
+                    {category !== "All" && (
+                      <span className="ml-1 text-xs opacity-75">
+                        ({repos.filter(repo => getProjectCategory(repo) === category).length})
+                      </span>
+                    )}
+                  </span>
+                  <span className="hidden md:inline">
+                    {/* Desktop: Full names */}
+                    {category}
+                    {category !== "All" && (
+                      <span className="ml-2 text-xs opacity-75">
+                        ({repos.filter(repo => getProjectCategory(repo) === category).length})
+                      </span>
+                    )}
+                  </span>
                 </button>
               ))}
             </div>
@@ -355,7 +377,7 @@ export default function ProjectsPage() {
 
           {/* Results count */}
           <div className="mt-4 text-sm text-[var(--dust-gray)]">
-            Showing {filteredRepos.length} of {repos.length} projects
+            Showing {filteredRepos.length} of {repos.length} Projects
           </div>
         </div>
 
