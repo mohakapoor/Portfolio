@@ -69,13 +69,19 @@ export async function GET(request: Request) {
 
     // Filter out forked repos and focus on original projects
     const originalRepos = repos.filter((repo: { fork?: boolean }) => !repo.fork);
+    
+    // Filter out repos with exclusion topics (portfolio, private, hidden, etc.)
+    const exclusionTopics = ['portfolio', 'private', 'hidden', 'exclude', 'personal'];
+    const filteredRepos = originalRepos.filter((repo: { topics?: string[] }) => 
+      !exclusionTopics.some(topic => repo.topics?.includes(topic))
+    );
 
     // Update cache
-    cachedRepos = originalRepos;
+    cachedRepos = filteredRepos;
     lastFetchTime = now;
     
-    console.log(`Fetched ${originalRepos.length} repos from GitHub API`);
-    return NextResponse.json(originalRepos);
+    console.log(`Fetched ${filteredRepos.length} repos from GitHub API (${originalRepos.length - filteredRepos.length} excluded)`);
+    return NextResponse.json(filteredRepos);
   } catch (error) {
     console.error('Error fetching GitHub repos:', error);
     
