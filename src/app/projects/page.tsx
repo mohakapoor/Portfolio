@@ -164,7 +164,8 @@ export default function ProjectsPage() {
         throw new Error(`Failed to fetch repositories: ${response.status}`);
       }
       
-      const repoData: GitHubRepo[] = await response.json();
+      const data = await response.json();
+      const repoData: GitHubRepo[] = data.repos || data; // Handle both old and new format
       
       // Optionally fetch README for featured repos (limit to prevent rate limiting)
       const reposWithReadme = await Promise.all(

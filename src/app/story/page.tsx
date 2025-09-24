@@ -3,11 +3,47 @@ import GitHubContributions from "@/components/GitHubContributions";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 
+interface GitHubStats {
+  totalRepos: number;
+  totalCommits: number;
+  languages: string[];
+  followers: number;
+}
+
 export default function StoryPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [expandedCard, setExpandedCard] = useState<number | null>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [animatedSections, setAnimatedSections] = useState<Set<string>>(new Set());
+  const [githubStats, setGithubStats] = useState<GitHubStats | null>(null);
+  const [statsLoading, setStatsLoading] = useState(true);
+
+  // Fetch GitHub stats
+  useEffect(() => {
+    const fetchGithubStats = async () => {
+      try {
+        setStatsLoading(true);
+        const response = await fetch('/api/github/repos?stats=true');
+        if (response.ok) {
+          const stats = await response.json();
+          setGithubStats(stats);
+        }
+      } catch (error) {
+        console.error('Failed to fetch GitHub stats:', error);
+        // Set fallback stats
+        setGithubStats({
+          totalRepos: 15,
+          totalCommits: 500,
+          languages: ['Python', 'TypeScript', 'JavaScript'],
+          followers: 0
+        });
+      } finally {
+        setStatsLoading(false);
+      }
+    };
+
+    fetchGithubStats();
+  }, []);
 
   // Handle click outside to close expanded card
   useEffect(() => {
@@ -458,27 +494,66 @@ export default function StoryPage() {
 
           <section id="github">
             <h2 className="newspaper-headline text-3xl my-8 animate-slide-left">GitHub</h2>
-              <div className="glass-card p-5">
-                <div className="grid md:grid-cols-[220px,1fr] gap-6 items-center">
-                <a
-                  href="https://github.com/mohakapoor"
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="flex flex-col items-center text-center"
-                >
-                  <img
-                    src="https://github.com/mohakapoor.png?size=240"
-                    alt="GitHub avatar of mohakapoor"
-                    className="w-40 h-40 md:w-52 md:h-52 rounded-lg border border-[var(--spider-red)]/40 object-cover"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = "https://avatars.githubusercontent.com/mohakapoor?size=240";
-                    }}
-                  />
-                </a>
-                <GitHubContributions username="mohakapoor" />
+              <div className="glass-card p-6">
+                <div className="space-y-8">
+                  {/* Row 1: Profile and Stats */}
+                  <div className="grid md:grid-cols-2 gap-8 items-center">
+                    {/* Col 1: Profile */}
+                    <div className="flex flex-col items-center text-center">
+                      <a
+                        href="https://github.com/mohakapoor"
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className="group"
+                      >
+                        <img
+                          src="https://github.com/mohakapoor.png?size=240"
+                          alt="GitHub avatar of mohakapoor"
+                          className="w-40 h-40 md:w-52 md:h-52 rounded-lg border border-[var(--spider-red)]/40 object-cover group-hover:border-[var(--spider-red)] transition-colors duration-200"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = "https://avatars.githubusercontent.com/mohakapoor?size=240";
+                          }}
+                        />
+                      </a>
+                      <h3 className="mt-4 text-xl font-semibold text-[var(--vintage-white)]">@mohakapoor</h3>
+                      <p className="text-[var(--dust-gray)] mt-1">Data Scientist</p>
+                    </div>
+
+                    {/* Col 2: Stats */}
+                    <div className="grid grid-cols-2 gap-6">
+                      <div className="text-center">
+                        <div className="text-3xl font-bold text-[var(--spider-red)]">
+                          {statsLoading ? '...' : githubStats?.totalRepos || '15+'}
+                        </div>
+                        <div className="text-[var(--dust-gray)]">Public Repos</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-3xl font-bold text-[var(--spider-red)]">
+                          {statsLoading ? '...' : `${githubStats?.totalCommits || '500+'}${typeof githubStats?.totalCommits === 'number' ? '' : ''}`}
+                        </div>
+                        <div className="text-[var(--dust-gray)]">Commits</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-3xl font-bold text-[var(--spider-red)]">
+                          {statsLoading ? '...' : `${githubStats?.languages?.length || '5+'}+`}
+                        </div>
+                        <div className="text-[var(--dust-gray)]">Languages</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-3xl font-bold text-[var(--spider-red)]">24/7</div>
+                        <div className="text-[var(--dust-gray)]">Code Mode</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Row 2: Contribution Activity (Full Width) */}
+                  <div>
+                    <h4 className="text-lg font-semibold mb-3 text-[var(--vintage-white)]">Contribution Activity</h4>
+                    <GitHubContributions username="mohakapoor" />
+                  </div>
+                </div>
               </div>
-            </div>
           </section>
 
           <section id="contact">
