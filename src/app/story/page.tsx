@@ -168,7 +168,7 @@ export default function StoryPage() {
               title="View All Projects"
             >
               <span className="flex items-center gap-1">
-                <span className="hidden sm:inline">VIEW ALL PROJECTS</span>
+                <span className="hidden sm:inline">VIEW ALL</span>
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="group-hover:translate-x-1 transition-transform duration-200">
                   <path d="M5 12h14" />
                   <path d="M12 5l7 7-7 7" />
