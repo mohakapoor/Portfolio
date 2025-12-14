@@ -349,11 +349,11 @@ export default function IntrusionDetectionProjectPage() {
                                         return (
                                             <div
                                                 key={i}
-                                                className={`glass-card flex-1 flex flex-col p-4 border rounded-lg text-[var(--vintage-white)] transition-all duration-500 relative overflow-hidden ${borderClass} ${loading ? 'animate-pulse opacity-50' : 'opacity-100'
+                                                className={`glass-card flex-1 flex flex-col justify-center p-4 border rounded-lg text-[var(--vintage-white)] transition-all duration-500 relative overflow-hidden ${borderClass} ${loading ? 'animate-pulse opacity-50' : 'opacity-100'
                                                     }`}
                                             >
                                                 {/* Top Row: Model Name (Left) and Prediction (Right) */}
-                                                <div className="flex justify-between items-start w-full mb-2">
+                                                <div className="flex justify-between items-center w-full">
                                                     <span className="text-sm text-white font-bold uppercase tracking-wider">
                                                         {model === 'logreg' ? 'Logistic Regression' : model === 'lightgbm' ? 'LightGBM' : 'FFNN'}
                                                     </span>
@@ -362,15 +362,6 @@ export default function IntrusionDetectionProjectPage() {
                                                     ) : (
                                                         <span className={`text-lg font-mono font-bold ${isMatch ? 'text-green-500' : 'text-[var(--spider-red)]'}`}>
                                                             {results ? predictionText : ''}
-                                                        </span>
-                                                    )}
-                                                </div>
-
-                                                {/* Bottom Right: Row Index */}
-                                                <div className="mt-auto self-end">
-                                                    {rowIndex !== undefined && (
-                                                        <span className="text-xs text-[var(--dust-gray)] font-mono opacity-70">
-                                                            Row: {rowIndex}
                                                         </span>
                                                     )}
                                                 </div>
