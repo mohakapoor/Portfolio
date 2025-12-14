@@ -18,7 +18,7 @@ export async function GET() {
 
         const data = await response.json();
         return NextResponse.json(data);
-    } catch (error) {
+    } catch {
         return NextResponse.json(
             { status: 'unhealthy', error: 'Failed to fetch' },
             { status: 500 }
@@ -88,10 +88,16 @@ export async function POST(request: Request) {
         const results = await Promise.all(promises);
 
         // Transform array into an object { logreg: ..., lightgbm: ..., ffnn: ... }
+        interface ModelResult {
+            prediction?: number;
+            row_index?: number;
+            error?: string;
+        }
+
         const responseData = results.reduce((acc, result) => {
             acc[result.model] = result.data || { error: result.error };
             return acc;
-        }, {} as Record<string, any>);
+        }, {} as Record<string, ModelResult>);
 
         return NextResponse.json(responseData);
     } catch (error) {

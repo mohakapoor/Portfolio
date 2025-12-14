@@ -10,7 +10,14 @@ export default function IntrusionDetectionProjectPage() {
     const [imageTransition, setImageTransition] = useState<'none' | 'left' | 'right'>('none');
     const [selectedAttackType, setSelectedAttackType] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
-    const [results, setResults] = useState<any>(null);
+
+    interface PredictionResult {
+        prediction?: number;
+        row_index?: number;
+        error?: string;
+    }
+
+    const [results, setResults] = useState<Record<string, PredictionResult> | null>(null);
     const [loading, setLoading] = useState(false);
     const [isSystemHealthy, setIsSystemHealthy] = useState<boolean>(true);
 
@@ -22,7 +29,7 @@ export default function IntrusionDetectionProjectPage() {
                 if (data.status !== 'healthy') {
                     setIsSystemHealthy(false);
                 }
-            } catch (e) {
+            } catch {
                 setIsSystemHealthy(false);
             }
         };
@@ -70,12 +77,12 @@ export default function IntrusionDetectionProjectPage() {
         }
     ];
 
-    const openLightbox = (index: number) => {
-        setSelectedImageIndex(index);
-        setLightboxOpen(true);
-        // Add a small delay to trigger the animation
-        setTimeout(() => setLightboxVisible(true), 10);
-    };
+    // const openLightbox = (index: number) => {
+    //     setSelectedImageIndex(index);
+    //     setLightboxOpen(true);
+    //     // Add a small delay to trigger the animation
+    //     setTimeout(() => setLightboxVisible(true), 10);
+    // };
 
     const closeLightbox = useCallback(() => {
         setLightboxVisible(false);
