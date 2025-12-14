@@ -71,18 +71,33 @@ export default function IntrusionDetectionProjectPage() {
 
     const images = [
         {
-            src: "", // Placeholder
-            alt: "Placeholder",
-            title: "Placeholder"
+            src: "/intrusion_detection_plots/logreg_test_cr.png",
+            alt: "Logistic Regression Classification Report",
+            title: "LogReg Results"
+        },
+        {
+            src: "/intrusion_detection_plots/svm_test_cr.png",
+            alt: "SVM Classification Report",
+            title: "SVM Results"
+        },
+        {
+            src: "/intrusion_detection_plots/lightgbm_test_cr.png",
+            alt: "LightGBM Classification Report",
+            title: "LightGBM Results"
+        },
+        {
+            src: "/intrusion_detection_plots/ffnn_test_cr.png",
+            alt: "FFNN Classification Report",
+            title: "FFNN Results"
         }
     ];
 
-    // const openLightbox = (index: number) => {
-    //     setSelectedImageIndex(index);
-    //     setLightboxOpen(true);
-    //     // Add a small delay to trigger the animation
-    //     setTimeout(() => setLightboxVisible(true), 10);
-    // };
+    const openLightbox = (index: number) => {
+        setSelectedImageIndex(index);
+        setLightboxOpen(true);
+        // Add a small delay to trigger the animation
+        setTimeout(() => setLightboxVisible(true), 10);
+    };
 
     const closeLightbox = useCallback(() => {
         setLightboxVisible(false);
@@ -225,7 +240,7 @@ export default function IntrusionDetectionProjectPage() {
                             Intrusion Detection
                         </h1>
                         <p className="text-xl text-[var(--dust-gray)] max-w-3xl mx-auto">
-                            {/* Description goes here */}
+                            Modern networks face sophisticated threats that evade traditional signatures. This project leverages advanced machine learning to detect anomalies in complex network traffic flows.
                         </p>
                     </header>
                 </section>
@@ -238,13 +253,19 @@ export default function IntrusionDetectionProjectPage() {
                             <div>
                                 <h3 className="text-xl mb-4 text-[var(--vintage-white)]">About the Project</h3>
                                 <p className="text-[var(--dust-gray)] mb-4 leading-relaxed">
-                                    {/* About content goes here */}
+                                    With the rapid digitalization of services, modern networks have become highly dynamic, expanding the attack surface for cyber threats. Anomalies often disguise themselves within normal traffic, making them invisible to traditional rule-based systems.
+                                    <br /><br />
+                                    This project explores a structured machine-learning workflow to identify these anomalies. By leveraging the **CICIDS-2017** benchmark dataset, we compare classical models (Logistic Regression, SVM) against advanced gradient boosting (LightGBM) and deep learning (Feedforward Neural Networks) to build a robust intrusion detection system.
                                 </p>
                             </div>
                             <div>
                                 <h3 className="text-xl mb-4 text-[var(--vintage-white)]">Tech Stack</h3>
                                 <div className="flex flex-wrap gap-2">
-                                    {/* Tags go here */}
+                                    {['Python', 'Pandas & NumPy', 'Scikit-learn', 'RAPIDS cuML', 'LightGBM', 'PyTorch', 'CICIDS-2017'].map((tag) => (
+                                        <span key={tag} className="px-3 py-1 text-sm bg-[var(--spider-red)]/20 text-[var(--spider-red)] border border-[var(--spider-red)]/40 rounded-full font-mono">
+                                            {tag}
+                                        </span>
+                                    ))}
                                 </div>
                                 <div className="mt-6">
                                     {/* Link to source code */}
@@ -252,10 +273,10 @@ export default function IntrusionDetectionProjectPage() {
                             </div>
                         </div>
                     </div>
-                </section>
+                </section >
 
                 {/* Live Demo Section */}
-                <section id="live-demo" className="max-w-5xl mx-auto mb-12">
+                < section id="live-demo" className="max-w-5xl mx-auto mb-12" >
                     <h2 className="newspaper-headline text-3xl mb-8 animate-slide-left">Live Demo</h2>
                     <div className="glass-card p-[10px] relative overflow-hidden">
                         {/* Offline Overlay */}
@@ -381,10 +402,10 @@ export default function IntrusionDetectionProjectPage() {
 
                         </div>
                     </div>
-                </section>
+                </section >
 
                 {/* Technical Architecture Section */}
-                <section id="technical-architecture" className="max-w-5xl mx-auto mb-12">
+                < section id="technical-architecture" className="max-w-5xl mx-auto mb-12" >
                     <h2 className="newspaper-headline text-3xl my-8 animate-slide-left">Technical Architecture</h2>
                     <div className="glass-card p-5">
                         <div className="grid md:grid-cols-2 gap-8">
@@ -402,33 +423,93 @@ export default function IntrusionDetectionProjectPage() {
                             </div>
                         </div>
                     </div>
-                </section>
+                </section >
 
                 {/* Performance & Results Section */}
                 <section id="performance-results" className="max-w-5xl mx-auto mb-12">
-                    <h2 className="newspaper-headline text-3xl my-8 animate-slide-right">Performance & Results</h2>
-                    <div className="glass-card p-5">
-                        <div className="grid md:grid-cols-2 gap-8">
-                            <div>
-                                <h3 className="text-xl mb-4 text-[var(--vintage-white)]">Training Performance</h3>
-                                <div className="space-y-3 text-sm text-[var(--dust-gray)]">
-                                    {/* Training performance details */}
-                                </div>
+                    <h2 className="newspaper-headline text-3xl mb-8 animate-slide-right">Performance Metrics</h2>
+                    <div className="grid md:grid-cols-2 gap-6">
+                        {/* LightGBM Card */}
+                        <div className="glass-card p-6 border-t-4 border-green-500">
+                            <h3 className="text-2xl font-bold text-white mb-1">LightGBM</h3>
+                            <p className="text-sm text-green-400 font-mono mb-4 text-center">BEST MULTICLASS</p>
+                            <div className="text-center space-y-2">
+                                <div className="text-5xl font-bold text-white">~99%</div>
+                                <div className="text-[var(--dust-gray)] text-sm uppercase tracking-widest">Accuracy</div>
                             </div>
-                            <div>
-                                <h3 className="text-xl mb-4 text-[var(--vintage-white)]">Inference Results</h3>
-                                <div className="space-y-3 text-sm text-[var(--dust-gray)]">
-                                    {/* Inference results details */}
-                                </div>
-                            </div>
+                            <p className="mt-4 text-[var(--dust-gray)] text-sm text-center">
+                                Outperformed all models in multiclass detection with exceptional precision across major attack types.
+                            </p>
                         </div>
 
-                        {/* Training Metrics Visualization */}
-                        <div className="mt-8">
-                            <h3 className="text-xl mb-6 text-[var(--vintage-white)] text-center">Training Metrics & Results</h3>
-                            <div className="grid md:grid-cols-3 gap-6">
-                                {/* Metrics placeholders */}
+                        {/* SVM Card */}
+                        <div className="glass-card p-6 border-t-4 border-blue-500">
+                            <h3 className="text-2xl font-bold text-white mb-1">SVM</h3>
+                            <p className="text-sm text-blue-400 font-mono mb-4 text-center">BEST BINARY</p>
+                            <div className="text-center space-y-2">
+                                <div className="text-5xl font-bold text-white">96.7%</div>
+                                <div className="text-[var(--dust-gray)] text-sm uppercase tracking-widest">Accuracy</div>
                             </div>
+                            <p className="mt-4 text-[var(--dust-gray)] text-sm text-center">
+                                Superior margin-based separation for binary (Attack vs. Benign) classification.
+                            </p>
+                        </div>
+
+                        {/* FFNN Card */}
+                        <div className="glass-card p-6 border-t-4 border-purple-500">
+                            <h3 className="text-2xl font-bold text-white mb-1">FFNN</h3>
+                            <p className="text-sm text-purple-400 font-mono mb-4 text-center">DEEP LEARNING</p>
+                            <div className="text-center space-y-2">
+                                <div className="text-5xl font-bold text-white">~98%</div>
+                                <div className="text-[var(--dust-gray)] text-sm uppercase tracking-widest">Accuracy</div>
+                            </div>
+                            <p className="mt-4 text-[var(--dust-gray)] text-sm text-center">
+                                Strong baseline for neural approaches, competitive with gradient boosting.
+                            </p>
+                        </div>
+
+                        {/* Logistic Regression Card */}
+                        <div className="glass-card p-6 border-t-4 border-yellow-500">
+                            <h3 className="text-2xl font-bold text-white mb-1">Logistic Regression</h3>
+                            <p className="text-sm text-yellow-500 font-mono mb-4 text-center">BASELINE</p>
+                            <div className="text-center space-y-2">
+                                <div className="text-5xl font-bold text-white">~93%</div>
+                                <div className="text-[var(--dust-gray)] text-sm uppercase tracking-widest">Accuracy</div>
+                            </div>
+                            <p className="mt-4 text-[var(--dust-gray)] text-sm text-center">
+                                Effective linear baseline, demonstrating the value of model complexity.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Gallery Section */}
+                <section id="gallery" className="max-w-5xl mx-auto mb-12">
+                    <h2 className="newspaper-headline text-3xl mb-8 animate-slide-left">Classification Reports</h2>
+                    <div className="glass-card p-6">
+                        <p className="text-[var(--dust-gray)] mb-6 max-w-3xl">
+                            Detailed performance breakdowns for each model, showing precision, recall, and F1-scores across all attack classes.
+                        </p>
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            {images.map((img, index) => (
+                                <div
+                                    key={index}
+                                    className="relative group cursor-pointer overflow-hidden rounded-lg border border-[var(--spider-red)]/20 hover:border-[var(--spider-red)] transition-all duration-300"
+                                    onClick={() => openLightbox(index)}
+                                >
+                                    <div className="aspect-square bg-black/40 flex items-center justify-center overflow-hidden">
+                                        {/* Using img tag for simplicity in grid, Next.js Image would be better but requires size knowledge */}
+                                        <img
+                                            src={img.src}
+                                            alt={img.alt}
+                                            className="object-cover w-full h-full opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                                        />
+                                    </div>
+                                    <div className="absolute inset-x-0 bottom-0 bg-black/80 p-2 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                                        <p className="text-xs text-[var(--vintage-white)] text-center truncate">{img.title}</p>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </section>
@@ -456,101 +537,103 @@ export default function IntrusionDetectionProjectPage() {
             </main>
 
             {/* Lightbox */}
-            {lightboxOpen && (
-                <div
-                    className={`fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 transition-all duration-500 ease-out ${lightboxVisible ? 'opacity-100' : 'opacity-0'
-                        }`}
-                    onClick={closeLightbox}
-                >
-                    {/* Left Navigation Button - Outside Lightbox */}
-                    <button
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            previousImage();
-                        }}
-                        className="absolute left-2 md:left-8 top-1/2 transform -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-[var(--spider-red)]/80 text-[var(--vintage-white)] hover:bg-[var(--spider-red)] transition-all duration-200 shadow-lg hover:scale-110 flex items-center justify-center text-lg font-bold z-10 animate-in slide-in-from-left-4 duration-300 delay-100"
-                        aria-label="Previous image"
-                    >
-                        ←
-                    </button>
-
-                    {/* Right Navigation Button - Outside Lightbox */}
-                    <button
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            nextImage();
-                        }}
-                        className="absolute right-2 md:right-8 top-1/2 transform -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-[var(--spider-red)]/80 text-[var(--vintage-white)] hover:bg-[var(--spider-red)] transition-all duration-200 shadow-lg hover:scale-110 flex items-center justify-center text-lg font-bold z-10 animate-in slide-in-from-right-4 duration-300 delay-100"
-                        aria-label="Next image"
-                    >
-                        →
-                    </button>
-
-                    {/* Close Button - Outside Lightbox */}
-                    <button
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            closeLightbox();
-                        }}
-                        className="absolute top-2 md:top-8 right-2 md:right-8 w-10 h-10 md:w-12 md:h-12 rounded-full bg-[var(--spider-red)]/80 text-[var(--vintage-white)] hover:bg-[var(--spider-red)] transition-all duration-200 shadow-lg hover:scale-110 flex items-center justify-center text-lg font-bold z-10 animate-in slide-in-from-top-4 duration-300 delay-100"
-                        aria-label="Close lightbox"
-                    >
-                        ✕
-                    </button>
-
+            {
+                lightboxOpen && (
                     <div
-                        className={`relative max-w-6xl max-h-[90vh] bg-[var(--newsprint-gray)] rounded-lg shadow-2xl flex flex-col md:flex-row overflow-hidden transition-all duration-500 ease-out transform ${lightboxVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
+                        className={`fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 transition-all duration-500 ease-out ${lightboxVisible ? 'opacity-100' : 'opacity-0'
                             }`}
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={closeLightbox}
                     >
-                        {/* Top Side (Mobile) / Left Side (Desktop) - Image */}
-                        <div className="flex-1 flex items-center justify-center p-4 md:p-6 relative min-h-[40vh] md:min-h-0">
-                            <img
-                                src={images[selectedImageIndex].src}
-                                alt={images[selectedImageIndex].alt}
-                                title={images[selectedImageIndex].title}
-                                className={`max-w-full max-h-full object-contain rounded-lg transition-all duration-500 ease-out transform ${lightboxVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
-                                    } ${imageTransition === 'left' ? 'lightbox-image-transition-left opacity-0 scale-95' :
-                                        imageTransition === 'right' ? 'lightbox-image-transition-right opacity-0 scale-95' :
-                                            'opacity-100 scale-100'
-                                    }`}
-                            />
-                        </div>
-
-                        {/* Bottom Side (Mobile) / Right Side (Desktop) - Description Panel */}
-                        <div
-                            className={`w-full md:w-80 bg-[var(--newsprint-gray)] border-t md:border-t-0 md:border-l border-[var(--spider-red)]/20 p-4 md:p-6 flex flex-col transition-all duration-500 ease-out transform ${lightboxVisible ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
-                                }`}
+                        {/* Left Navigation Button - Outside Lightbox */}
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                previousImage();
+                            }}
+                            className="absolute left-2 md:left-8 top-1/2 transform -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-[var(--spider-red)]/80 text-[var(--vintage-white)] hover:bg-[var(--spider-red)] transition-all duration-200 shadow-lg hover:scale-110 flex items-center justify-center text-lg font-bold z-10 animate-in slide-in-from-left-4 duration-300 delay-100"
+                            aria-label="Previous image"
                         >
-                            {/* Header with Title */}
-                            <div className="mb-4 md:mb-6">
-                                <h3
-                                    className={`text-xl md:text-2xl font-bold text-[var(--vintage-white)] newspaper-headline transition-all duration-500 ease-out transform ${lightboxVisible ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'
-                                        } ${imageTransition !== 'none' ? 'opacity-0 scale-90 translate-y-4' : 'opacity-100 scale-100 translate-y-0'
+                            ←
+                        </button>
+
+                        {/* Right Navigation Button - Outside Lightbox */}
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                nextImage();
+                            }}
+                            className="absolute right-2 md:right-8 top-1/2 transform -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-[var(--spider-red)]/80 text-[var(--vintage-white)] hover:bg-[var(--spider-red)] transition-all duration-200 shadow-lg hover:scale-110 flex items-center justify-center text-lg font-bold z-10 animate-in slide-in-from-right-4 duration-300 delay-100"
+                            aria-label="Next image"
+                        >
+                            →
+                        </button>
+
+                        {/* Close Button - Outside Lightbox */}
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                closeLightbox();
+                            }}
+                            className="absolute top-2 md:top-8 right-2 md:right-8 w-10 h-10 md:w-12 md:h-12 rounded-full bg-[var(--spider-red)]/80 text-[var(--vintage-white)] hover:bg-[var(--spider-red)] transition-all duration-200 shadow-lg hover:scale-110 flex items-center justify-center text-lg font-bold z-10 animate-in slide-in-from-top-4 duration-300 delay-100"
+                            aria-label="Close lightbox"
+                        >
+                            ✕
+                        </button>
+
+                        <div
+                            className={`relative max-w-6xl max-h-[90vh] bg-[var(--newsprint-gray)] rounded-lg shadow-2xl flex flex-col md:flex-row overflow-hidden transition-all duration-500 ease-out transform ${lightboxVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
+                                }`}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            {/* Top Side (Mobile) / Left Side (Desktop) - Image */}
+                            <div className="flex-1 flex items-center justify-center p-4 md:p-6 relative min-h-[40vh] md:min-h-0">
+                                <img
+                                    src={images[selectedImageIndex].src}
+                                    alt={images[selectedImageIndex].alt}
+                                    title={images[selectedImageIndex].title}
+                                    className={`max-w-full max-h-full object-contain rounded-lg transition-all duration-500 ease-out transform ${lightboxVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
+                                        } ${imageTransition === 'left' ? 'lightbox-image-transition-left opacity-0 scale-95' :
+                                            imageTransition === 'right' ? 'lightbox-image-transition-right opacity-0 scale-95' :
+                                                'opacity-100 scale-100'
                                         }`}
-                                >
-                                    {images[selectedImageIndex].title}
-                                </h3>
+                                />
                             </div>
 
-                            {/* Description Content */}
+                            {/* Bottom Side (Mobile) / Right Side (Desktop) - Description Panel */}
                             <div
-                                className={`flex-1 transition-all duration-500 ease-out transform ${imageTransition !== 'none' ? 'opacity-0 translate-y-6 scale-95' : 'opacity-100 translate-y-0 scale-100'
+                                className={`w-full md:w-80 bg-[var(--newsprint-gray)] border-t md:border-t-0 md:border-l border-[var(--spider-red)]/20 p-4 md:p-6 flex flex-col transition-all duration-500 ease-out transform ${lightboxVisible ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
                                     }`}
                             >
-                                {/* Image description placeholder */}
-                            </div>
+                                {/* Header with Title */}
+                                <div className="mb-4 md:mb-6">
+                                    <h3
+                                        className={`text-xl md:text-2xl font-bold text-[var(--vintage-white)] newspaper-headline transition-all duration-500 ease-out transform ${lightboxVisible ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'
+                                            } ${imageTransition !== 'none' ? 'opacity-0 scale-90 translate-y-4' : 'opacity-100 scale-100 translate-y-0'
+                                            }`}
+                                    >
+                                        {images[selectedImageIndex].title}
+                                    </h3>
+                                </div>
 
-                            {/* Footer */}
-                            <div className="mt-4 md:mt-6 pt-4 border-t border-[var(--spider-red)]/20">
-                                <p className="text-xs text-[var(--dust-gray)] text-center">
-                                    Click outside or press ESC to close
-                                </p>
+                                {/* Description Content */}
+                                <div
+                                    className={`flex-1 transition-all duration-500 ease-out transform ${imageTransition !== 'none' ? 'opacity-0 translate-y-6 scale-95' : 'opacity-100 translate-y-0 scale-100'
+                                        }`}
+                                >
+                                    {/* Image description placeholder */}
+                                </div>
+
+                                {/* Footer */}
+                                <div className="mt-4 md:mt-6 pt-4 border-t border-[var(--spider-red)]/20">
+                                    <p className="text-xs text-[var(--dust-gray)] text-center">
+                                        Click outside or press ESC to close
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            )}
+                )
+            }
         </>
     );
 }
