@@ -269,7 +269,7 @@ export default function IntrusionDetectionProjectPage() {
                                 </div>
                                 <div className="mt-6">
                                     <a
-                                        href="https://github.com/mohakapoor/IntrusionDetection"
+                                        href="https://github.com/mohakapoor/Network_Anomaly_Detection_CICIDS2017"
                                         target="_blank"
                                         rel="noreferrer noopener"
                                         className="spider-noir-button px-6 py-3 border-2 text-lg rounded-lg inline-block"
