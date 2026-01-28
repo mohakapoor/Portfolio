@@ -382,7 +382,7 @@ export default function IntrusionDetectionProjectPage() {
                                             >
                                                 {/* Top Row: Model Name (Left) and Prediction (Right) */}
                                                 <div className="flex justify-between items-center w-full">
-                                                    <span className="text-sm text-white font-bold uppercase tracking-wider">
+                                                    <span className="text-base text-white font-bold uppercase tracking-wider">
                                                         {model === 'logreg' ? 'Logistic Regression' : model === 'lightgbm' ? 'LightGBM' : 'FFNN'}
                                                     </span>
                                                     {result?.error ? (
@@ -417,6 +417,7 @@ export default function IntrusionDetectionProjectPage() {
                     <div className="glass-card p-5">
                         <div className="grid md:grid-cols-2 gap-8">
                             <div>
+                                <h3 className="text-xl mb-4 text-[var(--vintage-white)] border-b border-[var(--spider-red)]/30 pb-2">Model Architecture</h3>
                                 <div className="space-y-4">
                                     {/* Classical Models Sub-card */}
                                     <div className="bg-[var(--newsprint-white)]/5 p-4 rounded-lg border border-[var(--spider-red)]/20">
@@ -459,7 +460,7 @@ export default function IntrusionDetectionProjectPage() {
                                         <div key={i} className="flex gap-3 items-start group">
                                             <div className="mt-1.5 w-1.5 h-1.5 bg-[var(--spider-red)]/50 group-hover:bg-[var(--spider-red)] transform rotate-45 transition-colors"></div>
                                             <div>
-                                                <strong className="text-[var(--vintage-white)] block text-sm mb-0.5">{item.title}</strong>
+                                                <strong className="text-[var(--vintage-white)] block text-base mb-0.5">{item.title}</strong>
                                                 <p className="text-[var(--dust-gray)] text-sm leading-relaxed">{item.desc}</p>
                                             </div>
                                         </div>
@@ -568,14 +569,14 @@ export default function IntrusionDetectionProjectPage() {
                                 <h3 className="text-xl mb-4 text-[var(--vintage-white)]">Dataset Overview</h3>
                                 <div className="flex flex-col gap-4 flex-1">
                                     <div className="p-6 rounded-lg border border-[var(--spider-red)]/20 flex-1 flex flex-col justify-center">
-                                        <h4 className="text-[var(--vintage-white)] font-bold mb-2 text-lg">Source & Scale</h4>
+                                        <h4 className="text-[var(--vintage-white)] font-bold mb-2 text-base">Source & Scale</h4>
                                         <p className="text-[var(--dust-gray)] text-base leading-relaxed">
                                             Leveraging the <strong>CICIDS-2017</strong> benchmark from the Canadian Institute for Cybersecurity.
                                             Contains <strong>2.8M+ network flows</strong> with ~80 high-dimensional features.
                                         </p>
                                     </div>
                                     <div className="p-6 rounded-lg border border-[var(--spider-red)]/20 flex-1 flex flex-col justify-center">
-                                        <h4 className="text-[var(--vintage-white)] font-bold mb-2 text-lg">Time-Aware Partitioning</h4>
+                                        <h4 className="text-[var(--vintage-white)] font-bold mb-2 text-base">Time-Aware Partitioning</h4>
                                         <p className="text-[var(--dust-gray)] text-base leading-relaxed">
                                             To prevent look-ahead bias, data is split by time rather than random shuffling:
                                             <br />
@@ -599,7 +600,7 @@ export default function IntrusionDetectionProjectPage() {
                                                 {i + 1}
                                             </span>
                                             <span>
-                                                <strong className="text-[var(--vintage-white)] block">{step.title}</strong>
+                                                <strong className="text-[var(--vintage-white)] block text-base">{step.title}</strong>
                                                 {step.desc}
                                             </span>
                                         </li>
