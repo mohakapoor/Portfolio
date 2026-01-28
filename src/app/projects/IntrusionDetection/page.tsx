@@ -255,7 +255,7 @@ export default function IntrusionDetectionProjectPage() {
                                 <p className="text-[var(--dust-gray)] mb-4 leading-relaxed">
                                     With the rapid digitalization of services, modern networks have become highly dynamic, expanding the attack surface for cyber threats. Anomalies often disguise themselves within normal traffic, making them invisible to traditional rule-based systems.
                                     <br /><br />
-                                    This project explores a structured machine-learning workflow to identify these anomalies. By leveraging the **CICIDS-2017** benchmark dataset, we compare classical models (Logistic Regression, SVM) against advanced gradient boosting (LightGBM) and deep learning (Feedforward Neural Networks) to build a robust intrusion detection system.
+                                    This project explores a structured machine-learning workflow to identify these anomalies. By leveraging the CICIDS-2017 benchmark dataset, we compare classical models (Logistic Regression, SVM) against advanced gradient boosting (LightGBM) and deep learning (Feedforward Neural Networks) to build a robust intrusion detection system.
                                 </p>
                             </div>
                             <div>
@@ -268,7 +268,14 @@ export default function IntrusionDetectionProjectPage() {
                                     ))}
                                 </div>
                                 <div className="mt-6">
-                                    {/* Link to source code */}
+                                    <a
+                                        href="https://github.com/mohakapoor/IntrusionDetection"
+                                        target="_blank"
+                                        rel="noreferrer noopener"
+                                        className="spider-noir-button px-6 py-3 border-2 text-lg rounded-lg inline-block"
+                                    >
+                                        View Source Code
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -283,9 +290,9 @@ export default function IntrusionDetectionProjectPage() {
                         {!isSystemHealthy && (
                             <div className="absolute inset-0 z-50 bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center border border-[var(--spider-red)]/50 rounded-lg">
                                 <span className="text-4xl mb-4">⚠️</span>
-                                <h3 className="text-2xl font-bold text-[var(--spider-red)] tracking-widest uppercase mb-2">System Offline</h3>
-                                <p className="text-[var(--dust-gray)] font-mono text-sm max-w-md text-center px-4">
-                                    The prediction API is currently unavailable. Please check back later.
+                                <h3 className="text-5xl font-bold text-[var(--spider-red)] tracking-widest uppercase mb-2">System Offline</h3>
+                                <p className="text-[var(--dust-gray)] font-mono text-lg max-w-3xl text-center px-4">
+                                    This is a self hosted system and is not available 24/7. Please contact me on <a href="mailto:contact.mohakapoor@gmail.com" className="text-[var(--spider-red)] hover:underline">contact.mohakapoor@gmail.com</a> if you want a demo.
                                 </p>
                             </div>
                         )}
@@ -410,15 +417,53 @@ export default function IntrusionDetectionProjectPage() {
                     <div className="glass-card p-5">
                         <div className="grid md:grid-cols-2 gap-8">
                             <div>
-                                <h3 className="text-xl mb-4 text-[var(--vintage-white)]">Model Architecture</h3>
-                                <div className="space-y-3 text-sm text-[var(--dust-gray)]">
-                                    {/* Architecture details */}
+                                <div className="space-y-4">
+                                    {/* Classical Models Sub-card */}
+                                    <div className="bg-[var(--newsprint-white)]/5 p-4 rounded-lg border border-[var(--spider-red)]/20">
+                                        <h4 className="text-[var(--vintage-white)] font-bold mb-2 flex items-center gap-2">
+                                            <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
+                                            Classical & Hybrid
+                                        </h4>
+                                        <ul className="space-y-2 text-sm text-[var(--dust-gray)]">
+                                            <li><strong className="text-white">Logistic Regression (cuML):</strong> GPU-accelerated baseline w/ L2 reg.</li>
+                                            <li><strong className="text-white">SVM (cuML):</strong> Linear kernel for high-dimensional separation.</li>
+                                            <li><strong className="text-white">LightGBM (GPU):</strong> Gradient boosting w/ leaf-wise growth.</li>
+                                        </ul>
+                                    </div>
+
+                                    {/* Deep Learning Sub-card */}
+                                    <div className="bg-[var(--newsprint-white)]/5 p-4 rounded-lg border border-[var(--spider-red)]/20">
+                                        <h4 className="text-[var(--vintage-white)] font-bold mb-2 flex items-center gap-2">
+                                            <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
+                                            Deep Learning
+                                        </h4>
+                                        <p className="text-sm text-[var(--dust-gray)] mb-2">
+                                            <strong className="text-white">Feedforward Neural Network (PyTorch)</strong>
+                                        </p>
+                                        <div className="text-xs text-[var(--dust-gray)] font-mono bg-black/30 p-2 rounded">
+                                            Input → Dense(128) → BN → ReLU → Dropout(0.2) → Dense(64) → Softmax
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+
                             <div>
-                                <h3 className="text-xl mb-4 text-[var(--vintage-white)]">Training Specifications</h3>
-                                <div className="space-y-3 text-sm text-[var(--dust-gray)]">
-                                    {/* Training specs */}
+                                <h3 className="text-xl mb-4 text-[var(--vintage-white)] border-b border-[var(--spider-red)]/30 pb-2">Training Pipeline</h3>
+                                <div className="space-y-4">
+                                    {[
+                                        { title: "Time-Aware Splitting", desc: "Mon–Thu (Train) / Fri (Test) to simulate real-world deployment." },
+                                        { title: "Preprocessing", desc: "Median imputation, Standard Scaling, Incremental PCA (~99% var)." },
+                                        { title: "Imbalance Handling", desc: "Consolidated rare attacks & class-weighted loss functions." },
+                                        { title: "Optimization", desc: "RandomizedSearchCV (LightGBM) & Grid Search (SVM) on Macro-F1." }
+                                    ].map((item, i) => (
+                                        <div key={i} className="flex gap-3 items-start group">
+                                            <div className="mt-1.5 w-1.5 h-1.5 bg-[var(--spider-red)]/50 group-hover:bg-[var(--spider-red)] transform rotate-45 transition-colors"></div>
+                                            <div>
+                                                <strong className="text-[var(--vintage-white)] block text-sm mb-0.5">{item.title}</strong>
+                                                <p className="text-[var(--dust-gray)] text-sm leading-relaxed">{item.desc}</p>
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
                         </div>
@@ -519,17 +564,47 @@ export default function IntrusionDetectionProjectPage() {
                     <h2 className="newspaper-headline text-3xl my-8 animate-slide-left">Dataset & Training</h2>
                     <div className="glass-card p-5">
                         <div className="grid md:grid-cols-2 gap-8">
-                            <div>
-                                <h3 className="text-xl mb-4 text-[var(--vintage-white)]">Data Generation</h3>
-                                <div className="space-y-3 text-sm text-[var(--dust-gray)]">
-                                    {/* Data generation details */}
+                            <div className="flex flex-col h-full">
+                                <h3 className="text-xl mb-4 text-[var(--vintage-white)]">Dataset Overview</h3>
+                                <div className="flex flex-col gap-4 flex-1">
+                                    <div className="p-6 rounded-lg border border-[var(--spider-red)]/20 flex-1 flex flex-col justify-center">
+                                        <h4 className="text-[var(--vintage-white)] font-bold mb-2 text-lg">Source & Scale</h4>
+                                        <p className="text-[var(--dust-gray)] text-base leading-relaxed">
+                                            Leveraging the <strong>CICIDS-2017</strong> benchmark from the Canadian Institute for Cybersecurity.
+                                            Contains <strong>2.8M+ network flows</strong> with ~80 high-dimensional features.
+                                        </p>
+                                    </div>
+                                    <div className="p-6 rounded-lg border border-[var(--spider-red)]/20 flex-1 flex flex-col justify-center">
+                                        <h4 className="text-[var(--vintage-white)] font-bold mb-2 text-lg">Time-Aware Partitioning</h4>
+                                        <p className="text-[var(--dust-gray)] text-base leading-relaxed">
+                                            To prevent look-ahead bias, data is split by time rather than random shuffling:
+                                            <br />
+                                            <span className="text-[var(--spider-red)] font-mono text-sm">Mon-Thu (Train)</span> vs <span className="text-[var(--spider-red)] font-mono text-sm">Fri (Test)</span>.
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                             <div>
                                 <h3 className="text-xl mb-4 text-[var(--vintage-white)]">Training Pipeline</h3>
-                                <div className="space-y-3 text-sm text-[var(--dust-gray)]">
-                                    {/* Pipeline details */}
-                                </div>
+                                <ul className="space-y-3">
+                                    {[
+                                        { title: "Noise Reduction", desc: "Removed constant/near-zero variance features and duplicate columns." },
+                                        { title: "Robust Imputation", desc: "Median-based strategy to handle missing values and infinity without outlier sensitivity." },
+                                        { title: "Feature Extraction", desc: "Incremental PCA reduced dimensionality while retaining 99% of total variance." },
+                                        { title: "Class Downsampling", desc: "Strategically undersampled majority classes to reduce training bias." },
+                                        { title: "Class Balancing", desc: "Applied class weights to penalize misclassification of rare attacks (e.g., Bot, Web Attack)." }
+                                    ].map((step, i) => (
+                                        <li key={i} className="flex gap-3 text-sm text-[var(--dust-gray)]">
+                                            <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[var(--spider-red)]/20 text-[var(--spider-red)] flex items-center justify-center font-mono text-xs border border-[var(--spider-red)]/40">
+                                                {i + 1}
+                                            </span>
+                                            <span>
+                                                <strong className="text-[var(--vintage-white)] block">{step.title}</strong>
+                                                {step.desc}
+                                            </span>
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>
                         </div>
                     </div>
