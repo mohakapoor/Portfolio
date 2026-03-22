@@ -244,23 +244,20 @@ export function FeaturedProject() {
           <div className="flex items-center gap-4 mb-6">
             <div className="w-5 h-[1px] bg-white/15" />
             <span className="text-[10px] uppercase tracking-[0.16em] text-white/20 font-medium">
-              Featured Study
+              Currently working on
             </span>
           </div>
 
           {/* Title */}
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white/92 leading-[1.15] mb-8 max-w-xl">
+          <h2 className="text-5xl md:text-5xl font-bold tracking-tight text-white/92 leading-[1.15] mb-8 max-w-xl">
             <span style={{ color: 'var(--theme-accent)' }}>METR:</span> <br />
             Market Exposure Timing vs Randomness
           </h2>
 
           {/* Description */}
-          <div className="space-y-6 text-[14px] leading-relaxed text-white/40 mb-10 max-w-lg">
+          <div className="space-y-6 text-[20px] leading-relaxed text-white/40 mb-10 max-w-lg">
             <p>
               Can a machine learning model trained purely on historical price/volume data—without any live sentiment, news, macro indicators, or order flow—actually beat random market entries in the long term?
-            </p>
-            <p className="text-[13px] opacity-80">
-              METR is a controlled empirical study designed to isolate true statistical predictive edge from market noise. By restricting models to mathematical market microstructure and forcing a fixed 3-day holding period, the project evaluates whether assets possess predictable short-term inefficiencies.
             </p>
           </div>
 
@@ -284,7 +281,7 @@ export function FeaturedProject() {
             className="group flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.08em] transition-opacity hover:opacity-75"
             style={{ color: 'var(--theme-accent, #cc2936)' }}
           >
-            Explore the Study 
+            Explore more 
             <span className="text-lg transition-transform group-hover:translate-x-1">→</span>
           </a>
         </div>
