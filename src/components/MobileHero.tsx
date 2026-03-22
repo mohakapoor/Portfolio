@@ -31,7 +31,7 @@ export function MobileHero() {
             className="spider-noir-button w-full py-4 border-2 flex items-center justify-center text-sm uppercase tracking-[0.2em] font-bold"
             href="/story"
           >
-            Story
+            Read More
           </Link>
           <a
             className="spider-noir-button w-full py-4 border-2 flex items-center justify-center text-sm uppercase tracking-[0.2em] font-bold bg-white/5"

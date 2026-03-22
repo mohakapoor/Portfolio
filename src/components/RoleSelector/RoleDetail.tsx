@@ -62,7 +62,7 @@ export function RoleDetail({ role }: { role: RoleData }) {
           }}
           href="/story"
         >
-          Story
+          Read More
         </Link>
         <a
           className="spider-noir-button px-10 py-3 border-2 text-sm uppercase tracking-widest font-bold transition-all duration-500"
