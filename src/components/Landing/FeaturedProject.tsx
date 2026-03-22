@@ -29,7 +29,7 @@ function METRDashboard() {
       dataRef.current.push({
         price: basePrice,
         regime: Math.random() > 0.92 ? 'CRISIS' : (Math.random() > 0.75 ? 'TRENDING' : 'CALM'),
-        confidence: 0.52 + Math.random() * 0.08,
+        confidence: 0.61 + Math.random() * 0.08,
       });
     }
   }, []);
