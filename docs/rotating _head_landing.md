@@ -256,10 +256,8 @@ The restraint is the message.
 ```ts
 interface Role {
   label:    string        // "ML Engineer"
-  counter:  string        // "01 / 03"
   color:    string        // primary hex
   colorDim: string        // rgba dimmed variant
   tagline:  string        // 1–2 sentence description
-  tags:     string[]      // skill labels, first 2 get accent treatment
 }
 ```

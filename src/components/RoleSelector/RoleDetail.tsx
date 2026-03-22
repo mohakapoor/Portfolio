@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { RoleData } from "@/data/roles";
+import Link from "next/link";
 
 export function RoleDetail({ role }: { role: RoleData }) {
   const [currentRole, setCurrentRole] = useState(role);
@@ -26,9 +27,9 @@ export function RoleDetail({ role }: { role: RoleData }) {
     <div 
       className={`flex flex-col gap-6 max-w-lg transition-all duration-[350ms] ease-out will-change-transform ${fade}`}
     >
-       <div className="text-[10px] tracking-[0.3em] font-mono text-[#8c8c8c] uppercase">
-         {currentRole.counter}
-       </div>
+       <h1 className="newspaper-headline text-5xl sm:text-6xl md:text-7xl text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] tracking-tight mb-8">
+         Mohak Kapoor
+       </h1>
 
        <h2 className="text-4xl font-bold tracking-tight transition-colors duration-700" style={{ color: currentRole.tokens.primary }}>
          {currentRole.label}
@@ -38,25 +39,28 @@ export function RoleDetail({ role }: { role: RoleData }) {
          {currentRole.tagline}
        </p>
 
-       <div className="w-[28px] h-[2px] transition-colors duration-700" style={{ background: currentRole.tokens.outlineVariant }} />
-
-       <div className="flex flex-wrap gap-2 pt-2">
-         {currentRole.tags.map((tag, i) => {
-           const isPrimary = i < 2;
-           return (
-             <span 
-               key={tag}
-               className="px-3 py-1 rounded-full text-xs font-medium transition-colors duration-700"
-               style={{
-                 border: `1px solid ${isPrimary ? currentRole.tokens.primary + '80' : currentRole.tokens.outlineVariant}`,
-                 color: isPrimary ? currentRole.tokens.primary : '#8c8c8c',
-                 background: isPrimary ? currentRole.tokens.primary + '11' : 'transparent'
-               }}
-             >
-               {tag}
-             </span>
-           );
-         })}
+       <div className="flex flex-wrap gap-4 pt-6">
+         <Link
+           className="spider-noir-button px-10 py-3 border-2 text-sm uppercase tracking-widest font-bold transition-all duration-500"
+           style={{ 
+             borderColor: currentRole.tokens.primary,
+             boxShadow: `0 0 15px ${currentRole.tokens.primary}20`
+           }}
+           href="/story"
+         >
+           Story
+         </Link>
+         <a
+           className="spider-noir-button px-10 py-3 border-2 text-sm uppercase tracking-widest font-bold transition-all duration-500"
+           style={{ 
+             borderColor: currentRole.tokens.primary,
+             boxShadow: `0 0 15px ${currentRole.tokens.primary}20`
+           }}
+           href="/MOHAK_KAPOOR_ML.pdf"
+           download
+         >
+           Resume
+         </a>
        </div>
     </div>
   );

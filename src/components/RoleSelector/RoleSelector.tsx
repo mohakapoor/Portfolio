@@ -7,7 +7,6 @@ import { ThreeScene } from "@/components/RoleSelector/ThreeScene";
 import { RoleDetail } from "@/components/RoleSelector/RoleDetail";
 import { DotNav } from "@/components/RoleSelector/DotNav";
 import { BackgroundLandscape } from "@/components/RoleSelector/BackgroundLandscape";
-import Link from "next/link";
 
 export function RoleSelector() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -62,28 +61,6 @@ export function RoleSelector() {
       <div className="relative w-full md:w-[55%] flex flex-col justify-center p-8 md:p-24 z-10">
 
         {/* Name Header - Rendered directly over the Role Context */}
-        <div className="mb-20">
-          <h1 className="newspaper-headline text-5xl sm:text-6xl md:text-7xl text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] tracking-tight mb-8">
-            Mohak Kapoor
-          </h1>
-          <div className="flex flex-wrap gap-4">
-            <Link
-              className="spider-noir-button px-6 py-3 border-2 text-sm uppercase tracking-widest font-bold"
-              data-cursor-target
-              href="/story"
-            >
-              Story
-            </Link>
-            <a
-              className="spider-noir-button px-6 py-3 border-2 text-sm uppercase tracking-widest font-bold"
-              data-cursor-target
-              href="/MOHAK_KAPOOR_ML.pdf"
-              download="MOHAK_KAPOOR_ML.pdf"
-            >
-              Resume
-            </a>
-          </div>
-        </div>
 
         <RoleDetail role={activeRole} />
       </div>
