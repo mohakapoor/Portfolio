@@ -1,14 +1,78 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export function FeaturedProject() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
+  const visualRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      // Text Animation
+      gsap.fromTo(
+        textRef.current,
+        {
+          y: 60,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1.2,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 85%",
+            end: "bottom 15%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      // Visual Animation
+      gsap.fromTo(
+        visualRef.current,
+        {
+          scale: 0.95,
+          opacity: 0,
+          x: 40,
+        },
+        {
+          scale: 1,
+          opacity: 1,
+          x: 0,
+          duration: 1.2,
+          delay: 0.2,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+            end: "bottom 20%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="relative w-full px-8 py-20 md:px-24 md:py-24 border-b border-white/[0.04] bg-[#0d0d0d]">
+    <section 
+      ref={sectionRef}
+      className="relative w-full px-8 py-20 md:px-24 md:py-24 border-b border-white/[0.04] bg-[#0d0d0d]"
+    >
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-16 items-start">
         
         {/* Text Content */}
-        <div className="flex-1">
+        <div ref={textRef} className="flex-1">
           {/* Eyebrow */}
           <div className="flex items-center gap-4 mb-6">
             <div className="w-5 h-[1px] bg-white/15" />
@@ -54,6 +118,7 @@ export function FeaturedProject() {
 
         {/* Visual Placeholder */}
         <div 
+          ref={visualRef}
           className="w-full md:w-[280px] aspect-[4/5] rounded-xl border border-white/[0.07] bg-white/[0.03] p-6 flex flex-col gap-3 relative overflow-hidden"
         >
           {/* Abstract Grid Blocks */}

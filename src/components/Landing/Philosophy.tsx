@@ -1,10 +1,72 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export function Philosophy() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const pathsRef = useRef<(SVGPathElement | null)[]>([]);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      // Background Waves Animation
+      gsap.fromTo(
+        pathsRef.current,
+        {
+          x: -100,
+          opacity: 0,
+        },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 1.2,
+          stagger: 0.1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+            end: "bottom 20%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      // Content Animation
+      gsap.fromTo(
+        contentRef.current,
+        {
+          y: 40,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 70%",
+            end: "bottom 30%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="relative w-full px-8 py-24 md:py-32 border-b border-white/[0.04] bg-[#0d0d0d] flex justify-center text-center overflow-hidden min-h-[600px]">
+    <section 
+      ref={sectionRef}
+      className="relative w-full px-8 py-24 md:py-32 border-b border-white/[0.04] bg-[#0d0d0d] flex justify-center text-center overflow-hidden min-h-[600px]"
+    >
       
       {/* Papercut Layered Background - High Density Left to Right Sweep */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-30 md:opacity-40">
@@ -13,40 +75,29 @@ export function Philosophy() {
           className="w-full h-full object-cover scale-110"
           preserveAspectRatio="none"
         >
-          {/* Layer 1 - Deepest (Leftmost) */}
-          <path d="M0 0H150C250 200 50 400 200 600C300 750 150 800 150 800H0V0Z" fill="rgba(var(--theme-accent-rgb), 0.03)" />
-          
-          {/* Layer 2 */}
-          <path d="M0 0H300C400 200 200 400 350 600C450 750 300 800 300 800H0V0Z" fill="rgba(var(--theme-accent-rgb), 0.05)"
-            style={{ filter: "drop-shadow(25px 0 35px rgba(0,0,0,0.4))" }} />
-          
-          {/* Layer 3 */}
-          <path d="M0 0H400C500 200 300 400 450 600C550 750 400 800 400 800H0V0Z" fill="rgba(var(--theme-accent-rgb), 0.07)"
-            style={{ filter: "drop-shadow(20px 0 30px rgba(0,0,0,0.5))" }} />
-          
-          {/* Layer 4 */}
-          <path d="M0 0H500C600 200 400 400 550 600C650 750 500 800 500 800H0V0Z" fill="rgba(var(--theme-accent-rgb), 0.09)"
-            style={{ filter: "drop-shadow(15px 0 25px rgba(0,0,0,0.6))" }} />
-          
-          {/* Layer 5 */}
-          <path d="M0 0H600C700 200 500 400 650 600C750 750 600 800 600 800H0V0Z" fill="rgba(var(--theme-accent-rgb), 0.11)"
-            style={{ filter: "drop-shadow(12px 0 20px rgba(0,0,0,0.7))" }} />
-          
-          {/* Layer 6 */}
-          <path d="M0 0H700C800 200 600 400 750 600C850 750 700 800 700 800H0V0Z" fill="rgba(var(--theme-accent-rgb), 0.13)"
-            style={{ filter: "drop-shadow(10px 0 15px rgba(0,0,0,0.75))" }} />
-          
-          {/* Layer 7 */}
-          <path d="M0 0H800C900 200 700 400 850 600C950 750 800 800 800 800H0V0Z" fill="rgba(var(--theme-accent-rgb), 0.15)"
-            style={{ filter: "drop-shadow(8px 0 12px rgba(0,0,0,0.8))" }} />
-            
-          {/* Layer 8 - Closest (Sweeping furthest right) */}
-          <path d="M0 0H900C1000 200 800 400 950 600C1050 750 900 800 900 800H0V0Z" fill="rgba(var(--theme-accent-rgb), 0.18)"
-            style={{ filter: "drop-shadow(5px 0 10px rgba(0,0,0,0.85))" }} />
+          {/* Layers 1-8 */}
+          {[
+            "M0 0H150C250 200 50 400 200 600C300 750 150 800 150 800H0V0Z",
+            "M0 0H300C400 200 200 400 350 600C450 750 300 800 300 800H0V0Z",
+            "M0 0H400C500 200 300 400 450 600C550 750 400 800 400 800H0V0Z",
+            "M0 0H500C600 200 400 400 550 600C650 750 500 800 500 800H0V0Z",
+            "M0 0H600C700 200 500 400 650 600C750 750 600 800 600 800H0V0Z",
+            "M0 0H700C800 200 600 400 750 600C850 750 700 800 700 800H0V0Z",
+            "M0 0H800C900 200 700 400 850 600C950 750 800 800 800 800H0V0Z",
+            "M0 0H900C1000 200 800 400 950 600C1050 750 900 800 900 800H0V0Z"
+          ].map((d, i) => (
+            <path 
+              key={i}
+              ref={(el) => { (pathsRef.current[i] = el); }}
+              d={d} 
+              fill={`rgba(var(--theme-accent-rgb), ${0.03 + i * 0.02})`}
+              style={{ filter: i > 0 ? `drop-shadow(${25 - i * 3}px 0 ${35 - i * 3}px rgba(0,0,0,${0.4 + i * 0.05}))` : "none" }}
+            />
+          ))}
         </svg>
       </div>
 
-      <div className="max-w-[750px] relative z-10 px-4">
+      <div ref={contentRef} className="max-w-[750px] relative z-10 px-4">
         <h2 className="text-3xl md:text-[46px] font-bold tracking-tight text-white/92 leading-[1.15] mb-12">
           Open to <span style={{ color: 'var(--theme-accent)' }}>new challenges</span> and collaborative <br className="hidden md:block" />
           <span className="text-white/40">freelancing projects.</span>
