@@ -1,50 +1,65 @@
 export default function PalettePage() {
   const baseTokens = [
-    { name: "--ink-black",      hex: "#0d0d0d", label: "Ink Black",      use: "Page / body background" },
-    { name: "--charcoal",       hex: "#1a1a1a", label: "Charcoal",       use: "Sidebar, secondary surfaces" },
+    { name: "--ink-black", hex: "#0d0d0d", label: "Ink Black", use: "Page / body background" },
+    { name: "--charcoal", hex: "#1a1a1a", label: "Charcoal", use: "Sidebar, secondary surfaces" },
     { name: "--newsprint-gray", hex: "#2a2a2a", label: "Newsprint Gray", use: "Cards, glass surface base" },
-    { name: "--smoke",          hex: "#404040", label: "Smoke",           use: "Borders, dividers" },
-    { name: "--vintage-white",  hex: "#f5f5dc", label: "Vintage White",  use: "Primary text" },
-    { name: "--dust-gray",      hex: "#8c8c8c", label: "Dust Gray",      use: "Muted / secondary text" },
-    { name: "--sepia-tone",     hex: "#f4ecd8", label: "Sepia Tone",     use: "Decorative callouts (rare)" },
+    { name: "--smoke", hex: "#404040", label: "Smoke", use: "Borders, dividers" },
+    { name: "--vintage-white", hex: "#f5f5dc", label: "Vintage White", use: "Primary text" },
+    { name: "--dust-gray", hex: "#8c8c8c", label: "Dust Gray", use: "Muted / secondary text" },
+    { name: "--sepia-tone", hex: "#f4ecd8", label: "Sepia Tone", use: "Decorative callouts (rare)" },
   ];
 
   const roles = [
     {
       name: "ML Engineer",
-      palette: "Black & Red",
+      palette: "Black & Red · High-Tech Editorial",
+      accent: "#cc2936",
       swatches: [
-        { label: "Accent",       hex: "#cc2936", use: "--accent · title, dots, glow, emissive" },
-        { label: "Accent Dim",   hex: "rgba(204,41,54,0.25)", displayHex: "#cc2936", opacity: 0.25, use: "--accent-dim · pill borders, divider" },
-        { label: "Depth",        hex: "#8b0000", use: "hover / depth states" },
+        { label: "primary", hex: "#cc2936", use: "--accent · Spider Red · glow source, title, CTAs, emissive" },
+        { label: "tertiary", hex: "#e84050", use: "Brighter red punch — secondary glow, index numbers" },
+        { label: "primary_container", hex: "#a01f2a", use: "Darker red — holographic gradient endpoint (5–10% opacity)" },
+        { label: "on_primary", hex: "#ffe8e8", use: "Warm near-white — text on top of primary fills" },
+        { label: "secondary_container", hex: "#474746", use: "Secondary button background (no border)" },
+        { label: "error", hex: "#ff3333", use: "Bright alert red — validation text only, never as bg fill" },
+        { label: "outline_variant", hex: "#484847", use: "Ghost borders at 20% opacity — felt, not seen" },
       ],
     },
     {
       name: "Data Scientist",
-      palette: "Black & Purple",
+      palette: "Black & Pink · High-Tech Editorial",
+      accent: "#ec4899",
       swatches: [
-        { label: "Accent",       hex: "#7c29cc", use: "--accent · title, dots, glow, emissive" },
-        { label: "Accent Dim",   hex: "rgba(124,41,204,0.25)", displayHex: "#7c29cc", opacity: 0.25, use: "--accent-dim · pill borders, divider" },
-        { label: "Depth",        hex: "#4a0080", use: "hover / depth states" },
+        { label: "primary",               hex: "#ec4899", use: "--accent · Pink · glow source, title, CTAs, emissive" },
+        { label: "tertiary",              hex: "#ff7ab9", use: "Brighter pink punch — secondary glow, index numbers" },
+        { label: "primary_container",     hex: "#b8126b", use: "Darker pink — holographic gradient endpoint (5–10% opacity)" },
+        { label: "on_primary",            hex: "#36001a", use: "Deep maroon — text on top of primary fills" },
+        { label: "secondary_container",   hex: "#474746", use: "Secondary button background (no border)" },
+        { label: "error",                 hex: "#ff3333", use: "Bright alert red — validation text only, never as bg fill" },
+        { label: "outline_variant",       hex: "#484847", use: "Ghost borders at 20% opacity — felt, not seen" },
       ],
     },
     {
       name: "AI Engineer",
-      palette: "Black & Cyan",
+      palette: "Black & Cyan · High-Tech Editorial",
+      accent: "#a1faff",
       swatches: [
-        { label: "Accent",       hex: "#29b8cc", use: "--accent · title, dots, glow, emissive" },
-        { label: "Accent Dim",   hex: "rgba(41,184,204,0.25)", displayHex: "#29b8cc", opacity: 0.25, use: "--accent-dim · pill borders, divider" },
-        { label: "Depth",        hex: "#006b7a", use: "hover / depth states" },
+        { label: "primary",               hex: "#a1faff", use: "--accent · Cyan · glow source, title, CTAs, emissive" },
+        { label: "tertiary",              hex: "#4dedff", use: "Brighter cyan punch — secondary glow, index numbers" },
+        { label: "primary_container",     hex: "#00a7b5", use: "Darker cyan — holographic gradient endpoint (5–10% opacity)" },
+        { label: "on_primary",            hex: "#003338", use: "Dark teal — text on top of primary fills" },
+        { label: "secondary_container",   hex: "#474746", use: "Secondary button background (no border)" },
+        { label: "error",                 hex: "#ff3333", use: "Bright alert red — validation text only, never as bg fill" },
+        { label: "outline_variant",       hex: "#484847", use: "Ghost borders at 20% opacity — felt, not seen" },
       ],
     },
   ];
 
   const heatmap = [
     { level: "L0 · No activity", hex: "#0f0f0f" },
-    { level: "L1 · Low",         hex: "#332428" },
-    { level: "L2",               hex: "#56252d" },
-    { level: "L3",               hex: "#7a2b34" },
-    { level: "L4 · High",        hex: "#cc2936" },
+    { level: "L1 · Low", hex: "#332428" },
+    { level: "L2", hex: "#56252d" },
+    { level: "L3", hex: "#7a2b34" },
+    { level: "L4 · High", hex: "#cc2936" },
   ];
 
   return (
@@ -92,14 +107,15 @@ export default function PalettePage() {
                 {role.swatches.map((s) => (
                   <div key={s.label} style={{ display: "flex", alignItems: "center", gap: 12 }}>
                     <div style={{
-                      width: 48, height: 48, borderRadius: 6, flexShrink: 0,
+                      width: 48, height: 48,
+                      borderRadius: 0, flexShrink: 0,
                       background: s.hex,
                       border: "1px solid rgba(255,255,255,0.07)",
-                      boxShadow: `0 0 12px ${s.displayHex ?? s.hex}40`
+                      boxShadow: `0 0 12px ${(s as { displayHex?: string }).displayHex ?? s.hex}40`
                     }} />
                     <div>
                       <div style={{ fontSize: 12, fontWeight: 700, color: "#f5f5dc" }}>{s.label}</div>
-                      <div style={{ fontSize: 11, color: s.displayHex ?? s.hex, fontFamily: "monospace" }}>
+                      <div style={{ fontSize: 11, color: (s as { displayHex?: string }).displayHex ?? s.hex, fontFamily: "monospace" }}>
                         {s.hex}
                       </div>
                       <div style={{ fontSize: 10, color: "#5c5c5c", marginTop: 2 }}>{s.use}</div>
@@ -107,8 +123,31 @@ export default function PalettePage() {
                   </div>
                 ))}
               </div>
+              {/* Surface hierarchy — shown for all roles (obsidian surface stack) */}
+              <div style={{ padding: "10px 16px", borderTop: "1px solid #2a2a2a", background: "#0d0d0d" }}>
+                <div style={{ fontSize: 10, color: "#8c8c8c", marginBottom: 8, letterSpacing: "0.15em", textTransform: "uppercase" }}>Surface Hierarchy (real project tokens)</div>
+                <div style={{ display: "flex", gap: 3 }}>
+                  {[
+                    { label: "L1 ink-black", hex: "#0d0d0d", token: "--ink-black" },
+                    { label: "L2 charcoal", hex: "#1a1a1a", token: "--charcoal" },
+                    { label: "L3 newsprint", hex: "#2a2a2a", token: "--newsprint-gray" },
+                    { label: "L4 glass", hex: "rgba(255,255,255,0.03)", renderHex: "#0f0f0f", token: ".glass-card" },
+                    { label: "L5 smoke", hex: "#404040", token: "--smoke" },
+                  ].map((s) => (
+                    <div key={s.label} style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4, alignItems: "center" }}>
+                      <div style={{ width: "100%", height: 28, background: s.renderHex ?? s.hex, border: `1px solid ${role.accent}22` }} />
+                      <div style={{ fontSize: 8, color: "#494847", textAlign: "center", lineHeight: 1.3 }}>{s.label}</div>
+                      <div style={{ fontSize: 7, color: "#333", fontFamily: "monospace", textAlign: "center" }}>{s.token}</div>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ marginTop: 10, fontSize: 10, color: "#494847", lineHeight: 1.7 }}>
+                  <span style={{ color: "#4a4" }}>✓</span> Accent glow: <code style={{ color: role.accent, fontSize: 9 }}>box-shadow: 0 0 20px rgba(accent, 0.15)</code><br />
+                  <span style={{ color: "#a44" }}>✗</span> Black shadow: <code style={{ color: "#444", fontSize: 9 }}>box-shadow: 0 10px 24px rgba(0,0,0,0.45)</code>
+                </div>
+              </div>
               {/* Accent preview bar */}
-              <div style={{ height: 4, background: role.swatches[0].hex }} />
+              <div style={{ height: 4, background: role.accent }} />
             </div>
           ))}
         </div>
@@ -117,7 +156,7 @@ export default function PalettePage() {
       {/* ── Side-by-side accent comparison ──────────────────────── */}
       <section style={{ marginBottom: 56 }}>
         <h2 style={{ fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: "#8c8c8c", marginBottom: 20, borderBottom: "1px solid #2a2a2a", paddingBottom: 8 }}>
-          Accent Comparison — same HSL saturation &amp; lightness, hue only changes
+          Accent Comparison — three role primaries side by side
         </h2>
         <div style={{ display: "flex", gap: 0, borderRadius: 10, overflow: "hidden", height: 80, border: "1px solid #2a2a2a" }}>
           {roles.map((role) => (
@@ -130,8 +169,8 @@ export default function PalettePage() {
                 flexDirection: "column", gap: 2,
               }}
             >
-              <span style={{ fontSize: 11, fontWeight: 700, color: "#0d0d0d", opacity: 0.85 }}>{role.name}</span>
-              <span style={{ fontSize: 10, color: "#0d0d0d", opacity: 0.6, fontFamily: "monospace" }}>{role.swatches[0].hex}</span>
+              <span style={{ fontSize: 11, fontWeight: 700, color: role.name === "AI Engineer" ? "#006165" : "#ffe8e8", opacity: 0.9 }}>{role.name}</span>
+              <span style={{ fontSize: 10, color: role.name === "AI Engineer" ? "#006165" : "#ffe8e8", opacity: 0.6, fontFamily: "monospace" }}>{role.accent}</span>
             </div>
           ))}
         </div>
@@ -152,47 +191,6 @@ export default function PalettePage() {
               </div>
             </div>
           ))}
-        </div>
-      </section>
-
-      {/* ── Glass card preview ──────────────────────────────────── */}
-      <section style={{ marginBottom: 56 }}>
-        <h2 style={{ fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: "#8c8c8c", marginBottom: 20, borderBottom: "1px solid #2a2a2a", paddingBottom: 8 }}>
-          Component Previews
-        </h2>
-        <div style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "flex-start" }}>
-          {/* Glass card */}
-          <div className="glass-card" style={{ padding: "20px 24px", minWidth: 200 }}>
-            <div style={{ fontSize: 12, color: "#8c8c8c", marginBottom: 4 }}>glass-card</div>
-            <div style={{ fontSize: 15, color: "#f5f5dc" }}>Surface layer</div>
-            <div style={{ marginTop: 10, display: "flex", gap: 6, flexWrap: "wrap" }}>
-              <span className="tag">tag pill</span>
-              <span className="tag">another tag</span>
-            </div>
-          </div>
-          {/* Buttons */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            <button className="spider-noir-button" style={{ padding: "10px 24px", border: "2px solid", borderRadius: 4, cursor: "pointer", fontSize: 13 }}>
-              spider-noir-button
-            </button>
-            {roles.map((role) => (
-              <button
-                key={role.name}
-                style={{
-                  padding: "8px 20px", border: `2px solid ${role.swatches[0].hex}`,
-                  borderRadius: 4, background: "#2a2a2a", color: role.swatches[0].hex,
-                  cursor: "pointer", fontSize: 12, fontFamily: "monospace",
-                }}
-              >
-                {role.name} accent
-              </button>
-            ))}
-          </div>
-          {/* Glow preview */}
-          <div style={{ position: "relative", width: 160, height: 120, background: "#0d0d0d", borderRadius: 8, border: "1px solid #2a2a2a", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <div style={{ position: "absolute", inset: 0, background: "#cc2936", opacity: 0.3, filter: "blur(40px)", borderRadius: "50%", transform: "scale(0.6) translateY(30px)" }} />
-            <span style={{ position: "relative", fontSize: 11, color: "#8c8c8c" }}>glow preview</span>
-          </div>
         </div>
       </section>
 

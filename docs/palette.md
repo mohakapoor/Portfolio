@@ -114,72 +114,157 @@ The active palette is applied via two CSS custom properties on the root element:
 
 > These two variables are **landing page only**. Story and projects pages always use `--spider-red` directly.
 
+### Shared Surface Hierarchy (from `globals.css`)
+
+All three role palettes use the same dark base. The surface stack is already in the project — these are the real tokens.
+
+```
+L1 — Page / body      --ink-black  #0d0d0d    html, body background
+L2 — Drawer / nav     --charcoal   #1a1a1a    .glass-nav (rgba(42,42,42,0.85) + backdrop-blur)
+L3 — Button resting   --newsprint-gray  #2a2a2a   .spider-noir-button default bg, solid
+L4 — Glass surface    rgba(255,255,255,0.03)   .glass-card — frosted lift above L1
+                      backdrop-filter: blur(10px) saturate(120%)
+                      border: 1px solid rgba(--accent, 0.25)
+L5 — Hard borders     --smoke  #404040   use sparingly — only for hard section breaks
+```
+
+**Shadow rule — no pure black shadows:**
+```css
+/* ✓ Correct — accent-tinted glow (ML Engineer example) */
+box-shadow: 0 0 20px rgba(204, 41, 54, 0.15), 0 10px 40px rgba(204, 41, 54, 0.08);
+
+/* ✗ Wrong — dead grey/black shadow */
+box-shadow: 0 10px 24px rgba(0,0,0,0.45);
+```
+
+Each role's glow just swaps the RGB values to match its `--accent`.
+
 ---
 
-#### Palette 1 — ML Engineer · Black & Red
+#### Palette 1 — ML Engineer · Black & Red (High-Tech Editorial)
 
-The primary palette. Uses the existing Spider-Man Noir color system — no new colors introduced.
+Obsidian foundation with **Spider Red** (`#cc2936`) as the neon glow source. All supporting tokens derived from the same red family — no hue deviation. The design language: precise, cold, editorial. A live terminal into an intelligence network.
+
+**Design North Star:** High contrast, intentional asymmetry. Depth through glows, not shadows.
+
+##### Color Tokens
 
 ```
-Base:    --ink-black  #0d0d0d
-Surface: --newsprint-gray  #2a2a2a
-Accent:  #cc2936   (HSL 354°, 67%, 48%)
-Dim:     rgba(204, 41, 54, 0.25)
-Depth:   #8b0000   (--deep-crimson, hover/depth states)
+primary:                  #cc2936   ← --accent · Spider Red · glow source, title, CTAs, emissive
+tertiary:                 #e84050   ← brighter red punch — secondary glow, index numbers (001, 002)
+primary_container:        #a01f2a   ← darker red — holographic gradient endpoint (5–10% opacity)
+on_primary:               #ffe8e8   ← warm near-white — text on top of primary fills
+secondary_container:      #474746   ← neutral dark — secondary button background (no border)
+error:                    #ff3333   ← bright alert red — validation text only, distinct from pink/red accents
+outline_variant:          #484847   ← ghost borders at 20% opacity (felt, not seen)
+
+Surface hierarchy: → see shared surface hierarchy above. Same tokens, accent color swaps.
 ```
+
+##### Role Selector Slots
 
 | Slot | Value |
 |---|---|
 | `--accent` | `#cc2936` |
 | `--accent-dim` | `rgba(204,41,54,0.25)` |
-| Role title text | `--accent` |
-| Active dot | `--accent` |
-| Tag pill border (first 2) | `--accent-dim` |
-| Divider line | `--accent-dim` |
-| Mesh emissive | `--accent` at 0.12 multiplier |
-| Point light | `--accent` |
-| Bottom glow | `--accent` at 0.3 opacity |
-| Top glow | `--accent` at 0.07 opacity |
+| Depth (hover/glow) | `#a01f2a` (primary_container) |
+| Mesh emissive | `#cc2936` at 0.12 multiplier |
+| Point light | `#cc2936` |
+| Bottom glow | `#cc2936` at 0.3 opacity + 90px blur |
+| Top glow | `#cc2936` at 0.07 opacity |
+| Active dot | `#cc2936` |
+| Role title | `#cc2936` |
+| Divider line | `rgba(204,41,54,0.25)` |
+| Tag pill border (first 2) | `rgba(204,41,54,0.25)` |
+
+##### Key Rules (High-Tech Editorial)
+
+- **No grey/black shadows** — floating elements use accent glow: `box-shadow: 0 0 20px rgba(accent, 0.15)`. No `rgba(0,0,0)` shadows.
+- **Ghost border** on inputs: `outline_variant` (#484847) at 20% opacity — a hairline, not a wall.
+- **Signature Texture** — radial gradients from `primary` → `primary_container` at 5–10% opacity behind key text.
+- **`error` (#ff3333) must be clearly distinct from primary** — bright alert red so it reads as validation, not an accent.
 
 ---
 
-#### Palette 2 — Data Scientist · Black & Purple
+#### Palette 2 — Data Scientist · Black & Pink (High-Tech Editorial)
 
-Derived from Palette 1 by rotating hue to 270° (purple), keeping saturation and lightness identical.
+Obsidian foundation with **Pink** (`#ec4899`) as the neon glow source. All supporting tokens derived from the same pink family — no hue deviation.
+
+**Design North Star:** High contrast, intentional asymmetry. Depth through glows, not shadows.
+
+##### Color Tokens
 
 ```
-Base:    --ink-black  #0d0d0d
-Surface: --newsprint-gray  #2a2a2a
-Accent:  #7c29cc   (HSL 270°, 67%, 48%)
-Dim:     rgba(124, 41, 204, 0.25)
-Depth:   #4a0080   (deep purple, hover/depth states)
+primary:                  #ec4899   ← --accent · Pink · glow source, title, CTAs, emissive
+tertiary:                 #ff7ab9   ← brighter pink punch — secondary glow, index numbers (001, 002)
+primary_container:        #b8126b   ← darker pink — holographic gradient endpoint (5–10% opacity)
+on_primary:               #36001a   ← deep maroon — text on top of primary fills
+secondary_container:      #474746   ← neutral dark — secondary button background (no border)
+error:                    #ff3333   ← bright alert red — validation text only, distinct from pink/red accents
+outline_variant:          #484847   ← ghost borders at 20% opacity (felt, not seen)
+
+Surface hierarchy: → see shared surface hierarchy above. Same tokens, accent color swaps.
 ```
+
+##### Role Selector Slots
 
 | Slot | Value |
 |---|---|
-| `--accent` | `#7c29cc` |
-| `--accent-dim` | `rgba(124,41,204,0.25)` |
-| All other slots | Same as Palette 1, values just swap to purple |
+| `--accent` | `#ec4899` |
+| `--accent-dim` | `rgba(236,72,153,0.20)` |
+| Depth (hover/glow) | `#b8126b` (primary_container) |
+| Mesh emissive | `#ec4899` at 0.12 multiplier |
+| Point light | `#ec4899` |
+| Bottom glow | `#ec4899` at 0.3 opacity + 90px blur |
+| Top glow | `#ec4899` at 0.07 opacity |
+| Active dot | `#ec4899` |
+| Role title | `#ec4899` |
+| Divider line | `rgba(236,72,153,0.20)` |
 
 ---
 
-#### Palette 3 — AI Engineer · Black & Cyan
+#### Palette 3 — AI Engineer · Black & Cyan (High-Tech Editorial)
 
-Derived from Palette 1 by rotating hue to 183° (cyan), keeping saturation and lightness identical.
+Obsidian foundation with **Cyan** (`#a1faff`) as the neon glow source. All supporting tokens derived from the same cyan family — no hue deviation.
+
+**Design North Star:** High contrast, intentional asymmetry. Depth through glows, not shadows.
+
+##### Color Tokens
 
 ```
-Base:    --ink-black  #0d0d0d
-Surface: --newsprint-gray  #2a2a2a
-Accent:  #29b8cc   (HSL 183°, 67%, 48%)
-Dim:     rgba(41, 184, 204, 0.25)
-Depth:   #006b7a   (deep teal, hover/depth states)
+primary:                  #a1faff   ← --accent · Cyan · glow source, title, CTAs, emissive
+tertiary:                 #4dedff   ← brighter cyan punch — secondary glow, index numbers (001, 002)
+primary_container:        #00a7b5   ← darker cyan — holographic gradient endpoint (5–10% opacity)
+on_primary:               #003338   ← dark teal — text on top of primary fills
+secondary_container:      #474746   ← neutral dark — secondary button background (no border)
+error:                    #ff3333   ← bright alert red — validation text only, distinct from pink/red accents
+outline_variant:          #484847   ← ghost borders at 20% opacity (felt, not seen)
+
+Surface hierarchy: → see shared surface hierarchy above. Same tokens, accent color swaps.
 ```
+
+##### Role Selector Slots
 
 | Slot | Value |
 |---|---|
-| `--accent` | `#29b8cc` |
-| `--accent-dim` | `rgba(41,184,204,0.25)` |
-| All other slots | Same as Palette 1, values just swap to cyan |
+| `--accent` | `#a1faff` |
+| `--accent-dim` | `rgba(161,250,255,0.20)` |
+| Depth (hover/glow) | `#00a7b5` (primary_container) |
+| Mesh emissive | `#a1faff` at 0.12 multiplier |
+| Point light | `#a1faff` |
+| Bottom glow | `#a1faff` at 0.3 opacity + 90px blur |
+| Top glow | `#a1faff` at 0.07 opacity |
+| Active dot | `#a1faff` |
+| Role title | `#a1faff` |
+| Divider line | `rgba(161,250,255,0.20)` |
+| Tag pill border (first 2) | `rgba(161,250,255,0.20)` |
+
+##### Key Rules (High-Tech Editorial)
+
+- **No grey/black shadows** — floating elements use accent glow: `box-shadow: 0 0 20px rgba(accent, 0.15)`. No `rgba(0,0,0)` shadows.
+- **Ghost border** on inputs: `outline_variant` (#484847) at 20% opacity — a hairline, not a wall.
+- **Signature Texture** — radial gradients from `primary` → `primary_container` at 5–10% opacity behind key text.
+- **`error` (#ff3333) must be clearly distinct from primary** — bright alert red so it reads as validation, not an accent.
 
 ---
 
@@ -187,9 +272,9 @@ Depth:   #006b7a   (deep teal, hover/depth states)
 
 | Role | `--accent` | `--accent-dim` | Depth |
 |---|---|---|---|
-| ML Engineer | `#cc2936` | `rgba(204,41,54,0.25)` | `#8b0000` |
-| Data Scientist | `#7c29cc` | `rgba(124,41,204,0.25)` | `#4a0080` |
-| AI Engineer | `#29b8cc` | `rgba(41,184,204,0.25)` | `#006b7a` |
+| ML Engineer | `#cc2936` | `rgba(204,41,54,0.25)` | `#a01f2a` |
+| Data Scientist | `#ec4899` | `rgba(236,72,153,0.20)` | `#b8126b` |
+| AI Engineer | `#a1faff` | `rgba(161,250,255,0.20)` | `#00a7b5` |
 
 ---
 
