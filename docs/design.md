@@ -73,6 +73,31 @@ src/
 - Responsive design with mobile-first approach
 - Glass morphism cards for navigation
 
+## 🧠 Landing Page Role System
+
+### **The "Rotating Head" Core**
+The landing page revolves around an interactive 3D head (`/head.glb`) that acts as a persona toggle. 
+
+- **Component**: `src/components/RoleSelector/RoleSelector.tsx`
+- **Engine**: **React Three Fiber** (`ThreeScene.tsx`) handles the GLTF rendering.
+- **Interaction**: 
+  - **Auto-rotation**: The head spins continuously by default.
+  - **Snapping**: Clicking the head locks it to a front-facing "snapped" state for reading role details and navigating to the Story page.
+  - **Auto-Sync**: Completing a full rotation (detected via Y-rotation threshold) automatically increments the index to the next role in `src/data/roles.ts`.
+
+### **Dynamic Theming Engine**
+Every role/persona (Trader, Quant, Developer) comes with a set of "Theme Tokens" (`primary`, `secondary`, `tertiary`) that are injected into the DOM as CSS variables.
+
+- **Variable Injection**: `BackgroundLandscape.tsx` updates `document.documentElement.style` with colors like `--theme-primary` and `--theme-accent` whenever the `activeIndex` changes.
+- **Global Stylings**: Components across the site (the "Read More" button, METR charts, grid streams) use these variables, allowing for an instant, unified aesthetic shift.
+
+### **Component Architecture**
+1. **`RoleSelector`**: Parent state container for the active index and lock state.
+2. **`ThreeScene`**: The 3D viewport, lighting, and snappy rotation logic.
+3. **`BackgroundLandscape`**: Renders the blurred background image layers and handles theme injection.
+4. **`RoleDetail`**: Renders the "Story" (Read More) text and CTA for the current role.
+5. **`DotNav`**: Pagination indicator for the role sequence.
+
 ### **2. Story Page (`/story`)**
 **Purpose**: Personal narrative and featured projects
 
@@ -232,6 +257,27 @@ GITHUB_USERNAME=yourusername             # Your GitHub username
 - **Manual Topics**: Requires manual topic management on GitHub
 - **Language Bias**: Heavily weighted toward primary language
 - **Edge Cases**: Some repos may be miscategorized
+
+## 🏗️ Isometric Microstructure System (METR)
+
+### **Design Concept**
+Visualizes the **Market Exposure Timing vs Randomness (METR)** study as a live, 3D market floor. The background consists of a large-scale isometric grid that simulates the deterministic "microstructure" of a high-frequency trading environment.
+
+### **Technical Breakdown**
+- **Isometric Logic**: Uses CSS `transform: perspective(1200px) rotateX(55deg) rotateZ(-45deg)` on a dual-scale SVG container to create a deep, receding floor effect.
+- **GSAP Data Streams**: Specific SVG paths are animated using `stroke-dashoffset` to simulate "data packets" pulsing through the grid along the isometric axes.
+- **Theme Sync**: Stroke colors and glow effects (`drop-shadow`) are linked to the `--theme-accent` variable, allowing the background to respond to persona shifts.
+
+### **Mishaps & Lessons Learned**
+1. **Z-Index Masking**: 
+    - **Problem**: Placing a background with `-z-10` inside a `relative` container with a `bg-color` often renders the background invisible because the parent's fill is layered *above* its negative-z children.
+    - **Fix**: Set the parent `section` to `bg-transparent` and move the background fill (`bg-[#0d0d0d]`) into the background component itself at `z-0`, while elevating content to `z-10`.
+2. **Opacity Compounding**: 
+    - **Problem**: Low opacity on a container (`0.2`) multiplied by low opacity on a stroke (`0.1`) results in total invisibility (~2% net opacity).
+    - **Fix**: Boost container base opacity to at least `0.4` and use stronger stroke weights (`1.5px+`) for foreground depth.
+3. **SVG Measurement Timing**:
+    - **Problem**: `getTotalLength()` can return `0` if called before the SVG has fully rendered.
+    - **Fix**: Use a fallback value (e.g., `1000`) in the GSAP initialization to prevent animation "deadlocking".
 
 ## 🔮 Future Enhancements
 
