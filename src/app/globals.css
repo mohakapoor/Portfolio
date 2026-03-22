@@ -369,6 +369,6 @@ body {
 /* Use landscape background for wider screens */
 @media (min-width: 768px) {
   .noir-hero::before {
-    background: url('/bg_landscape.png') center / cover no-repeat;
+    background: url('/bg_landscape1.png') center / cover no-repeat;
   }
 }

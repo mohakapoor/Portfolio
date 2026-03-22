@@ -90,7 +90,7 @@ function METRDashboard() {
 
       // 3. Draw Price Line (Scanning Reveal)
       const scanIndex = (Math.abs(frameRef.current) * 2.5) % data.length;
-      
+
       const prices = data.map(d => d.price);
       const min = Math.min(...prices) - 10;
       const max = Math.max(...prices) + 10;
@@ -181,6 +181,98 @@ function METRDashboard() {
   );
 }
 
+function IsometricBackground() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const pathsRef = useRef<SVGPathElement[]>([]);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    // Pulse animation for the "data streams"
+    const ctx = gsap.context(() => {
+      pathsRef.current.forEach((path, i) => {
+        if (!path) return;
+        const length = path.getTotalLength() || 1000;
+        
+        // Initial state
+        gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
+
+        // Continuous flow
+        gsap.to(path, {
+          strokeDashoffset: -length,
+          duration: 3 + i * 2,
+          repeat: -1,
+          ease: "none",
+          delay: i * 0.5,
+        });
+
+        // Opacity pulse
+        gsap.to(path, {
+          opacity: 1,
+          duration: 1.5,
+          repeat: -1,
+          yoyo: true,
+          ease: "power1.inOut",
+          delay: i * 0.8
+        });
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <div 
+      ref={containerRef}
+      className="absolute inset-0 overflow-hidden pointer-events-none z-0 bg-[#0d0d0d] select-none"
+    >
+      <div 
+        className="absolute inset-0 w-[200%] h-[200%] -left-1/2 -top-1/2 opacity-40"
+        style={{
+          transform: 'perspective(1200px) rotateX(55deg) rotateZ(-45deg)',
+          transformStyle: 'preserve-3d'
+        }}
+      >
+        <svg 
+          width="100%" 
+          height="100%" 
+          viewBox="0 0 1000 1000" 
+          fill="none" 
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          {/* Base Grid */}
+          <defs>
+            <pattern id="isoGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#isoGrid)" />
+
+          {/* Data Streams */}
+          {[
+            "M 100 0 V 1000", "M 300 0 V 1000", "M 500 0 V 1000", "M 700 0 V 1000", "M 900 0 V 1000",
+            "M 0 200 H 1000", "M 0 400 H 1000", "M 0 600 H 1000", "M 0 800 H 1000"
+          ].map((d, i) => (
+            <path
+              key={i}
+              ref={el => { if (el) pathsRef.current[i] = el; }}
+              d={d}
+              stroke="var(--theme-accent)"
+              strokeWidth="2"
+              opacity="0.3"
+              style={{ filter: 'drop-shadow(0 0 4px var(--theme-accent))' }}
+            />
+          ))}
+        </svg>
+      </div>
+      
+      {/* Background Gradient Falloff */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0d0d0d] via-transparent to-[#0d0d0d] pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#0d0d0d] via-transparent to-[#0d0d0d] pointer-events-none" />
+    </div>
+  );
+}
+
 export function FeaturedProject() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
@@ -234,9 +326,10 @@ export function FeaturedProject() {
   return (
     <section 
       ref={sectionRef}
-      className="relative w-full px-8 py-20 md:px-24 md:py-24 border-b border-white/[0.04] bg-[#0d0d0d]"
+      className="relative w-full px-8 py-20 md:px-24 md:py-24 border-b border-white/[0.04] bg-transparent overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-16 items-start">
+      <IsometricBackground />
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-16 items-start relative z-10">
         
         {/* Text Content */}
         <div ref={textRef} className="flex-1">
