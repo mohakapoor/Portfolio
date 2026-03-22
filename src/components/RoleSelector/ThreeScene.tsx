@@ -25,24 +25,25 @@ function RotatingHead({ roles, activeIndex, isLocked, setIsLocked, onChangeRole 
     return clone;
   }, [scene]);
 
-  // Synchronize materials with High-Tech Editorial active tertiary token
+  // Synchronize materials with a high-contrast dark base for light interaction
   useEffect(() => {
     clonedScene.traverse((child) => {
       if ((child as THREE.Mesh).isMesh) {
          const mesh = child as THREE.Mesh;
          
-          // Create the High-Tech Editorial emissive material
+          // Sculpted material for high shadow contrast
           mesh.material = new THREE.MeshStandardMaterial({
-            color: new THREE.Color("#050505"),
+            color: new THREE.Color("#383838"),
             emissive: new THREE.Color(activeRole.tokens.tertiary),
-            emissiveIntensity: 3.0, 
-            roughness: 0.5, 
-            metalness: 0.5,
-            flatShading: true,
+            emissiveIntensity: 1,
+            roughness: 0.8, // Matte for maximum contrast
+            metalness: 0.2,
+            flatShading: true, // Smooth shading for sculpted look
           });
       }
     });
   }, [clonedScene, activeRole]);
+
 
   // Track previous rotation and elapsed time for animations without Clock deprecations
   const prevRotationYRef = useRef(0);
@@ -124,17 +125,20 @@ export function ThreeScene(props: ThreeSceneProps) {
   return (
     <div className="w-full h-full cursor-pointer touch-none">
       <Canvas camera={{ position: [0, 0, 5], fov: 40 }} dpr={[1, 2]}>
-        {/* Low ambient — keep it dark so directionals do the work */}
-        <ambientLight intensity={0.12} />
+        {/* Very low ambient — dark base is essential */}
+        <ambientLight intensity={0.05} />
 
-        {/* Key light — above, offset to one side, strong */}
-        <directionalLight position={[3, 5, 4]} intensity={1.6} />
+        {/* Key light — high and to the side, this is what carves the face */}
+        <directionalLight position={[-2, 8, 3]} intensity={2.8} />
 
-        {/* Fill light — opposite side, much weaker, softens harsh shadows */}
-        <directionalLight position={[-4, 1, 3]} intensity={0.35} />
+        {/* Brow/eye definition light — above the face, slightly forward */}
+        <directionalLight position={[0, 6, 2]} intensity={1.2} />
 
-        {/* Rim light — from behind/below, separates head from background */}
-        <directionalLight position={[0, -3, -4]} intensity={0.7} />
+        {/* Weak front fill — just enough to see into the shadows */}
+        <directionalLight position={[0, 0, 6]} intensity={0.25} />
+
+        {/* Rim — separates from background */}
+        <directionalLight position={[0, -1, -5]} intensity={1.1} />
         <Center>
           <React.Suspense fallback={
             <Html center>
