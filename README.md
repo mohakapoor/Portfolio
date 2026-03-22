@@ -44,16 +44,11 @@ portfolio-noir/
 - **Animations:** GSAP (ScrollTrigger)
 - **Styling:** Tailwind CSS + Custom Token System
 - **Language:** TypeScript
-- **Deployment:** [Your deployment platform]
+- **Deployment:** Vecel
 
 ## 📄 Documentation
 
 For a deep dive into the architecture, isometric mishaps, and theming engine, see: [**docs/design.md**](./docs/design.md)
 
-## 📄 License
-
-[Your license information]
-
----
 
 **Note:** Update the deployment URL and repository information as needed.
