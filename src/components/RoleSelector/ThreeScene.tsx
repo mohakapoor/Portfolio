@@ -1,10 +1,23 @@
 "use client";
 
 import React, { useRef, useState, useEffect, useMemo } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useGLTF, Html, Center, Wireframe } from "@react-three/drei";
 import * as THREE from "three";
 import { RoleData } from "@/data/roles";
+import { gsap } from "gsap";
+
+function CameraEntrance() {
+  const { camera } = useThree();
+  useEffect(() => {
+    // Cinematic Zoom-in Reveal
+    gsap.fromTo(camera.position, 
+      { z: 12 }, 
+      { z: 5, duration: 2.5, ease: "expo.out", delay: 0.2 }
+    );
+  }, [camera]);
+  return null;
+}
 
 interface ThreeSceneProps {
   roles: RoleData[];
@@ -29,17 +42,17 @@ function RotatingHead({ roles, activeIndex, isLocked, setIsLocked, onChangeRole 
   useEffect(() => {
     clonedScene.traverse((child) => {
       if ((child as THREE.Mesh).isMesh) {
-         const mesh = child as THREE.Mesh;
-         
-          // Sculpted material for high shadow contrast
-          mesh.material = new THREE.MeshStandardMaterial({
-            color: new THREE.Color("#383838"),
-            emissive: new THREE.Color(activeRole.tokens.tertiary),
-            emissiveIntensity: 0.9,
-            roughness: 0.7, // Matte for maximum contrast
-            metalness: 0.3,
-            flatShading: true, // Smooth shading for sculpted look
-          });
+        const mesh = child as THREE.Mesh;
+
+        // Sculpted material for high shadow contrast
+        mesh.material = new THREE.MeshStandardMaterial({
+          color: new THREE.Color("#383838"),
+          emissive: new THREE.Color(activeRole.tokens.tertiary),
+          emissiveIntensity: 0.9,
+          roughness: 0.7, // Matte for maximum contrast
+          metalness: 0.3,
+          flatShading: true, // Smooth shading for sculpted look
+        });
       }
     });
   }, [clonedScene, activeRole]);
@@ -49,74 +62,78 @@ function RotatingHead({ roles, activeIndex, isLocked, setIsLocked, onChangeRole 
   const prevRotationYRef = useRef(0);
   const elapsedTimeRef = useRef(0);
   const activeIndexRef = useRef(activeIndex);
-  
+
   useEffect(() => {
     activeIndexRef.current = activeIndex;
   }, [activeIndex]);
 
   useFrame((state, delta) => {
     elapsedTimeRef.current += delta;
-    
+
     if (groupRef.current) {
       const TWO_PI = Math.PI * 2;
-      
+      const mouseX = state.mouse.x * 0.25; // Subtle tracking
+      const mouseY = state.mouse.y * 0.2;
+
       if (!isLocked) {
         // 1. Continuous Auto-rotation
-        groupRef.current.rotation.y += delta * 0.8; 
+        groupRef.current.rotation.y += delta * 0.8;
         
         // Normalize for math stability
         const currentY = ((groupRef.current.rotation.y % TWO_PI) + TWO_PI) % TWO_PI;
         groupRef.current.rotation.y = currentY;
 
-        // 2. Full Rotation Trigger: If we jumped from ~2π back to ~0, increment role
+        // 2. Full Rotation Trigger
         if (currentY < prevRotationYRef.current && prevRotationYRef.current > 4.5) {
           const nextIdx = (activeIndexRef.current + 1) % roles.length;
           onChangeRole(nextIdx);
         }
-        
+
         prevRotationYRef.current = currentY;
+        
+        // Subtle tilt even during rotation
+        groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, -mouseY * 0.5, delta * 2);
       } else {
-        // 3. Front-Facing Snapping (Target is Always 0 for all roles now)
+        // 3. Front-Facing Snapping + Mouse Gaze
         const currentY = ((groupRef.current.rotation.y % TWO_PI) + TWO_PI) % TWO_PI;
         groupRef.current.rotation.y = currentY;
 
-        const targetRotY = activeRole.rotationY; // This is now 0 for all roles
+        const targetRotY = activeRole.rotationY; 
         const diff = Math.atan2(Math.sin(targetRotY - currentY), Math.cos(targetRotY - currentY));
         
-        groupRef.current.rotation.y += diff * 10.0 * delta;
-        
-        if (Math.abs(diff) < 0.001) {
-          groupRef.current.rotation.y = targetRotY;
-        }
+        // Combine snappy rotation with subtle gaze
+        groupRef.current.rotation.y += (diff * 10.0 + mouseX) * delta;
+        groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, -mouseY, delta * 2);
         
         prevRotationYRef.current = groupRef.current.rotation.y;
       }
-      
-      // Floating animation (sine wave Y drift) using the non-deprecated ref
-      groupRef.current.position.y = Math.sin(elapsedTimeRef.current * 1.2) * 0.08;
+
+      // Organic Floating & Breathing
+      groupRef.current.position.y = Math.sin(elapsedTimeRef.current * 1.5) * 0.12;
+      groupRef.current.position.x = Math.cos(elapsedTimeRef.current * 0.8) * 0.06;
     }
   });
 
   return (
-    <group 
+    <group
       position={[0, 0, 0]}
       onClick={(e) => {
         e.stopPropagation();
         setIsLocked(!isLocked);
       }}
     >
-       <group ref={groupRef}>
-         <primitive object={clonedScene} scale={5.4} position-y={-0.4} />
-       </group>
+      <group ref={groupRef}>
+        <primitive object={clonedScene} scale={5.4} position-y={-0.4} />
+      </group>
 
-       {/* Subtle role-tinting point light */}
-       <pointLight position={[0, 1, 4]} color={activeRole.tokens.tertiary} intensity={1.2} distance={20} />
-       
-       <Html position={[0, -2.5, 0]} center zIndexRange={[100, 0]}>
-         <div className="text-[10px] uppercase tracking-[0.2em] text-[#666] whitespace-nowrap opacity-60 select-none cursor-pointer hover:opacity-100 transition-opacity">
-           {isLocked ? "locked · click to resume auto-rotation" : "auto-rotating · click model to lock"}
-         </div>
-       </Html>
+      {/* Subtle role-tinting point light */}
+      <pointLight position={[0, 1, 4]} color={activeRole.tokens.tertiary} intensity={1.2} distance={20} />
+
+      <Html position={[0, -2.5, 0]} center zIndexRange={[100, 0]}>
+        <div className="text-[10px] uppercase tracking-[0.2em] text-[#666] whitespace-nowrap opacity-60 select-none cursor-pointer hover:opacity-100 transition-opacity">
+          {isLocked ? "locked · click to resume auto-rotation" : "auto-rotating · click model to lock"}
+        </div>
+      </Html>
     </group>
   );
 }
@@ -125,6 +142,7 @@ export function ThreeScene(props: ThreeSceneProps) {
   return (
     <div className="w-full h-full cursor-pointer touch-none">
       <Canvas camera={{ position: [0, 0, 5], fov: 40 }} dpr={[1, 2]}>
+        <CameraEntrance />
         {/* Very low ambient — dark base is essential */}
         <ambientLight intensity={0.05} />
 
