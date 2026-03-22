@@ -130,6 +130,27 @@ Every role/persona (Trader, Quant, Developer) comes with a set of "Theme Tokens"
 - **README Parsing**: Shows clean first paragraph from README
 - **Error Handling**: Graceful fallbacks for API failures
 
+## 📽️ B-Roll & Visual Accents
+
+### **Orchestration**
+The landing page uses a series of "B-Roll" sections to provide social proof and mission context. All of these sections are orchestrated via **GSAP ScrollTrigger** for a professional, "Apple-style" reveal.
+
+- **`Stats.tsx`**: Renders numeric proof (years active, projects completed) with a staggered fade-up entrance.
+- **`Philosophy.tsx`**: A double-column text block that explains the user's core methodology, featuring a scroll-bound opacity reveal.
+- **`Marquee.tsx`**: A horizontal ticker that loops technical skills or buzzwords to maintain visual interest.
+- **`Footer.tsx`**: Minimal contact block that follows the site's monochrome/accent design.
+
+## 📱 Mobile-First Adaptation
+
+### **Hybrid Hero Strategy**
+Due to the high performance cost of WebGL (`react-three-fiber`), the portfolio uses a hybrid approach for the Hero section:
+
+- **Desktop**: Renders the full `RoleSelector` (3D head + background layers).
+- **Mobile**: Replaces the 3D module with a simple but punchy `Typewriter` component and a static `bg_portrait.png` background. This ensures the site remains lightning-fast and battery-efficient on smaller devices while still feeling interactive.
+
+### **Header & Socials**
+- **`HeaderSocials.tsx`**: Stays consistent across all pages (Story, Projects, Landing), providing a persistent anchor point for GitHub and LinkedIn links.
+
 ## 🔌 API Architecture
 
 ### **Why Proxy APIs?**
