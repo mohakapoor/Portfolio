@@ -20,7 +20,7 @@ export function Footer() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-20"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-[#22c55e]"></span>
           </div>
-          <p className="text-[12px] font-medium tracking-tight">
+          <p className="text-[20px] font-medium tracking-tight">
             <span className="text-white/65 mr-2">Open to work</span>
             <span className="text-white/25">· Based in New Delhi· ML & AI roles</span>
           </p>
@@ -32,7 +32,7 @@ export function Footer() {
             <a
               key={social.name}
               href={social.url}
-              className="text-[11px] font-bold uppercase tracking-[0.14em] text-white/25 transition-colors duration-200 hover:text-white/70"
+              className="text-[15px] font-bold uppercase tracking-[0.14em] text-white/25 transition-colors duration-200 hover:text-white/70"
             >
               {social.name}
             </a>
