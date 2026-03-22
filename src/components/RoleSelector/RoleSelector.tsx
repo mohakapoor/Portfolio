@@ -7,6 +7,7 @@ import { ThreeScene } from "@/components/RoleSelector/ThreeScene";
 import { RoleDetail } from "@/components/RoleSelector/RoleDetail";
 import { DotNav } from "@/components/RoleSelector/DotNav";
 import { BackgroundLandscape } from "@/components/RoleSelector/BackgroundLandscape";
+import { Marquee } from "@/components/Landing/Marquee";
 
 export function RoleSelector() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -29,40 +30,45 @@ export function RoleSelector() {
   }, [activeIndex, activeRole]);
 
   return (
-    <div className="relative w-full min-h-[100dvh] flex flex-col md:flex-row items-stretch justify-center overflow-hidden">
+    <div className="relative w-full min-h-[100dvh] flex flex-col overflow-hidden">
       <BackgroundLandscape image={activeRole.backgroundImage} />
       <AmbientGlow activeColor={activeRole.tokens.primary} />
-
-      {/* LEFT PANEL - 45% */}
-      <div className="relative w-full md:w-[45%] flex flex-col items-center justify-center z-10 p-8 md:p-16">
-        <div className="w-full h-[500px]">
-          <ThreeScene
-            roles={rolesData}
-            activeIndex={activeIndex}
-            isLocked={isLocked}
-            setIsLocked={setIsLocked}
-            onChangeRole={setActiveIndex}
-          />
+      
+      {/* Interactive Content Area */}
+      <div className="flex-1 flex flex-col md:flex-row items-stretch justify-center relative z-10">
+        {/* LEFT PANEL - 45% */}
+        <div className="relative w-full md:w-[45%] flex flex-col items-center justify-center p-8 md:p-16">
+          <div className="w-full h-[500px]">
+            <ThreeScene
+              roles={rolesData}
+              activeIndex={activeIndex}
+              isLocked={isLocked}
+              setIsLocked={setIsLocked}
+              onChangeRole={setActiveIndex}
+            />
+          </div>
+          <div className="mt-8">
+            <DotNav
+              total={rolesData.length}
+              activeIndex={activeIndex}
+              onSelect={(idx: number) => {
+                setActiveIndex(idx);
+                setIsLocked(true);
+              }}
+              activeColor={activeRole.tokens.primary}
+            />
+          </div>
         </div>
-        <div className="mt-8">
-          <DotNav
-            total={rolesData.length}
-            activeIndex={activeIndex}
-            onSelect={(idx: number) => {
-              setActiveIndex(idx);
-              setIsLocked(true); // Lock when navigation is manually triggered
-            }}
-            activeColor={activeRole.tokens.primary}
-          />
+
+        {/* RIGHT PANEL - 55% */}
+        <div className="relative w-full md:w-[55%] flex flex-col justify-center p-8 md:p-24">
+          <RoleDetail role={activeRole} />
         </div>
       </div>
 
-      {/* RIGHT PANEL - 55% */}
-      <div className="relative w-full md:w-[55%] flex flex-col justify-center p-8 md:p-24 z-10">
-
-        {/* Name Header - Rendered directly over the Role Context */}
-
-        <RoleDetail role={activeRole} />
+      {/* Marquee Footnote - Anchored inside the Hero Height */}
+      <div className="relative z-10">
+        <Marquee />
       </div>
     </div>
   );

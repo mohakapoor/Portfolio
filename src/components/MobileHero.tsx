@@ -3,6 +3,7 @@
 import React from "react";
 import Typewriter from "@/components/Typewriter";
 import Link from "next/link";
+import { Marquee } from "@/components/Landing/Marquee";
 
 export function MobileHero() {
   return (
@@ -42,6 +43,11 @@ export function MobileHero() {
         </div>
       </div>
       
+      {/* Marquee Footnote for Mobile */}
+      <div className="absolute bottom-0 left-0 w-full overflow-hidden z-20">
+        <Marquee />
+      </div>
+
       {/* Subtle bottom vignette for some depth */}
       <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black to-transparent opacity-60 pointer-events-none" />
     </div>

@@ -1,7 +1,6 @@
 import TargetCursor from "@/components/TargetCursor";
 import { RoleSelector } from "@/components/RoleSelector/RoleSelector";
 import { MobileHero } from "@/components/MobileHero";
-import { Marquee } from "@/components/Landing/Marquee";
 import { FeaturedProject } from "@/components/Landing/FeaturedProject";
 import { Philosophy } from "@/components/Landing/Philosophy";
 import { Stats } from "@/components/Landing/Stats";
@@ -28,7 +27,6 @@ export default function Home() {
       </section>
 
       {/* Content Sections Below-the-Fold */}
-      <Marquee />
       <FeaturedProject />
       <Philosophy />
       <Stats />
