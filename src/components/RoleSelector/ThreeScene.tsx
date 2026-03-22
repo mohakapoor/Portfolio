@@ -35,9 +35,9 @@ function RotatingHead({ roles, activeIndex, isLocked, setIsLocked, onChangeRole 
           mesh.material = new THREE.MeshStandardMaterial({
             color: new THREE.Color("#383838"),
             emissive: new THREE.Color(activeRole.tokens.tertiary),
-            emissiveIntensity: 1,
-            roughness: 0.8, // Matte for maximum contrast
-            metalness: 0.2,
+            emissiveIntensity: 0.9,
+            roughness: 0.7, // Matte for maximum contrast
+            metalness: 0.3,
             flatShading: true, // Smooth shading for sculpted look
           });
       }
