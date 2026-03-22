@@ -3,9 +3,9 @@
 import React, { useState, useEffect } from "react";
 import { rolesData } from "@/data/roles";
 import { AmbientGlow } from "./AmbientGlow";
-import { ThreeScene } from "./ThreeScene";
-import { RoleDetail } from "./RoleDetail";
-import { DotNav } from "./DotNav";
+import { ThreeScene } from "@/components/RoleSelector/ThreeScene";
+import { RoleDetail } from "@/components/RoleSelector/RoleDetail";
+import { DotNav } from "@/components/RoleSelector/DotNav";
 import Link from "next/link";
 
 export function RoleSelector() {
@@ -29,7 +29,7 @@ export function RoleSelector() {
   }, [activeIndex, activeRole]);
 
   return (
-    <div className="relative w-full min-h-screen flex flex-col md:flex-row items-stretch justify-center overflow-hidden">
+    <div className="relative w-full min-h-[100dvh] flex flex-col md:flex-row items-stretch justify-center overflow-hidden">
       <AmbientGlow activeColor={activeRole.tokens.primary} />
 
       {/* LEFT PANEL - 45% */}

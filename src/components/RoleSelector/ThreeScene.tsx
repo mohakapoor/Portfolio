@@ -106,7 +106,7 @@ function RotatingHead({ roles, activeIndex, isLocked, setIsLocked, onChangeRole 
       }}
     >
        <group ref={groupRef}>
-         <primitive object={clonedScene} scale={5.4} />
+         <primitive object={clonedScene} scale={5.4} position-y={-0.4} />
        </group>
 
        {/* Subtle role-tinting point light */}
