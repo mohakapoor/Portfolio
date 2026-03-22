@@ -16,6 +16,7 @@ export interface RoleData {
   tags: string[];
   tokens: RoleTokenSet;
   rotationY: number; // The target angle in radians for the 3D model 
+  backgroundImage: string;
 }
 
 // 0, 120deg, 240deg in radians
@@ -37,7 +38,8 @@ export const rolesData: RoleData[] = [
       secondaryContainer: "#474746",
       error: "#ff3333",
       outlineVariant: "#484847",
-    }
+    },
+    backgroundImage: "/bg_landscape1.png",
   },
   {
     id: "ds",
@@ -54,7 +56,8 @@ export const rolesData: RoleData[] = [
       secondaryContainer: "#474746",
       error: "#ff3333",
       outlineVariant: "#484847",
-    }
+    },
+    backgroundImage: "/bg_landscape2.png",
   },
   {
     id: "ai",
@@ -71,6 +74,7 @@ export const rolesData: RoleData[] = [
       secondaryContainer: "#474746",
       error: "#ff3333",
       outlineVariant: "#484847",
-    }
+    },
+    backgroundImage: "/bg_landscape3.png",
   }
 ];

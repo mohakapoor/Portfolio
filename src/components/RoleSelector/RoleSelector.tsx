@@ -6,6 +6,7 @@ import { AmbientGlow } from "./AmbientGlow";
 import { ThreeScene } from "@/components/RoleSelector/ThreeScene";
 import { RoleDetail } from "@/components/RoleSelector/RoleDetail";
 import { DotNav } from "@/components/RoleSelector/DotNav";
+import { BackgroundLandscape } from "@/components/RoleSelector/BackgroundLandscape";
 import Link from "next/link";
 
 export function RoleSelector() {
@@ -30,6 +31,7 @@ export function RoleSelector() {
 
   return (
     <div className="relative w-full min-h-[100dvh] flex flex-col md:flex-row items-stretch justify-center overflow-hidden">
+      <BackgroundLandscape image={activeRole.backgroundImage} />
       <AmbientGlow activeColor={activeRole.tokens.primary} />
 
       {/* LEFT PANEL - 45% */}

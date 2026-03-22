@@ -348,7 +348,7 @@ body {
   /* mix-blend-mode: normal; */
 }
 
-/* Noir hero with responsive background images */
+/* Noir hero container base */
 .noir-hero {
   position: relative;
   overflow: hidden;
