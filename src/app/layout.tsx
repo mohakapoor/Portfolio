@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import {
   Bebas_Neue,
   Crimson_Text,
@@ -38,6 +38,11 @@ const courier = Courier_Prime({
   variable: "--font-courier",
   display: "swap",
 });
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+}
 
 export const metadata: Metadata = {
   title: "Mohak Kapoor | ML ENGINEER",
