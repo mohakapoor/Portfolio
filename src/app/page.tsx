@@ -1,5 +1,4 @@
 import Typewriter from "@/components/Typewriter";
-import AutoRedirect from "@/components/AutoRedirect";
 import TargetCursor from "@/components/TargetCursor";
 import Link from "next/link";
 
@@ -7,7 +6,7 @@ export default function Home() {
   return (
     <main className="noir-hero min-h-screen flex items-center justify-center px-4 sm:px-6 py-16 sm:py-20 relative">
       <TargetCursor targetSelector='[data-cursor-target], .cursor-target' spinDuration={3} hideDefaultCursor={true} color={'var(--spider-red)'} />
-      <AutoRedirect href="/story" delayMs={10000} />
+
       <section className="relative z-10 max-w-4xl w-full text-center">
         <h1 className="newspaper-headline text-5xl sm:text-6xl md:text-7-5xl lg:text-8xl mb-4 sm:mb-6 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">
           Mohak Kapoor
