@@ -21,27 +21,34 @@ portfolio-noir/
 ## 🎨 Features
 
 - Responsive design for all devices
-- Interactive card animations
-- Mobile-friendly navigation
+- **Interactive 3D Persona Selector** (React Three Fiber)
+- **Isometric METR Dashboard** (High-fidelity study visualization)
+- **Dynamic CSS Theming** (Site-wide accent shifts based on role)
+- Mobile-friendly navigation with `Typewriter` hero adaptation
 - Dark theme with Spider-Man Noir aesthetic
-- Smooth scrolling and transitions
+- Smooth GSAP-powered scrolling and transitions
 
 ## 📱 Pages
 
-- **Home** - Landing page with auto-redirect
-- **Story** - Detailed portfolio with interactive sections
-  - Featured Projects
-  - Experience
-  - Skills & Technologies
-  - GitHub integration
+- **Home** - Landing page with an interactive 3D Role Selector and persona-swapping engine
+- **Story** - Detailed portfolio with interactive sections:
+  - **METR (Market Exposure Timing vs Randomness)**: Featured study with isometric animations
+  - Experience & Skills
+  - GitHub integration & live README parsing
   - Contact information
 
 ## 🔧 Tech Stack
 
 - **Framework:** Next.js 14 (App Router)
-- **Styling:** Tailwind CSS
+- **3D Engine:** React Three Fiber / Three.js
+- **Animations:** GSAP (ScrollTrigger)
+- **Styling:** Tailwind CSS + Custom Token System
 - **Language:** TypeScript
 - **Deployment:** [Your deployment platform]
+
+## 📄 Documentation
+
+For a deep dive into the architecture, isometric mishaps, and theming engine, see: [**docs/design.md**](./docs/design.md)
 
 ## 📄 License
 
