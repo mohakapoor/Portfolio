@@ -22,7 +22,7 @@ export function Footer() {
           </div>
           <p className="text-[12px] font-medium tracking-tight">
             <span className="text-white/65 mr-2">Open to work</span>
-            <span className="text-white/25">· Based in New York · ML & AI roles</span>
+            <span className="text-white/25">· Based in New Delhi· ML & AI roles</span>
           </p>
         </div>
 

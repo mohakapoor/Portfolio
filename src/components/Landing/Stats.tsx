@@ -3,9 +3,9 @@
 import React from "react";
 
 const STATS = [
-  { value: "12", label: "Projects Shipped" },
-  { value: "08", label: "Deployed Systems" },
-  { value: "04", label: "Years Experience" },
+  { value: "13", label: "Projects Shipped" },
+  { value: "02", label: "Deployed Systems" },
+  { value: "01", label: "Years Experience" },
   { value: "∞", label: "Tabs Open" },
 ];
 
