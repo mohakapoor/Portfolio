@@ -21,7 +21,7 @@ export function Footer() {
             <span className="relative inline-flex rounded-full h-2 w-2 bg-[#22c55e]"></span>
           </div>
           <p className="text-[20px] font-medium tracking-tight">
-            <span className="text-white/65 mr-2">Open to work</span>
+            <span className="text-[#22c55e] mr-2">Open to work</span>
             <span className="text-white/25">· Based in New Delhi· ML & AI roles</span>
           </p>
         </div>

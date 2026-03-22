@@ -22,7 +22,10 @@ export function Stats() {
             key={stat.label} 
             className="bg-[#0d0d0d] px-8 py-12 flex flex-col items-start"
           >
-            <span className="text-4xl md:text-5xl font-bold tracking-tight text-white/92 mb-4">
+            <span 
+              className="text-4xl md:text-5xl font-bold tracking-tight mb-4"
+              style={{ color: 'var(--theme-accent)' }}
+            >
               {stat.value}
             </span>
             <span className="text-[11px] uppercase tracking-[0.12em] font-medium text-white/25">

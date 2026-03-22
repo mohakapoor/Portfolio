@@ -19,7 +19,7 @@ export function FeaturedProject() {
 
           {/* Title */}
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white/92 leading-[1.15] mb-8 max-w-xl">
-            Neural Artifacts: <br />
+            Neural <span style={{ color: 'var(--theme-accent)' }}>Artifacts:</span> <br />
             Latent Space Explorer
           </h2>
 

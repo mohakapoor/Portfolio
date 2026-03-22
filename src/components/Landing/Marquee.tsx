@@ -45,8 +45,11 @@ export function Marquee() {
           {[...STACK_PRIMARY, ...STACK_PRIMARY].map((item, i) => (
             <span
               key={`${item}-${i}`}
-              className={`text-[11px] font-semibold uppercase tracking-[0.12em] transition-opacity duration-500
-                ${i % 3 === 0 ? "text-white/45" : "text-white/15"}`}
+              className={`text-[11px] font-semibold uppercase tracking-[0.12em] transition-opacity duration-500`}
+              style={{ 
+                color: i % 7 === 0 ? 'var(--theme-accent)' : 'inherit',
+                opacity: i % 7 === 0 ? 0.9 : i % 3 === 0 ? 0.45 : 0.15 
+              }}
             >
               {item}
             </span>
@@ -60,8 +63,11 @@ export function Marquee() {
           {[...STACK_SECONDARY, ...STACK_SECONDARY].map((item, i) => (
             <span
               key={`${item}-${i}`}
-              className={`text-[11px] font-semibold uppercase tracking-[0.12em] transition-opacity duration-500
-                ${i % 2 === 0 ? "text-white/45" : "text-white/15"}`}
+              className={`text-[11px] font-semibold uppercase tracking-[0.12em] transition-opacity duration-500`}
+              style={{ 
+                color: i % 5 === 0 ? 'var(--theme-accent)' : 'inherit',
+                opacity: i % 5 === 0 ? 0.9 : i % 2 === 0 ? 0.45 : 0.15 
+              }}
             >
               {item}
             </span>
