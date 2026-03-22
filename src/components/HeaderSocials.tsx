@@ -17,7 +17,7 @@ export default function HeaderSocials(): React.ReactElement {
         </svg>
       </a>
       <a
-        href="https://www.linkedin.com/in/mohak-kapoor-24383828a"
+        href="https://www.linkedin.com/in/mohakapoor/"
         target="_blank"
         rel="noreferrer noopener"
         aria-label="LinkedIn"

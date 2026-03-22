@@ -3,10 +3,10 @@
 import React from "react";
 
 const SOCIALS = [
-  { name: "GitHub", url: "https://github.com" },
-  { name: "LinkedIn", url: "https://linkedin.com" },
-  { name: "Twitter/X", url: "https://twitter.com" },
-  { name: "Email", url: "mailto:hello@example.com" },
+  { name: "GitHub", url: "https://github.com/mohakapoor" },
+  { name: "LinkedIn", url: "https://www.linkedin.com/in/mohakapoor/" },
+  { name: "Twitter/X", url: "https://x.com/mohakapoor" },
+  { name: "Email", url: "mailto:contact.mohakapoor@gmail.com" },
 ];
 
 export function Footer() {
