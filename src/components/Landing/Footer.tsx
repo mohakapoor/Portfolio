@@ -36,7 +36,7 @@ export function Footer() {
             trigger: footerRef.current,
             start: "top 95%",
             end: "bottom bottom",
-            toggleActions: "play reverse play reverse",
+            toggleActions: "play none none none",
           },
         }
       );

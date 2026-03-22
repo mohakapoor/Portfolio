@@ -37,7 +37,7 @@ export function Stats() {
             trigger: sectionRef.current,
             start: "top 90%",
             end: "bottom 10%",
-            toggleActions: "play reverse play reverse",
+            toggleActions: "play none none none",
           },
         }
       );

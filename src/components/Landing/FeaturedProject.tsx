@@ -31,7 +31,7 @@ export function FeaturedProject() {
             trigger: sectionRef.current,
             start: "top 85%",
             end: "bottom 15%",
-            toggleActions: "play reverse play reverse",
+            toggleActions: "play none none none",
           },
         }
       );
@@ -55,7 +55,7 @@ export function FeaturedProject() {
             trigger: sectionRef.current,
             start: "top 80%",
             end: "bottom 20%",
-            toggleActions: "play reverse play reverse",
+            toggleActions: "play none none none",
           },
         }
       );
