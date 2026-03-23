@@ -63,15 +63,15 @@ export function Philosophy() {
   }, []);
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       className="relative w-full px-8 py-24 md:py-32 border-b border-white/[0.04] bg-[#0d0d0d] flex justify-center text-center overflow-hidden min-h-[600px]"
     >
-      
+
       {/* Papercut Layered Background - High Density Left to Right Sweep */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-30 md:opacity-40">
-        <svg 
-          viewBox="0 0 1440 800" 
+        <svg
+          viewBox="0 0 1440 800"
           className="w-full h-full object-cover scale-110"
           preserveAspectRatio="none"
         >
@@ -86,10 +86,10 @@ export function Philosophy() {
             "M0 0H800C900 200 700 400 850 600C950 750 800 800 800 800H0V0Z",
             "M0 0H900C1000 200 800 400 950 600C1050 750 900 800 900 800H0V0Z"
           ].map((d, i) => (
-            <path 
+            <path
               key={i}
               ref={(el) => { (pathsRef.current[i] = el); }}
-              d={d} 
+              d={d}
               fill={`rgba(var(--theme-accent-rgb), ${0.03 + i * 0.02})`}
               style={{ filter: i > 0 ? `drop-shadow(${25 - i * 3}px 0 ${35 - i * 3}px rgba(0,0,0,${0.4 + i * 0.05}))` : "none" }}
             />
@@ -102,14 +102,44 @@ export function Philosophy() {
           Open to <span style={{ color: 'var(--theme-accent)' }}>new challenges</span> and collaborative <br className="hidden md:block" />
           <span className="text-white/40">freelancing projects.</span>
         </h2>
-        
+
         <p className="text-[14px] md:text-[17px] leading-relaxed text-white/40 max-w-[500px] mx-auto mb-14 font-medium">
-          Specializing in High-Performance ML, Computer Vision, and Data Engineering. 
+          Specializing in Anomaly Detection, Computer Vision, and Data Engineering.
           Let’s build something impactful together.
         </p>
 
-        <div className="flex justify-center">
-          <div className="w-12 h-[1px]" style={{ backgroundColor: 'var(--theme-accent)', opacity: 0.4 }} />
+        <div className="flex justify-center group cursor-pointer">
+          <a 
+            href="mailto:contact.mohakapoor@gmail.com"
+            className="h-11 w-11 border border-white/10 bg-white/[0.02] rounded-full flex items-center transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:w-44 px-3 relative overflow-hidden active:scale-95 shadow-lg no-underline"
+          >
+             <div className="flex items-center justify-center w-full">
+               {/* Text revealed on expansion - collapsed width initially */}
+               <div className="w-0 opacity-0 group-hover:w-full group-hover:opacity-100 transition-all duration-500 ease-out overflow-hidden flex items-center">
+                 <span className="text-white/50 font-medium tracking-[0.2em] text-[10px] uppercase whitespace-nowrap pl-2">
+                    Let's Talk
+                 </span>
+               </div>
+
+               {/* Minimalist Mail Icon - Always visible, pushed to right on expansion */}
+               <div className="transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] flex-shrink-0 text-white/40 group-hover:text-[var(--theme-accent)]">
+                  <svg 
+                    width="18" 
+                    height="18" 
+                    viewBox="0 0 24 24" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    strokeWidth="1.2" 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round"
+                    className="transition-colors duration-500"
+                  >
+                    <rect x="2" y="4" width="20" height="16" rx="2" />
+                    <path d="m22 7-10 7L2 7" />
+                  </svg>
+               </div>
+             </div>
+          </a>
         </div>
       </div>
 

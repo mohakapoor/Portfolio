@@ -63,7 +63,7 @@ export const rolesData: RoleData[] = [
     id: "ai",
     label: "AI Engineer",
     counter: "03 / 03",
-    tagline: "Building end-to-end intelligent systems. From crafting custom LLM outreach pipelines to integrating real-time computer vision into web apps.",
+    tagline: "Building end-to-end intelligent systems. From crafting LLM outreach pipelines to integrating real-time computer vision into web apps.",
     tags: ["LLMs", "Generative AI", "Computer Vision", "Next.js"],
     rotationY: 0,
     tokens: {
