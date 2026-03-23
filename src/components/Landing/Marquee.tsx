@@ -32,17 +32,17 @@ export function Marquee() {
           width: fit-content;
         }
         .animate-marquee-left {
-          animation: marquee-left 30s linear infinite;
+          animation: marquee-left 150s linear infinite;
         }
         .animate-marquee-right {
-          animation: marquee-right 36s linear infinite;
+          animation: marquee-right 180s linear infinite;
         }
       `}</style>
 
       {/* Row 1: Primary Stack - Scrolls Left */}
       <div className="flex overflow-hidden mb-4">
         <div className="marquee-row animate-marquee-left flex gap-10 pr-10">
-          {[...STACK_PRIMARY, ...STACK_PRIMARY].map((item, i) => (
+          {[...Array(10)].flatMap(() => STACK_PRIMARY).map((item, i) => (
             <span
               key={`${item}-${i}`}
               className={`text-[11px] font-semibold uppercase tracking-[0.12em] transition-opacity duration-500`}
@@ -60,7 +60,7 @@ export function Marquee() {
       {/* Row 2: Secondary Stack - Scrolls Right */}
       <div className="flex overflow-hidden">
         <div className="marquee-row animate-marquee-right flex gap-10 pr-10">
-          {[...STACK_SECONDARY, ...STACK_SECONDARY].map((item, i) => (
+          {[...Array(10)].flatMap(() => STACK_SECONDARY).map((item, i) => (
             <span
               key={`${item}-${i}`}
               className={`text-[11px] font-semibold uppercase tracking-[0.12em] transition-opacity duration-500`}
