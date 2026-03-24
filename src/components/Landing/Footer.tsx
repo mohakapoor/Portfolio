@@ -46,7 +46,7 @@ export function Footer({ isFullWidth = false }: { isFullWidth?: boolean }) {
   }, []);
 
   return (
-    <footer ref={footerRef} className="relative w-full px-8 py-10 md:px-12 md:py-12 bg-[#0d0d0d]">
+    <footer ref={footerRef} className="relative z-[60] w-full px-8 py-10 md:px-12 md:py-12 bg-[#0d0d0d]">
       <div ref={contentRef} className={`${isFullWidth ? "w-full" : "max-w-7xl mx-auto"} flex flex-col md:flex-row justify-between items-center gap-8`}>
         
         {/* Availability Status */}

@@ -3,6 +3,7 @@ import GitHubContributions from "@/components/GitHubContributions";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Footer } from "@/components/Landing/Footer";
+import InteractiveGrid from "@/components/Story/InteractiveGrid";
 
 export default function StoryPage() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -140,12 +141,14 @@ export default function StoryPage() {
       )}
 
       {/* Main Content Layout */}
-      <div className="w-full px-8 md:px-20">
-        <header className="mb-10 text-center mt-5">
-          <h1 className="newspaper-headline text-6xl md:text-7xl text-white drop-shadow-[0_0_12px_rgba(var(--theme-accent-rgb),0.2)]">My Story</h1>
-        </header>
+      <div className="w-full relative mt-[-64px]">
+        <InteractiveGrid />
+        <div className="px-8 md:px-20 pt-24">
+          <header className="mb-10 text-center mt-5">
+            <h1 className="newspaper-headline text-6xl md:text-7xl text-white drop-shadow-[0_0_12px_rgba(var(--theme-accent-rgb),0.2)]">My Story</h1>
+          </header>
 
-        <article className="space-y-20 leading-relaxed text-lg pb-24">
+        <article className="space-y-20 leading-relaxed text-lg pb-8">
           <section id="who-am-i" className="glass-card p-6">
             <h2 className="newspaper-headline text-3xl mb-2">Who Am I</h2>
             <p className="text-dust-gray">
@@ -288,11 +291,14 @@ export default function StoryPage() {
             </div>
           </section>
         </article>
-
-        {/* Footer Area */}
-        <div className="w-full h-[1px] bg-white/[0.05] mt-12" />
-        <Footer isFullWidth={true} />
       </div>
-    </main>
+    </div>
+
+    <div className="w-full px-8 md:px-20">
+      {/* Footer Area */}
+      <div className="w-full h-[1px] bg-white/[0.05] mt-4" />
+      <Footer isFullWidth={true} />
+    </div>
+  </main>
   );
 }

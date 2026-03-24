@@ -10,7 +10,7 @@ export default function GitHubContributions({ username }: GitHubContributionsPro
     // Fetch the current theme accent from CSS variables
     const root = document.documentElement;
     const themeColor = getComputedStyle(root).getPropertyValue('--theme-accent').trim();
-    
+
     if (themeColor && themeColor.startsWith('#')) {
       setAccentColor(themeColor.replace('#', ''));
     }

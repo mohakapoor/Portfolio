@@ -354,6 +354,20 @@ body {
   /* mix-blend-mode: normal; */
 }
 
+/* Story Page Grid Background */
+.noir-bg-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  mask-image: radial-gradient(circle at center, black 0%, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 80%);
+}
+
 /* Noir hero container base */
 .noir-hero {
   position: relative;
