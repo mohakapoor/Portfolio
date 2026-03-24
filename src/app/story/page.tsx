@@ -168,44 +168,57 @@ export default function StoryPage() {
                   id: 0, 
                   title: "Intrusion Detection System", 
                   desc: "Real-time network traffic analysis using hybrid machine learning (LightGBM + Deep Learning) to detect sophisticated cyber attacks on the CICIDS-2017 dataset.",
-                  tags: ["Python", "PyTorch", "RAPIDS", "LightGBM", "CICIDS-2017"]
+                  tags: ["Python", "PyTorch", "RAPIDS", "LightGBM", "CICIDS-2017"],
+                  href: "/projects/IntrusionDetection"
                 },
                 { 
                   id: 1, 
                   title: "CaptchaOCR", 
                   desc: "End-to-end CAPTCHA text recognition using custom CRNN architecture with CTC loss, achieving 96%+ character accuracy.",
-                  tags: ["Python", "PyTorch", "CNN-LSTM", "CTC Loss", "Computer Vision"]
+                  tags: ["Python", "PyTorch", "CNN-LSTM", "CTC Loss", "Computer Vision"],
+                  href: "/projects/CaptchaOCR"
                 },
                 { 
                   id: 2, 
                   title: "HermesGPT", 
                   desc: "AI‑powered personalized cold emails with Gmail API, email verification, and PostgreSQL tracking.",
-                  tags: ["Python", "Gmail API", "Gemini AI", "Automation", "PostgreSQL"]
+                  tags: ["Python", "Gmail API", "Gemini AI", "Automation", "PostgreSQL"],
+                  href: "https://github.com/mohakapoor/HermesGPT"
                 },
                 { 
                   id: 3, 
                   title: "Solar Power Generation Predictor", 
                   desc: "Weather‑aware ML to predict hourly generation, surfaced via a Django web front‑end for user inputs.",
-                  tags: ["TensorFlow", "scikit‑learn", "Pandas", "Django", "OpenWeatherMap API"]
+                  tags: ["TensorFlow", "scikit‑learn", "Pandas", "Django", "OpenWeatherMap API"],
+                  href: "https://github.com/mohakapoor/Solar-Energy-Prediction"
                 }
-              ].map((proj) => (
-                <div
-                  key={proj.id}
-                  ref={(el) => { cardRefs.current[proj.id] = el; }}
-                  className={`relative overflow-hidden rounded-[12px] p-5 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group cursor-pointer border backdrop-blur-md ${expandedCard === proj.id ? 'scale-105 z-10 bg-[var(--theme-accent)]/[0.07] border-[var(--theme-accent)]/[0.30]' : 'bg-[var(--theme-accent)]/[0.03] border-[var(--theme-accent)]/[0.12] hover:bg-[var(--theme-accent)]/[0.07] hover:border-[var(--theme-accent)]/[0.30] hover:scale-105 hover:z-10'}`}
-                  onClick={() => handleCardClick(proj.id)}
-                >
-                  <div className={`absolute -top-6 -right-6 w-24 h-24 bg-[var(--theme-accent)]/20 rounded-full blur-[24px] pointer-events-none transition-opacity duration-700 ${expandedCard === proj.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
-                  <div className="flex justify-between items-start mb-2 relative z-10">
-                    <h3 className="text-xl">{proj.title}</h3>
-                    <div className={`text-[14px] text-[var(--theme-accent)]/40 transition-all duration-300 ml-3 shrink-0 ${expandedCard === proj.id ? 'text-[var(--theme-accent)]/90 translate-x-[2px] -translate-y-[2px]' : 'group-hover:text-[var(--theme-accent)]/90 group-hover:translate-x-[2px] group-hover:-translate-y-[2px]'}`}>↗</div>
-                  </div>
-                  <p className="text-dust-gray mb-3 text-sm">{proj.desc}</p>
-                  <div className="flex flex-wrap gap-2 relative z-10">
-                    {proj.tags.map(tag => <span key={tag} className="tag">{tag}</span>)}
-                  </div>
-                </div>
-              ))}
+              ].map((proj) => {
+                const isExternal = proj.href.startsWith('http');
+                const CardWrapper = isExternal ? 'a' : Link;
+                const wrapperProps = isExternal 
+                  ? { href: proj.href, target: "_blank", rel: "noopener noreferrer" } 
+                  : { href: proj.href };
+
+                return (
+                  <CardWrapper
+                    key={proj.id}
+                    {...wrapperProps}
+                    ref={(el: any) => { cardRefs.current[proj.id] = el; }}
+                    className={`relative overflow-hidden rounded-[12px] p-5 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group cursor-pointer border backdrop-blur-md block ${expandedCard === proj.id ? 'scale-105 z-10 bg-[var(--theme-accent)]/[0.07] border-[var(--theme-accent)]/[0.30]' : 'bg-[var(--theme-accent)]/[0.03] border-[var(--theme-accent)]/[0.12] hover:bg-[var(--theme-accent)]/[0.07] hover:border-[var(--theme-accent)]/[0.30] hover:scale-105 hover:z-10'}`}
+                    onClick={() => handleCardClick(proj.id)}
+                  >
+                    <div className={`absolute -top-6 -right-6 w-24 h-24 bg-[var(--theme-accent)]/20 rounded-full blur-[24px] pointer-events-none transition-opacity duration-700 ${expandedCard === proj.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
+                    <div className="flex justify-between items-start mb-2 relative z-10">
+                      <h3 className="text-xl">{proj.title}</h3>
+                      <div className={`text-[14px] text-[var(--theme-accent)]/40 transition-all duration-300 ml-3 shrink-0 ${expandedCard === proj.id ? 'text-[var(--theme-accent)]/90 translate-x-[2px] -translate-y-[2px]' : 'group-hover:text-[var(--theme-accent)]/90 group-hover:translate-x-[2px] group-hover:-translate-y-[2px]'}`}>↗</div>
+                    </div>
+                    <p className="text-dust-gray mb-3 text-sm">{proj.desc}</p>
+                    <div className="flex flex-wrap gap-2 relative z-10">
+                      {proj.tags.map(tag => <span key={tag} className="tag">{tag}</span>)}
+                    </div>
+                  </CardWrapper>
+                );
+              })}
             </div>
           </section>
 
