@@ -98,7 +98,7 @@ export default function StoryPage() {
       {/* Hamburger button (story page only) */}
       <button
         aria-label="Open menu"
-        className="fixed top-5 left-4 sm:top-6 sm:left-6 z-30 p-3 rounded-md border border-[var(--spider-red)] bg-[var(--newsprint-gray)] text-[var(--vintage-white)] hover:bg-[var(--spider-red)] transition"
+        className="fixed top-5 left-4 sm:top-6 sm:left-6 z-30 p-3 rounded-md border border-[var(--theme-accent)] bg-[var(--newsprint-gray)] text-[var(--vintage-white)] hover:bg-[var(--theme-accent)] transition"
         onClick={() => setMenuOpen(true)}
       >
         <span className="block w-7 h-[3px] bg-[var(--vintage-white)] mb-1" />
@@ -122,11 +122,11 @@ export default function StoryPage() {
         aria-modal="true"
         aria-label="Story navigation"
       >
-        <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--spider-red)]/40">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--theme-accent)]/40">
           <span className="newspaper-headline text-2xl">Menu</span>
           <button
             aria-label="Close menu"
-            className="p-2 rounded-md border border-[var(--spider-red)] text-[var(--vintage-white)] hover:bg-[var(--spider-red)] transition"
+            className="p-2 rounded-md border border-[var(--theme-accent)] text-[var(--vintage-white)] hover:bg-[var(--theme-accent)] transition"
             onClick={() => setMenuOpen(false)}
           >
             ✕
@@ -148,7 +148,7 @@ export default function StoryPage() {
 
       <section className="max-w-5xl mx-auto">
         <header className="mb-10 text-center mt-5 animate-slide-down">
-          <h1 className="newspaper-headline text-6xl md:text-7xl text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">My Story</h1>
+          <h1 className="newspaper-headline text-6xl md:text-7xl text-white drop-shadow-[0_0_12px_rgba(var(--theme-accent-rgb),0.2)] transition-all duration-700">My Story</h1>
         </header>
 
         <article className="space-y-20 leading-relaxed text-lg">
@@ -164,7 +164,7 @@ export default function StoryPage() {
               <h2 className="newspaper-headline text-3xl animate-slide-right">Featured Projects</h2>
               <Link
                 href="/projects"
-                className="newspaper-headline text-3xl text-[var(--dust-gray)] hover:text-[var(--spider-red)] transition-colors duration-200 animate-slide-left group flex-shrink-0"
+                className="newspaper-headline text-3xl text-[var(--dust-gray)] hover:text-[var(--theme-accent)] transition-colors duration-200 animate-slide-left group flex-shrink-0"
                 title="View All Projects"
               >
                 <span className="flex items-center gap-1">
@@ -213,7 +213,7 @@ export default function StoryPage() {
                         </a>
                         <a
                           href="/projects/IntrusionDetection"
-                          className="spider-noir-button px-6 py-2 border-2 text-lg rounded-lg bg-[var(--spider-red)]/10 hover:bg-[var(--spider-red)]/20"
+                          className="spider-noir-button px-6 py-2 border-2 text-lg rounded-lg bg-[var(--theme-accent)]/10 hover:bg-[var(--theme-accent)]/20"
                         >
                           Read More
                         </a>
@@ -266,7 +266,7 @@ export default function StoryPage() {
                         </a>
                         <a
                           href="/projects/CaptchaOCR"
-                          className="spider-noir-button px-6 py-2 border-2 text-lg rounded-lg bg-[var(--spider-red)]/10 hover:bg-[var(--spider-red)]/20"
+                          className="spider-noir-button px-6 py-2 border-2 text-lg rounded-lg bg-[var(--theme-accent)]/10 hover:bg-[var(--theme-accent)]/20"
                         >
                           Read More
                         </a>
@@ -478,7 +478,7 @@ export default function StoryPage() {
                     <img
                       src="https://github.com/mohakapoor.png?size=240"
                       alt="GitHub avatar of mohakapoor"
-                      className="w-40 h-40 md:w-52 md:h-52 rounded-lg border border-[var(--spider-red)]/40 object-cover group-hover:border-[var(--spider-red)] transition-colors duration-200"
+                      className="w-40 h-40 md:w-52 md:h-52 rounded-lg border border-[var(--theme-accent)]/40 object-cover group-hover:border-[var(--theme-accent)] transition-colors duration-200"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
                         target.src = "https://avatars.githubusercontent.com/mohakapoor?size=240";

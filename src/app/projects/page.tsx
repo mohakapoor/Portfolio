@@ -231,7 +231,7 @@ export default function ProjectsPage() {
       {/* Hamburger button */}
       <button
         aria-label="Open menu"
-        className="fixed top-5 left-4 sm:top-6 sm:left-6 z-30 p-3 rounded-md border border-[var(--spider-red)] bg-[var(--newsprint-gray)] text-[var(--vintage-white)] hover:bg-[var(--spider-red)] transition"
+        className="fixed top-5 left-4 sm:top-6 sm:left-6 z-30 p-3 rounded-md border border-[var(--theme-accent)] bg-[var(--newsprint-gray)] text-[var(--vintage-white)] hover:bg-[var(--theme-accent)] transition"
         onClick={() => setMenuOpen(true)}
       >
         <span className="block w-7 h-[3px] bg-[var(--vintage-white)] mb-1" />
@@ -255,11 +255,11 @@ export default function ProjectsPage() {
         aria-modal="true"
         aria-label="Projects navigation"
       >
-        <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--spider-red)]/40">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--theme-accent)]/40">
           <span className="newspaper-headline text-2xl">Menu</span>
           <button
             aria-label="Close menu"
-            className="p-2 rounded-md border border-[var(--spider-red)] text-[var(--vintage-white)] hover:bg-[var(--spider-red)] transition"
+            className="p-2 rounded-md border border-[var(--theme-accent)] text-[var(--vintage-white)] hover:bg-[var(--theme-accent)] transition"
             onClick={() => setMenuOpen(false)}
           >
             ✕
@@ -276,7 +276,7 @@ export default function ProjectsPage() {
       <div className="max-w-7xl mx-auto mb-8">
         <Link 
           href="/story" 
-          className="inline-flex items-center gap-2 text-[var(--vintage-white)] hover:text-[var(--spider-red)] transition-colors duration-200"
+          className="inline-flex items-center gap-2 text-[var(--vintage-white)] hover:text-[var(--theme-accent)] transition-colors duration-200"
         >
           <span>←</span>
           <span>Back to Story</span>
@@ -307,8 +307,8 @@ export default function ProjectsPage() {
                   onClick={() => setSelectedCategory(category)}
                   className={`px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap flex-shrink-0 transition-all duration-200 ${
                     selectedCategory === category
-                      ? 'bg-[var(--spider-red)] text-[var(--vintage-white)] shadow-lg'
-                      : 'bg-[var(--newsprint-gray)] text-[var(--dust-gray)] border border-[var(--spider-red)]/40 hover:bg-[var(--spider-red)]/20 hover:text-[var(--vintage-white)]'
+                      ? 'bg-[var(--theme-accent)] text-[var(--vintage-white)] shadow-lg'
+                      : 'bg-[var(--newsprint-gray)] text-[var(--dust-gray)] border border-[var(--theme-accent)]/40 hover:bg-[var(--theme-accent)]/20 hover:text-[var(--vintage-white)]'
                   }`}
                 >
                   <span className="md:hidden">
@@ -350,15 +350,15 @@ export default function ProjectsPage() {
               placeholder="Search projects..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="flex-1 px-4 py-3 bg-[var(--newsprint-gray)] border border-[var(--spider-red)]/40 rounded-lg text-[var(--vintage-white)] placeholder-[var(--dust-gray)] focus:border-[var(--spider-red)] focus:outline-none transition"
+              className="flex-1 px-4 py-3 bg-[var(--newsprint-gray)] border border-[var(--theme-accent)]/40 rounded-lg text-[var(--vintage-white)] placeholder-[var(--dust-gray)] focus:border-[var(--theme-accent)] focus:outline-none transition"
             />
             <button
               onClick={handleRefresh}
               disabled={refreshing}
-              className={`px-4 py-3 border border-[var(--spider-red)] rounded-lg text-[var(--vintage-white)] transition-all duration-200 ${
+              className={`px-4 py-3 border border-[var(--theme-accent)] rounded-lg text-[var(--vintage-white)] transition-all duration-200 ${
                 refreshing 
-                  ? 'bg-[var(--spider-red)]/20 cursor-not-allowed' 
-                  : 'bg-[var(--newsprint-gray)] hover:bg-[var(--spider-red)] hover:scale-105'
+                  ? 'bg-[var(--theme-accent)]/20 cursor-not-allowed' 
+                  : 'bg-[var(--newsprint-gray)] hover:bg-[var(--theme-accent)] hover:scale-105'
               }`}
               title="Refresh projects from GitHub"
             >
@@ -385,7 +385,7 @@ export default function ProjectsPage() {
         {/* Loading State */}
         {loading && (
           <div className="text-center py-12">
-            <div className="inline-block w-8 h-8 border-2 border-[var(--spider-red)] border-t-transparent rounded-full animate-spin"></div>
+            <div className="inline-block w-8 h-8 border-2 border-[var(--theme-accent)] border-t-transparent rounded-full animate-spin"></div>
             <p className="mt-4 text-[var(--dust-gray)]">Fetching projects from GitHub...</p>
           </div>
         )}
@@ -402,7 +402,7 @@ export default function ProjectsPage() {
                     href={repo.html_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 rounded-lg bg-[var(--spider-red)]/20 border border-[var(--spider-red)]/40 text-[var(--vintage-white)] hover:bg-[var(--spider-red)] hover:scale-105 transition-all duration-200 group"
+                    className="p-2 rounded-lg bg-[var(--theme-accent)]/20 border border-[var(--theme-accent)]/40 text-[var(--vintage-white)] hover:bg-[var(--theme-accent)] hover:scale-105 transition-all duration-200 group"
                     title="View on GitHub"
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="group-hover:scale-110 transition-transform duration-200">
@@ -416,7 +416,7 @@ export default function ProjectsPage() {
                       href={repo.homepage}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 rounded-lg bg-[var(--spider-red)]/20 border border-[var(--spider-red)]/40 text-[var(--vintage-white)] hover:bg-[var(--spider-red)] hover:scale-105 transition-all duration-200 group"
+                      className="p-2 rounded-lg bg-[var(--theme-accent)]/20 border border-[var(--theme-accent)]/40 text-[var(--vintage-white)] hover:bg-[var(--theme-accent)] hover:scale-105 transition-all duration-200 group"
                       title="View live demo"
                     >
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="group-hover:rotate-12 transition-transform duration-200">
@@ -433,7 +433,7 @@ export default function ProjectsPage() {
                     href={repo.html_url} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="hover:text-[var(--spider-red)] transition-colors"
+                    className="hover:text-[var(--theme-accent)] transition-colors"
                   >
                     {repo.name}
                   </a>
@@ -453,7 +453,7 @@ export default function ProjectsPage() {
                       <div className="flex flex-wrap items-center gap-3">
                         {getTopLanguages(repo).map((lang) => (
                           <span key={lang} className="flex items-center gap-1.5 text-xs text-[var(--dust-gray)]">
-                            <span className="w-2.5 h-2.5 rounded-full bg-[var(--spider-red)]"></span>
+                            <span className="w-2.5 h-2.5 rounded-full bg-[var(--theme-accent)]"></span>
                             {lang}
                           </span>
                         ))}
@@ -479,7 +479,7 @@ export default function ProjectsPage() {
 
                   {/* Category Badge - Bottom Right */}
                   <div className="flex justify-end">
-                    <span className="px-2 py-1 text-xs font-medium bg-[var(--spider-red)]/20 text-gray-200 rounded border border-[var(--spider-red)]/40">
+                    <span className="px-2 py-1 text-xs font-medium bg-[var(--theme-accent)]/20 text-gray-200 rounded border border-[var(--theme-accent)]/40">
                       {getProjectCategory(repo)}
                     </span>
                   </div>
