@@ -180,13 +180,21 @@ export default function StoryPage() {
               {/* Card 1,1 - Left column, expands right */}
               <div
                 ref={(el) => { cardRefs.current[0] = el; }}
-                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer ${expandedCard === 0 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'
+                className={`relative overflow-hidden rounded-[12px] p-5 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group cursor-pointer border backdrop-blur-md ${expandedCard === 0 ? 'scale-105 z-10 bg-[var(--theme-accent)]/[0.07] border-[var(--theme-accent)]/[0.30]' : 'bg-[var(--theme-accent)]/[0.03] border-[var(--theme-accent)]/[0.12] hover:bg-[var(--theme-accent)]/[0.07] hover:border-[var(--theme-accent)]/[0.30] hover:scale-105 hover:z-10'
                   }`}
                 onClick={() => handleCardClick(0)}
               >
-                <h3 className="text-xl mb-2">
-                  <a href="/projects/IntrusionDetection" target="_blank" rel="noreferrer noopener">Intrusion Detection System — Network Anomaly Detection</a>
-                </h3>
+                {/* Glow Blob */}
+                <div className={`absolute -top-6 -right-6 w-24 h-24 bg-[var(--theme-accent)]/20 rounded-full blur-[24px] pointer-events-none transition-opacity duration-700 ${expandedCard === 0 ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
+                
+                <div className="flex justify-between items-start mb-2 relative z-10">
+                  <h3 className="text-xl">
+                    <a href="/projects/IntrusionDetection" target="_blank" rel="noreferrer noopener">Intrusion Detection System — Network Anomaly Detection</a>
+                  </h3>
+                  <div className={`text-[14px] text-[var(--theme-accent)]/40 transition-all duration-300 ml-3 shrink-0 ${expandedCard === 0 ? 'text-[var(--theme-accent)]/90 translate-x-[2px] -translate-y-[2px]' : 'group-hover:text-[var(--theme-accent)]/90 group-hover:translate-x-[2px] group-hover:-translate-y-[2px]'}`}>
+                    ↗
+                  </div>
+                </div>
                 <p className="text-dust-gray mb-3">
                   Real-time network traffic analysis using hybrid machine learning (LightGBM + Deep Learning) to detect sophisticated cyber attacks on the CICIDS-2017 dataset.
                 </p>
@@ -234,13 +242,21 @@ export default function StoryPage() {
               {/* Card 1,2 - Right column, expands left */}
               <div
                 ref={(el) => { cardRefs.current[1] = el; }}
-                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer ${expandedCard === 1 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'
+                className={`relative overflow-hidden rounded-[12px] p-5 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group cursor-pointer border backdrop-blur-md ${expandedCard === 1 ? 'scale-105 z-10 bg-[var(--theme-accent)]/[0.07] border-[var(--theme-accent)]/[0.30]' : 'bg-[var(--theme-accent)]/[0.03] border-[var(--theme-accent)]/[0.12] hover:bg-[var(--theme-accent)]/[0.07] hover:border-[var(--theme-accent)]/[0.30] hover:scale-105 hover:z-10'
                   }`}
                 onClick={() => handleCardClick(1)}
               >
-                <h3 className="text-xl mb-2">
-                  <a href="https://github.com/mohakapoor/CaptchaOCR" target="_blank" rel="noreferrer noopener">CaptchaOCR — CAPTCHA Recognition System</a>
-                </h3>
+                {/* Glow Blob */}
+                <div className={`absolute -top-6 -right-6 w-24 h-24 bg-[var(--theme-accent)]/20 rounded-full blur-[24px] pointer-events-none transition-opacity duration-700 ${expandedCard === 1 ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
+                
+                <div className="flex justify-between items-start mb-2 relative z-10">
+                  <h3 className="text-xl">
+                    <a href="https://github.com/mohakapoor/CaptchaOCR" target="_blank" rel="noreferrer noopener">CaptchaOCR — CAPTCHA Recognition System</a>
+                  </h3>
+                  <div className={`text-[14px] text-[var(--theme-accent)]/40 transition-all duration-300 ml-3 shrink-0 ${expandedCard === 1 ? 'text-[var(--theme-accent)]/90 translate-x-[2px] -translate-y-[2px]' : 'group-hover:text-[var(--theme-accent)]/90 group-hover:translate-x-[2px] group-hover:-translate-y-[2px]'}`}>
+                    ↗
+                  </div>
+                </div>
                 <p className="text-dust-gray mb-3">End-to-end CAPTCHA text recognition using custom CRNN architecture with CTC loss, achieving 96%+ character accuracy.</p>
                 <div
                   className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-700 ease-in ${expandedCard === 1
@@ -288,15 +304,23 @@ export default function StoryPage() {
               {/* Card 2,1 - Left column, expands right */}
               <div
                 ref={(el) => { cardRefs.current[2] = el; }}
-                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer ${expandedCard === 2 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'
+                className={`relative overflow-hidden rounded-[12px] p-5 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group cursor-pointer border backdrop-blur-md ${expandedCard === 2 ? 'scale-105 z-10 bg-[var(--theme-accent)]/[0.07] border-[var(--theme-accent)]/[0.30]' : 'bg-[var(--theme-accent)]/[0.03] border-[var(--theme-accent)]/[0.12] hover:bg-[var(--theme-accent)]/[0.07] hover:border-[var(--theme-accent)]/[0.30] hover:scale-105 hover:z-10'
                   }`}
                 onClick={() => handleCardClick(2)}
               >
-                <h3 className="text-xl mb-2">
-                  <a href="https://github.com/mohakapoor/HermesGPT" target="_blank" rel="noreferrer noopener">
-                    HermesGPT — Automated Internship Outreach Bot
-                  </a>
-                </h3>
+                {/* Glow Blob */}
+                <div className={`absolute -top-6 -right-6 w-24 h-24 bg-[var(--theme-accent)]/20 rounded-full blur-[24px] pointer-events-none transition-opacity duration-700 ${expandedCard === 2 ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
+                
+                <div className="flex justify-between items-start mb-2 relative z-10">
+                  <h3 className="text-xl">
+                    <a href="https://github.com/mohakapoor/HermesGPT" target="_blank" rel="noreferrer noopener">
+                      HermesGPT — Automated Internship Outreach Bot
+                    </a>
+                  </h3>
+                  <div className={`text-[14px] text-[var(--theme-accent)]/40 transition-all duration-300 ml-3 shrink-0 ${expandedCard === 2 ? 'text-[var(--theme-accent)]/90 translate-x-[2px] -translate-y-[2px]' : 'group-hover:text-[var(--theme-accent)]/90 group-hover:translate-x-[2px] group-hover:-translate-y-[2px]'}`}>
+                    ↗
+                  </div>
+                </div>
                 <p className="text-dust-gray mb-3">AI‑powered personalized cold emails with Gmail API, email verification, and PostgreSQL tracking.</p>
                 <div
                   className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-700 ease-in ${expandedCard === 2
@@ -326,13 +350,21 @@ export default function StoryPage() {
               {/* Card 2,2 - Right column, expands left */}
               <div
                 ref={(el) => { cardRefs.current[3] = el; }}
-                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer ${expandedCard === 3 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'
+                className={`relative overflow-hidden rounded-[12px] p-5 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group cursor-pointer border backdrop-blur-md ${expandedCard === 3 ? 'scale-105 z-10 bg-[var(--theme-accent)]/[0.07] border-[var(--theme-accent)]/[0.30]' : 'bg-[var(--theme-accent)]/[0.03] border-[var(--theme-accent)]/[0.12] hover:bg-[var(--theme-accent)]/[0.07] hover:border-[var(--theme-accent)]/[0.30] hover:scale-105 hover:z-10'
                   }`}
                 onClick={() => handleCardClick(3)}
               >
-                <h3 className="text-xl mb-2">
-                  <a href="https://github.com/mohakapoor/Solar-Energy-Generation-Prediction" target="_blank" rel="noreferrer noopener">Solar Power Generation Predictor</a>
-                </h3>
+                {/* Glow Blob */}
+                <div className={`absolute -top-6 -right-6 w-24 h-24 bg-[var(--theme-accent)]/20 rounded-full blur-[24px] pointer-events-none transition-opacity duration-700 ${expandedCard === 3 ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
+                
+                <div className="flex justify-between items-start mb-2 relative z-10">
+                  <h3 className="text-xl">
+                    <a href="https://github.com/mohakapoor/Solar-Energy-Generation-Prediction" target="_blank" rel="noreferrer noopener">Solar Power Generation Predictor</a>
+                  </h3>
+                  <div className={`text-[14px] text-[var(--theme-accent)]/40 transition-all duration-300 ml-3 shrink-0 ${expandedCard === 3 ? 'text-[var(--theme-accent)]/90 translate-x-[2px] -translate-y-[2px]' : 'group-hover:text-[var(--theme-accent)]/90 group-hover:translate-x-[2px] group-hover:-translate-y-[2px]'}`}>
+                    ↗
+                  </div>
+                </div>
                 <p className="text-dust-gray mb-3">Weather‑aware ML to predict hourly generation, surfaced via a Django web front‑end for user inputs.</p>
                 <div
                   className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-700 ease-in ${expandedCard === 3
