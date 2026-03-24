@@ -13,7 +13,7 @@ const SOCIALS = [
   { name: "Email", url: "mailto:contact.mohakapoor@gmail.com" },
 ];
 
-export function Footer() {
+export function Footer({ isFullWidth = false }: { isFullWidth?: boolean }) {
   const footerRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -47,7 +47,7 @@ export function Footer() {
 
   return (
     <footer ref={footerRef} className="relative w-full px-8 py-10 md:px-12 md:py-12 bg-[#0d0d0d]">
-      <div ref={contentRef} className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+      <div ref={contentRef} className={`${isFullWidth ? "w-full" : "max-w-7xl mx-auto"} flex flex-col md:flex-row justify-between items-center gap-8`}>
         
         {/* Availability Status */}
         <div className="flex items-center gap-4">

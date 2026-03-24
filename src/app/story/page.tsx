@@ -2,13 +2,13 @@
 import GitHubContributions from "@/components/GitHubContributions";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { Footer } from "@/components/Landing/Footer";
 
 export default function StoryPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [expandedCard, setExpandedCard] = useState<number | null>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [animatedSections, setAnimatedSections] = useState<Set<string>>(new Set());
-
 
   // Handle click outside to close expanded card
   useEffect(() => {
@@ -27,9 +27,7 @@ export default function StoryPage() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [expandedCard]);
 
-
-
-  // Handle card click (mobile)
+  // Handle card click
   const handleCardClick = (index: number) => {
     if (expandedCard === index) {
       setExpandedCard(null); // Close if already expanded
@@ -48,13 +46,13 @@ export default function StoryPage() {
             if (!animatedSections.has(sectionId)) {
               setAnimatedSections(prev => new Set(prev).add(sectionId));
 
-              // Animate all cards in this section simultaneously with a slight delay
+              // Animate all cards in this section
               const cards = entry.target.querySelectorAll('.glass-card');
               setTimeout(() => {
                 cards.forEach((card) => {
                   card.classList.add('animate-in');
                 });
-              }, 250); // 250ms delay before starting animation
+              }, 250); 
             }
           }
         });
@@ -62,11 +60,9 @@ export default function StoryPage() {
       { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
     );
 
-    // Observe all sections with IDs
     const sections = document.querySelectorAll('section[id]');
     sections.forEach(section => observer.observe(section));
 
-    // Also observe the main article for any cards that might not be in sections
     const article = document.querySelector('article');
     if (article) {
       observer.observe(article);
@@ -75,15 +71,13 @@ export default function StoryPage() {
     return () => observer.disconnect();
   }, [animatedSections]);
 
-  // Immediate visibility + Fallback: Make all cards visible immediately and after 3 seconds
+  // Immediate visibility + Fallback
   useEffect(() => {
-    // Make all cards visible immediately to prevent disappearing
     const allCards = document.querySelectorAll('.glass-card');
     allCards.forEach((card) => {
       card.classList.add('animate-in');
     });
 
-    // Also keep the 3-second fallback as backup
     const fallbackTimer = setTimeout(() => {
       allCards.forEach((card) => {
         card.classList.add('animate-in');
@@ -94,8 +88,38 @@ export default function StoryPage() {
   }, []);
 
   return (
-    <main className="min-h-screen px-6 py-16">
-      {/* Hamburger button (story page only) */}
+    <main className="min-h-screen py-16 px-0 overflow-x-hidden">
+      {/* Navigation Sidebar */}
+      <nav 
+        className={`fixed top-0 left-0 z-60 h-full w-72 glass-nav transform transition-transform duration-300 ${menuOpen ? "translate-x-0" : "-translate-x-full"}`}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Story navigation"
+      >
+        <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--theme-accent)]/40">
+          <span className="newspaper-headline text-2xl">Menu</span>
+          <button
+            aria-label="Close menu"
+            className="p-2 rounded-md border border-[var(--theme-accent)] text-[var(--vintage-white)] hover:bg-[var(--theme-accent)] transition"
+            onClick={() => setMenuOpen(false)}
+          >
+            ✕
+          </button>
+        </div>
+        <div className="px-4 py-3 space-y-2">
+          <Link href="/" className="block py-2 hover:underline" onClick={() => setMenuOpen(false)}>Home</Link>
+          <Link href="/story" className="block py-2 hover:underline" onClick={() => setMenuOpen(false)}>Story</Link>
+          <Link href="/projects" className="block py-2 hover:underline" onClick={() => setMenuOpen(false)}>Projects</Link>
+          <div className="mt-4 text-dust-gray">On this page</div>
+          <a href="#who-am-i" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Who Am I</a>
+          <a href="#featured" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Featured Projects</a>
+          <a href="#experience" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Experience</a>
+          <a href="#skills" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Skills</a>
+          <a href="#github" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>GitHub</a>
+        </div>
+      </nav>
+
+      {/* Hamburger button */}
       <button
         aria-label="Open menu"
         className="fixed top-5 left-4 sm:top-6 sm:left-6 z-30 p-3 rounded-md border border-[var(--theme-accent)] bg-[var(--newsprint-gray)] text-[var(--vintage-white)] hover:bg-[var(--theme-accent)] transition"
@@ -115,447 +139,160 @@ export default function StoryPage() {
         />
       )}
 
-      {/* Left sidebar */}
-      <aside
-        className={`fixed top-0 left-0 z-60 h-full w-72 glass-nav transform transition-transform duration-300 ${menuOpen ? "translate-x-0" : "-translate-x-full"}`}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Story navigation"
-      >
-        <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--theme-accent)]/40">
-          <span className="newspaper-headline text-2xl">Menu</span>
-          <button
-            aria-label="Close menu"
-            className="p-2 rounded-md border border-[var(--theme-accent)] text-[var(--vintage-white)] hover:bg-[var(--theme-accent)] transition"
-            onClick={() => setMenuOpen(false)}
-          >
-            ✕
-          </button>
-        </div>
-        <nav className="px-4 py-3 space-y-2">
-          <Link href="/" className="block py-2 hover:underline" onClick={() => setMenuOpen(false)}>Home</Link>
-          <Link href="/story" className="block py-2 hover:underline" onClick={() => setMenuOpen(false)}>Story</Link>
-          <Link href="/projects" className="block py-2 hover:underline" onClick={() => setMenuOpen(false)}>Projects</Link>
-          <div className="mt-4 text-dust-gray">On this page</div>
-          <a href="#who-am-i" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Who Am I</a>
-          <a href="#featured" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Featured Projects</a>
-          <a href="#experience" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Experience</a>
-          <a href="#skills" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Skills</a>
-          <a href="#github" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>GitHub</a>
-          <a href="#contact" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Contact</a>
-        </nav>
-      </aside>
-
-      <section className="max-w-5xl mx-auto">
-        <header className="mb-10 text-center mt-5 animate-slide-down">
-          <h1 className="newspaper-headline text-6xl md:text-7xl text-white drop-shadow-[0_0_12px_rgba(var(--theme-accent-rgb),0.2)] transition-all duration-700">My Story</h1>
+      {/* Main Content Layout */}
+      <div className="w-full px-8 md:px-20">
+        <header className="mb-10 text-center mt-5">
+          <h1 className="newspaper-headline text-6xl md:text-7xl text-white drop-shadow-[0_0_12px_rgba(var(--theme-accent-rgb),0.2)]">My Story</h1>
         </header>
 
-        <article className="space-y-20 leading-relaxed text-lg">
-          <section id="who-am-i" className="glass-card p-6 animate-slide-left">
+        <article className="space-y-20 leading-relaxed text-lg pb-24">
+          <section id="who-am-i" className="glass-card p-6">
             <h2 className="newspaper-headline text-3xl mb-2">Who Am I</h2>
-            <p className="text-dust-gray mb-4">
+            <p className="text-dust-gray">
               I am an AI Integration Engineer & ML Enthusiast. I build production-grade AI systems that close the gap between models and applications, with a focus on MCP development, time-series forecasting, Computer Vision, and scalable ML Systems. I like to build quick prototypes and test new ideas.
             </p>
           </section>
 
           <section id="featured">
-            <div className="flex items-baseline justify-between my-8">
-              <h2 className="newspaper-headline text-3xl animate-slide-right">Featured Projects</h2>
-              <Link
-                href="/projects"
-                className="newspaper-headline text-3xl text-[var(--dust-gray)] hover:text-[var(--theme-accent)] transition-colors duration-200 animate-slide-left group flex-shrink-0"
-                title="View All Projects"
-              >
-                <span className="flex items-center gap-1">
-                  <span className="hidden sm:inline">VIEW ALL</span>
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="group-hover:translate-x-1 transition-transform duration-200">
-                    <path d="M5 12h14" />
-                    <path d="M12 5l7 7-7 7" />
-                  </svg>
-                </span>
-              </Link>
+             <div className="flex items-baseline justify-between my-8">
+              <h2 className="newspaper-headline text-3xl">Featured Projects</h2>
+              <Link href="/projects" className="text-[var(--dust-gray)] hover:text-[var(--theme-accent)] transition-colors">VIEW ALL &rarr;</Link>
             </div>
             <div className="grid gap-6 md:grid-cols-2">
-              {/* Card 1,1 - Left column, expands right */}
-              <div
-                ref={(el) => { cardRefs.current[0] = el; }}
-                className={`relative overflow-hidden rounded-[12px] p-5 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group cursor-pointer border backdrop-blur-md ${expandedCard === 0 ? 'scale-105 z-10 bg-[var(--theme-accent)]/[0.07] border-[var(--theme-accent)]/[0.30]' : 'bg-[var(--theme-accent)]/[0.03] border-[var(--theme-accent)]/[0.12] hover:bg-[var(--theme-accent)]/[0.07] hover:border-[var(--theme-accent)]/[0.30] hover:scale-105 hover:z-10'
-                  }`}
-                onClick={() => handleCardClick(0)}
-              >
-                {/* Glow Blob */}
-                <div className={`absolute -top-6 -right-6 w-24 h-24 bg-[var(--theme-accent)]/20 rounded-full blur-[24px] pointer-events-none transition-opacity duration-700 ${expandedCard === 0 ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
-                
-                <div className="flex justify-between items-start mb-2 relative z-10">
-                  <h3 className="text-xl">
-                    <a href="/projects/IntrusionDetection" target="_blank" rel="noreferrer noopener">Intrusion Detection System — Network Anomaly Detection</a>
-                  </h3>
-                  <div className={`text-[14px] text-[var(--theme-accent)]/40 transition-all duration-300 ml-3 shrink-0 ${expandedCard === 0 ? 'text-[var(--theme-accent)]/90 translate-x-[2px] -translate-y-[2px]' : 'group-hover:text-[var(--theme-accent)]/90 group-hover:translate-x-[2px] group-hover:-translate-y-[2px]'}`}>
-                    ↗
-                  </div>
-                </div>
-                <p className="text-dust-gray mb-3">
-                  Real-time network traffic analysis using hybrid machine learning (LightGBM + Deep Learning) to detect sophisticated cyber attacks on the CICIDS-2017 dataset.
-                </p>
+              {/* Featured Project Cards */}
+              {[
+                { 
+                  id: 0, 
+                  title: "Intrusion Detection System", 
+                  desc: "Real-time network traffic analysis using hybrid machine learning (LightGBM + Deep Learning) to detect sophisticated cyber attacks on the CICIDS-2017 dataset.",
+                  tags: ["Python", "PyTorch", "RAPIDS", "LightGBM", "CICIDS-2017"]
+                },
+                { 
+                  id: 1, 
+                  title: "CaptchaOCR", 
+                  desc: "End-to-end CAPTCHA text recognition using custom CRNN architecture with CTC loss, achieving 96%+ character accuracy.",
+                  tags: ["Python", "PyTorch", "CNN-LSTM", "CTC Loss", "Computer Vision"]
+                },
+                { 
+                  id: 2, 
+                  title: "HermesGPT", 
+                  desc: "AI‑powered personalized cold emails with Gmail API, email verification, and PostgreSQL tracking.",
+                  tags: ["Python", "Gmail API", "Gemini AI", "Automation", "PostgreSQL"]
+                },
+                { 
+                  id: 3, 
+                  title: "Solar Power Generation Predictor", 
+                  desc: "Weather‑aware ML to predict hourly generation, surfaced via a Django web front‑end for user inputs.",
+                  tags: ["TensorFlow", "scikit‑learn", "Pandas", "Django", "OpenWeatherMap API"]
+                }
+              ].map((proj) => (
                 <div
-                  className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-700 ease-in ${expandedCard === 0
-                      ? 'grid-rows-[1fr] opacity-100'
-                      : 'grid-rows-[0fr] opacity-0 group-hover:grid-rows-[1fr] group-hover:opacity-100'
-                    }`}
+                  key={proj.id}
+                  ref={(el) => { cardRefs.current[proj.id] = el; }}
+                  className={`relative overflow-hidden rounded-[12px] p-5 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group cursor-pointer border backdrop-blur-md ${expandedCard === proj.id ? 'scale-105 z-10 bg-[var(--theme-accent)]/[0.07] border-[var(--theme-accent)]/[0.30]' : 'bg-[var(--theme-accent)]/[0.03] border-[var(--theme-accent)]/[0.12] hover:bg-[var(--theme-accent)]/[0.07] hover:border-[var(--theme-accent)]/[0.30] hover:scale-105 hover:z-10'}`}
+                  onClick={() => handleCardClick(proj.id)}
                 >
-                  <div className="min-h-0 text-dust-gray mb-3 text-sm leading-relaxed">
-                    <p className="mb-3 font-semibold">Achieved 99% multiclass accuracy using a hybrid ensemble of Classical (SVM, LogReg) and Modern (LightGBM, FFNN) models.</p>
-                    <ul className="list-disc pl-5 space-y-1">
-                      <li>Processed 2.8M+ flow records with GPU-accelerated preprocessing (RAPIDS cuML) and Time-Aware partitioning</li>
-                      <li>Interactive dashboard with real-time attack prediction API</li>
-                      <li>Hybrid ensemble combining the interpretability of classical models with the power of deep learning</li>
-                    </ul>
-                    <div className="mt-4 text-center my-2">
-                      <div className="flex gap-4 justify-center">
-                        <a
-                          href="/projects/IntrusionDetection#live-demo"
-                          className="spider-noir-button px-6 py-2 border-2 text-lg rounded-lg"
-                        >
-                          Live Demo
-                        </a>
-                        <a
-                          href="/projects/IntrusionDetection"
-                          className="spider-noir-button px-6 py-2 border-2 text-lg rounded-lg bg-[var(--theme-accent)]/10 hover:bg-[var(--theme-accent)]/20"
-                        >
-                          Read More
-                        </a>
-                      </div>
-                    </div>
+                  <div className={`absolute -top-6 -right-6 w-24 h-24 bg-[var(--theme-accent)]/20 rounded-full blur-[24px] pointer-events-none transition-opacity duration-700 ${expandedCard === proj.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
+                  <div className="flex justify-between items-start mb-2 relative z-10">
+                    <h3 className="text-xl">{proj.title}</h3>
+                    <div className={`text-[14px] text-[var(--theme-accent)]/40 transition-all duration-300 ml-3 shrink-0 ${expandedCard === proj.id ? 'text-[var(--theme-accent)]/90 translate-x-[2px] -translate-y-[2px]' : 'group-hover:text-[var(--theme-accent)]/90 group-hover:translate-x-[2px] group-hover:-translate-y-[2px]'}`}>↗</div>
+                  </div>
+                  <p className="text-dust-gray mb-3 text-sm">{proj.desc}</p>
+                  <div className="flex flex-wrap gap-2 relative z-10">
+                    {proj.tags.map(tag => <span key={tag} className="tag">{tag}</span>)}
                   </div>
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  <span className="tag">Python</span>
-                  <span className="tag">PyTorch</span>
-                  <span className="tag">RAPIDS cuML</span>
-                  <span className="tag">LightGBM</span>
-                  <span className="tag">Next.js</span>
-                  <span className="tag">CICIDS-2017</span>
-                </div>
-              </div>
-
-              {/* Card 1,2 - Right column, expands left */}
-              <div
-                ref={(el) => { cardRefs.current[1] = el; }}
-                className={`relative overflow-hidden rounded-[12px] p-5 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group cursor-pointer border backdrop-blur-md ${expandedCard === 1 ? 'scale-105 z-10 bg-[var(--theme-accent)]/[0.07] border-[var(--theme-accent)]/[0.30]' : 'bg-[var(--theme-accent)]/[0.03] border-[var(--theme-accent)]/[0.12] hover:bg-[var(--theme-accent)]/[0.07] hover:border-[var(--theme-accent)]/[0.30] hover:scale-105 hover:z-10'
-                  }`}
-                onClick={() => handleCardClick(1)}
-              >
-                {/* Glow Blob */}
-                <div className={`absolute -top-6 -right-6 w-24 h-24 bg-[var(--theme-accent)]/20 rounded-full blur-[24px] pointer-events-none transition-opacity duration-700 ${expandedCard === 1 ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
-                
-                <div className="flex justify-between items-start mb-2 relative z-10">
-                  <h3 className="text-xl">
-                    <a href="https://github.com/mohakapoor/CaptchaOCR" target="_blank" rel="noreferrer noopener">CaptchaOCR — CAPTCHA Recognition System</a>
-                  </h3>
-                  <div className={`text-[14px] text-[var(--theme-accent)]/40 transition-all duration-300 ml-3 shrink-0 ${expandedCard === 1 ? 'text-[var(--theme-accent)]/90 translate-x-[2px] -translate-y-[2px]' : 'group-hover:text-[var(--theme-accent)]/90 group-hover:translate-x-[2px] group-hover:-translate-y-[2px]'}`}>
-                    ↗
-                  </div>
-                </div>
-                <p className="text-dust-gray mb-3">End-to-end CAPTCHA text recognition using custom CRNN architecture with CTC loss, achieving 96%+ character accuracy.</p>
-                <div
-                  className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-700 ease-in ${expandedCard === 1
-                      ? 'grid-rows-[1fr] opacity-100'
-                      : 'grid-rows-[0fr] opacity-0 group-hover:grid-rows-[1fr] group-hover:opacity-100'
-                    }`}
-                >
-                  <div className="min-h-0 text-dust-gray mb-3 text-sm leading-relaxed">
-                    <p className="mb-3 font-semibold">Achieving 96%+ character accuracy through synthetic data generation and deep learning.</p>
-                    <ul className="list-disc pl-5 space-y-1">
-                      <li>CNN + BiLSTM architecture with Connectionist Temporal Classification</li>
-                      <li>Synthetic CAPTCHA generation for robust training data</li>
-                      <li>Real-time inference with GPU acceleration and deployment on Hugging Face</li>
-                      <li>Comprehensive training pipeline with early stopping and performance metrics</li>
-                    </ul>
-                    <div className="mt-4 text-center my-2">
-                      <div className="flex gap-4 justify-center">
-                        <a
-                          href="/projects/CaptchaOCR#live-demo"
-                          className="spider-noir-button px-6 py-2 border-2 text-lg rounded-lg"
-                        >
-                          Live Demo
-                        </a>
-                        <a
-                          href="/projects/CaptchaOCR"
-                          className="spider-noir-button px-6 py-2 border-2 text-lg rounded-lg bg-[var(--theme-accent)]/10 hover:bg-[var(--theme-accent)]/20"
-                        >
-                          Read More
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  <span className="tag">Python</span>
-                  <span className="tag">PyTorch</span>
-                  <span className="tag">CNN-LSTM</span>
-                  <span className="tag">CTC Loss</span>
-                  <span className="tag">Computer Vision</span>
-                  <span className="tag">Deep Learning</span>
-                  <span className="tag">Hugging Face</span>
-                </div>
-              </div>
-
-              {/* Card 2,1 - Left column, expands right */}
-              <div
-                ref={(el) => { cardRefs.current[2] = el; }}
-                className={`relative overflow-hidden rounded-[12px] p-5 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group cursor-pointer border backdrop-blur-md ${expandedCard === 2 ? 'scale-105 z-10 bg-[var(--theme-accent)]/[0.07] border-[var(--theme-accent)]/[0.30]' : 'bg-[var(--theme-accent)]/[0.03] border-[var(--theme-accent)]/[0.12] hover:bg-[var(--theme-accent)]/[0.07] hover:border-[var(--theme-accent)]/[0.30] hover:scale-105 hover:z-10'
-                  }`}
-                onClick={() => handleCardClick(2)}
-              >
-                {/* Glow Blob */}
-                <div className={`absolute -top-6 -right-6 w-24 h-24 bg-[var(--theme-accent)]/20 rounded-full blur-[24px] pointer-events-none transition-opacity duration-700 ${expandedCard === 2 ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
-                
-                <div className="flex justify-between items-start mb-2 relative z-10">
-                  <h3 className="text-xl">
-                    <a href="https://github.com/mohakapoor/HermesGPT" target="_blank" rel="noreferrer noopener">
-                      HermesGPT — Automated Internship Outreach Bot
-                    </a>
-                  </h3>
-                  <div className={`text-[14px] text-[var(--theme-accent)]/40 transition-all duration-300 ml-3 shrink-0 ${expandedCard === 2 ? 'text-[var(--theme-accent)]/90 translate-x-[2px] -translate-y-[2px]' : 'group-hover:text-[var(--theme-accent)]/90 group-hover:translate-x-[2px] group-hover:-translate-y-[2px]'}`}>
-                    ↗
-                  </div>
-                </div>
-                <p className="text-dust-gray mb-3">AI‑powered personalized cold emails with Gmail API, email verification, and PostgreSQL tracking.</p>
-                <div
-                  className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-700 ease-in ${expandedCard === 2
-                      ? 'grid-rows-[1fr] opacity-100'
-                      : 'grid-rows-[0fr] opacity-0 group-hover:grid-rows-[1fr] group-hover:opacity-100'
-                    }`}
-                >
-                  <div className="min-h-0 text-dust-gray mb-3 text-sm leading-relaxed">
-                    <ul className="list-disc pl-5 space-y-1">
-                      <li>Gemini AI integration for dynamic content generation</li>
-                      <li>Automated email verification and deliverability checks</li>
-                      <li>Response rate analytics and engagement tracking</li>
-                      <li>Customizable email templates and personalization</li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  <span className="tag">Python</span>
-                  <span className="tag">Gmail API</span>
-                  <span className="tag">Gemini AI</span>
-                  <span className="tag">PostgreSQL</span>
-                  <span className="tag">SMTP</span>
-                  <span className="tag">Automation</span>
-                </div>
-              </div>
-
-              {/* Card 2,2 - Right column, expands left */}
-              <div
-                ref={(el) => { cardRefs.current[3] = el; }}
-                className={`relative overflow-hidden rounded-[12px] p-5 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group cursor-pointer border backdrop-blur-md ${expandedCard === 3 ? 'scale-105 z-10 bg-[var(--theme-accent)]/[0.07] border-[var(--theme-accent)]/[0.30]' : 'bg-[var(--theme-accent)]/[0.03] border-[var(--theme-accent)]/[0.12] hover:bg-[var(--theme-accent)]/[0.07] hover:border-[var(--theme-accent)]/[0.30] hover:scale-105 hover:z-10'
-                  }`}
-                onClick={() => handleCardClick(3)}
-              >
-                {/* Glow Blob */}
-                <div className={`absolute -top-6 -right-6 w-24 h-24 bg-[var(--theme-accent)]/20 rounded-full blur-[24px] pointer-events-none transition-opacity duration-700 ${expandedCard === 3 ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
-                
-                <div className="flex justify-between items-start mb-2 relative z-10">
-                  <h3 className="text-xl">
-                    <a href="https://github.com/mohakapoor/Solar-Energy-Generation-Prediction" target="_blank" rel="noreferrer noopener">Solar Power Generation Predictor</a>
-                  </h3>
-                  <div className={`text-[14px] text-[var(--theme-accent)]/40 transition-all duration-300 ml-3 shrink-0 ${expandedCard === 3 ? 'text-[var(--theme-accent)]/90 translate-x-[2px] -translate-y-[2px]' : 'group-hover:text-[var(--theme-accent)]/90 group-hover:translate-x-[2px] group-hover:-translate-y-[2px]'}`}>
-                    ↗
-                  </div>
-                </div>
-                <p className="text-dust-gray mb-3">Weather‑aware ML to predict hourly generation, surfaced via a Django web front‑end for user inputs.</p>
-                <div
-                  className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-700 ease-in ${expandedCard === 3
-                      ? 'grid-rows-[1fr] opacity-100'
-                      : 'grid-rows-[0fr] opacity-0 group-hover:grid-rows-[1fr] group-hover:opacity-100'
-                    }`}
-                >
-                  <div className="min-h-0 text-dust-gray mb-3 text-sm leading-relaxed">
-                    <ul className="list-disc pl-5 space-y-1">
-                      <li>Multi-variate time series forecasting model</li>
-                      <li>Seasonal trend analysis and panel degradation modeling</li>
-                      <li>Real-time weather data integration via OpenWeatherMap API</li>
-                      <li>User-configurable prediction parameters</li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  <span className="tag">TensorFlow</span>
-                  <span className="tag">scikit‑learn</span>
-                  <span className="tag">Pandas</span>
-                  <span className="tag">NumPy</span>
-                  <span className="tag">Django</span>
-                  <span className="tag">OpenWeatherMap API</span>
-                </div>
-              </div>
+              ))}
             </div>
           </section>
 
           <section id="experience">
-            <h2 className="newspaper-headline text-3xl my-8 animate-slide-left">Experience</h2>
+            <h2 className="newspaper-headline text-3xl my-8">Experience</h2>
             <div className="grid gap-6 md:grid-cols-2">
               <div
                 ref={(el) => { cardRefs.current[4] = el; }}
-                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer ${expandedCard === 4 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'
-                  }`}
+                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer ${expandedCard === 4 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'}`}
                 onClick={() => handleCardClick(4)}
               >
                 <h3 className="text-xl mb-1">HumanizeIQ — AI Intern Integrations</h3>
-                <p className="text-dust-gray mb-3">Developed MCP infrastructure and AI workflow orchestration for recruiter call analysis, building scalable systems with Cloudflare Workers and multi-model AI integration.</p>
-                <div
-                  className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-700 ease-in ${expandedCard === 4
-                      ? 'grid-rows-[1fr] opacity-100'
-                      : 'grid-rows-[0fr] opacity-0 group-hover:grid-rows-[1fr] group-hover:opacity-100'
-                    }`}
-                >
-                  <div className="min-h-0 text-dust-gray mb-3 text-sm leading-relaxed">
-                    <ul className="list-disc pl-5 space-y-1">
-                      <li>Developed two specialized MCP servers using Cloudflare Workers: image generation and multimodal document generation (text + images), with async processing and R2 bucket storage.</li>
-                      <li>Built scalable MCP infrastructure implementing background processing, result retrieval, and integration with LLM chat systems.</li>
-                      <li>Designed AI-powered workflow orchestration for recruiter call analysis using Gemini and GPT-4 models, automating report generation and email distribution.</li>
-                      <li>Set up APIs for report storage, email distribution, and call event handling to support the recruiter analysis workflow.</li>
+                <p className="text-dust-gray text-sm mb-2">Developed MCP infrastructure and AI workflow orchestration for recruiter call analysis, building scalable systems with Cloudflare Workers.</p>
+                <div className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-700 ${expandedCard === 4 ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0 group-hover:grid-rows-[1fr] group-hover:opacity-100'}`}>
+                  <div className="min-h-0 text-dust-gray text-xs leading-relaxed">
+                    <ul className="list-disc pl-4 space-y-1">
+                      <li>Developed specialized MCP servers for image and multimodal document generation.</li>
+                      <li>Designed AI-powered workflow orchestration using Gemini and GPT-4.</li>
+                      <li>Set up APIs for report storage, email distribution, and call event handling.</li>
                     </ul>
                   </div>
                 </div>
               </div>
               <div
                 ref={(el) => { cardRefs.current[5] = el; }}
-                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer ${expandedCard === 5 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'
-                  }`}
+                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer ${expandedCard === 5 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'}`}
                 onClick={() => handleCardClick(5)}
               >
                 <h3 className="text-xl mb-1">JPMorgan Chase & Co. — Quant Research Virtual</h3>
-                <p className="text-dust-gray mb-3">Analyzed a loan book to estimate probability of default; transformed FICO scores into categorical features with dynamic programming.</p>
-                <div
-                  className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-700 ease-in ${expandedCard === 5
-                      ? 'grid-rows-[1fr] opacity-100'
-                      : 'grid-rows-[0fr] opacity-0 group-hover:grid-rows-[1fr] group-hover:opacity-100'
-                    }`}
-                >
-                  <div className="min-h-0 text-dust-gray mb-3 text-sm leading-relaxed">
-                    <ul className="list-disc pl-5 space-y-1">
-                      <li>Applied quantitative research methods in a simulated banking environment for loan default analysis</li>
-                      <li>Used dynamic programming to convert FICO scores into categorical data, enhancing default prediction model robustness</li>
-                      <li>Developed a natural gas price prediction model using SARIMA time series analysis</li>
+                <p className="text-dust-gray text-sm mb-2">Analyzed a loan book to estimate probability of default; transformed FICO scores with dynamic programming.</p>
+                <div className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-700 ${expandedCard === 5 ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0 group-hover:grid-rows-[1fr] group-hover:opacity-100'}`}>
+                  <div className="min-h-0 text-dust-gray text-xs leading-relaxed">
+                    <ul className="list-disc pl-4 space-y-1">
+                      <li>Used dynamic programming to convert FICO scores into categorical data.</li>
+                      <li>Developed natural gas price prediction model using SARIMA analysis.</li>
                     </ul>
                   </div>
                 </div>
               </div>
               <div className="glass-card p-5">
                 <h3 className="text-xl mb-1">OSDC — Member</h3>
-                <p className="text-dust-gray">Organized hackathons and open‑source events; collaborated on OSS contributions.</p>
+                <p className="text-dust-gray text-sm">Organized hackathons and open‑source events; collaborated on OSS contributions.</p>
               </div>
               <div className="glass-card p-5">
                 <h3 className="text-xl mb-1">Social Media — Strategy & Marketing</h3>
-                <p className="text-dust-gray">Led strategy for two Instagram pages (55k & 17k followers), increasing engagement by 167%.</p>
+                <p className="text-dust-gray text-sm">Led strategy for two Instagram pages (55k & 17k followers), increasing engagement by 167%.</p>
               </div>
             </div>
           </section>
 
           <section id="skills">
-            <h2 className="newspaper-headline text-3xl my-8 animate-slide-right">Skills & Technologies</h2>
-            <div className="grid gap-6 md:grid-cols-2">
+            <h2 className="newspaper-headline text-3xl my-8">Skills & Technologies</h2>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               <div className="glass-card p-5">
                 <h3 className="text-xl mb-3">Machine Learning</h3>
                 <div className="flex flex-wrap gap-2">
-                  <span className="tag">Deep Learning</span>
-                  <span className="tag">Time-Series Forecasting</span>
-                  <span className="tag">CNN-LSTM</span>
-                  <span className="tag">Random Forest</span>
-                  <span className="tag">TensorFlow</span>
-                  <span className="tag">scikit-learn</span>
+                  {["Deep Learning", "Time-Series", "CNN-LSTM", "Random Forest", "TensorFlow", "scikit-learn"].map(s => <span key={s} className="tag">{s}</span>)}
                 </div>
               </div>
               <div className="glass-card p-5">
-                <h3 className="text-xl mb-3">Development & Infrastructure</h3>
+                <h3 className="text-xl mb-3">Dev & Infrastructure</h3>
                 <div className="flex flex-wrap gap-2">
-                  <span className="tag">Python</span>
-                  <span className="tag">C++</span>
-                  <span className="tag">TypeScript</span>
-                  <span className="tag">MCP Development</span>
-                  <span className="tag">Cloudflare Workers</span>
-                  <span className="tag">Async Systems</span>
-                  <span className="tag">PostgreSQL</span>
-                  <span className="tag">REST APIs</span>
-                  <span className="tag">Django</span>
-                  <span className="tag">Docker</span>
+                  {["Python", "C++", "TypeScript", "MCP", "Cloudflare", "PostgreSQL", "Django", "Docker"].map(s => <span key={s} className="tag">{s}</span>)}
                 </div>
               </div>
-              <div className="glass-card p-5">
-                <h3 className="text-xl mb-3">CI/CD</h3>
+              <div className="glass-card p-5 md:col-span-2 lg:col-span-1">
+                <h3 className="text-xl mb-3">CI/CD & Ops</h3>
                 <div className="flex flex-wrap gap-2">
-                  <span className="tag">GitHub Actions</span>
-                  <span className="tag">CI/CD Pipelines</span>
-                  <span className="tag">Deployment Automation</span>
-                  <span className="tag">Workflow Orchestration</span>
+                  {["GitHub Actions", "Pipelines", "Automation", "Workflow Orchestration"].map(s => <span key={s} className="tag">{s}</span>)}
                 </div>
               </div>
             </div>
           </section>
 
           <section id="github">
-            <h2 className="newspaper-headline text-3xl my-8 animate-slide-left">GitHub</h2>
+            <h2 className="newspaper-headline text-3xl my-8">GitHub</h2>
             <div className="glass-card p-6">
-              <div className="space-y-8">
-                {/* Centered Profile */}
-                <div className="flex flex-col items-center text-center">
-                  <a
-                    href="https://github.com/mohakapoor"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="group"
-                  >
-                    <img
-                      src="https://github.com/mohakapoor.png?size=240"
-                      alt="GitHub avatar of mohakapoor"
-                      className="w-40 h-40 md:w-52 md:h-52 rounded-lg border border-[var(--theme-accent)]/40 object-cover group-hover:border-[var(--theme-accent)] transition-colors duration-200"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src = "https://avatars.githubusercontent.com/mohakapoor?size=240";
-                      }}
-                    />
-                  </a>
-                  <h3 className="mt-4 text-xl font-semibold text-[var(--vintage-white)]">@mohakapoor</h3>
-                  <p className="text-[var(--dust-gray)] mt-1">Data Scientist</p>
-                </div>
-
-                {/* Contribution Activity (Full Width) */}
-                <div>
-                  <h4 className="text-lg font-semibold mb-3 text-[var(--vintage-white)]">Contribution Activity</h4>
-                  <GitHubContributions username="mohakapoor" />
-                </div>
+              <div className="flex flex-col items-center text-center mb-8">
+                <img src="https://github.com/mohakapoor.png?size=240" className="w-40 h-40 rounded-lg border border-[var(--theme-accent)]/40 object-cover mb-4" />
+                <h3 className="text-xl font-semibold text-[var(--vintage-white)]">@mohakapoor</h3>
               </div>
-            </div>
-          </section>
-
-          <section id="contact">
-            <h2 className="newspaper-headline text-3xl my-6 animate-slide-right">Get in touch</h2>
-            <div className="grid gap-6 md:grid-cols-2">
-              <a
-                className="glass-card p-6 block no-underline cursor-pointer"
-                href="mailto:contact.mohakapoor@gmail.com"
-                target="_blank"
-                rel="noreferrer noopener"
-              >
-                <h3 className="text-xl mb-2">Contact</h3>
-                <p className="text-dust-gray">Got a case for me? Let&apos;s talk.</p>
-              </a>
-              <a
-                className="glass-card p-6 block no-underline cursor-pointer"
-                href="/MOHAK_KAPOOR_ML.pdf"
-                download="MOHAK_KAPOOR_ML.pdf"
-              >
-                <h3 className="text-xl mb-2">Download Resume</h3>
-                <p className="text-dust-gray">Grab the Resume as a PDF.</p>
-              </a>
+              <GitHubContributions username="mohakapoor" />
             </div>
           </section>
         </article>
-      </section>
+
+        {/* Footer Area */}
+        <div className="w-full h-[1px] bg-white/[0.05] mt-12" />
+        <Footer isFullWidth={true} />
+      </div>
     </main>
   );
 }
-
-
