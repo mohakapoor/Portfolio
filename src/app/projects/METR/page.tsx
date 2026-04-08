@@ -92,41 +92,63 @@ export default function METRProjectPage() {
                 {/* Project Overview Section */}
                 <section id="project-details" className="max-w-5xl mx-auto mb-16">
                     <h2 className="newspaper-headline text-3xl my-8 animate-slide-right">Project Overview</h2>
-                    <div className="glass-card p-6 md:p-8">
-                        <div className="grid md:grid-cols-3 gap-8">
+                    
+                    {/* Card 1: The Idea */}
+                    <div className="glass-card p-6 md:p-8 mb-8 animate-slide-up">
+                        <div className="grid md:grid-cols-3 gap-8 items-start">
                             <div className="md:col-span-2">
                                 <h3 className="text-xl mb-4 text-[var(--vintage-white)] flex items-center gap-2">
                                     <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
                                     The Idea
                                 </h3>
-                                <p className="text-[var(--dust-gray)] mb-6 leading-relaxed text-lg">
+                                <p className="text-[var(--dust-gray)] leading-relaxed text-lg mb-6">
                                     Can machine learning truly distinguish between a high-probability market regime and simple statistical noise? METR is a controlled multi-asset empirical study designed to answer this fundamental question.
                                     <br /><br />
                                     By training an **XGBoost Meta-Filter** on price action, volume, and implied volatility (VIX), the study isolates true statistical predictive edge from market drift. Validated against **10,000 Monte Carlo simulations**, the results confirm that while benchmark indices are highly efficient, specific commodity instruments like Gold hold exploitable temporal windows.
                                 </p>
                             </div>
-                            <div className="bg-white/5 p-6 rounded-lg border border-[var(--spider-red)]/20">
-                                <h3 className="text-xl mb-4 text-[var(--vintage-white)]">Audit Engine</h3>
-                                <div className="flex flex-wrap gap-2 mb-6">
-                                    {['XGBoost', 'Polars', 'Triple Barrier', 'FracDiff', 'Monte Carlo', 'SHAP'].map((tag) => (
+                            <div className="md:col-span-1">
+                                <h3 className="text-xl mb-4 text-[var(--vintage-white)]">Tech Stack</h3>
+                                <div className="flex flex-wrap gap-2 mb-8">
+                                    {['Python', 'XGBoost', 'Polars', 'Scikit-Learn', 'NumPy', 'Gaussian HMM'].map((tag) => (
                                         <span key={tag} className="px-3 py-1 text-xs bg-[var(--spider-red)]/10 text-[var(--spider-red)] border border-[var(--spider-red)]/30 rounded-full font-mono">
                                             {tag}
                                         </span>
                                     ))}
                                 </div>
-                                <div className="space-y-4 pt-4 border-t border-[var(--spider-red)]/20">
-                                    <div>
-                                        <span className="text-white block font-bold text-sm">Assets Under Audit</span>
-                                        <span className="text-[var(--dust-gray)] text-xs">Nifty 50, GOLDBEES, USD/INR</span>
-                                    </div>
-                                    <div>
-                                        <span className="text-white block font-bold text-sm">Validation Standard</span>
-                                        <span className="text-[var(--dust-gray)] text-xs">Out-of-Sample (2024–2025)</span>
-                                    </div>
-                                    <div>
-                                        <span className="text-white block font-bold text-sm">Execution Friction</span>
-                                        <span className="text-[var(--dust-gray)] text-xs">5 bps per round-trip</span>
-                                    </div>
+                                <a
+                                    href="https://github.com/mohakapoor/METR"
+                                    target="_blank"
+                                    rel="noreferrer noopener"
+                                    className="spider-noir-button w-full py-3 border-2 text-center rounded-lg inline-block text-sm font-bold tracking-widest uppercase transition-all duration-300 hover:shadow-[0_0_20px_rgba(204,41,54,0.3)]"
+                                >
+                                    View Source Code
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Card 2: Audit Engine */}
+                    <div className="glass-card p-6 md:p-8 animate-slide-up" style={{ animationDelay: '0.1s' }}>
+                        <div className="grid md:grid-cols-4 gap-8 items-center">
+                            <div className="md:col-span-1">
+                                <h3 className="text-xl text-[var(--vintage-white)] mb-2">Audit Specs</h3>
+                                <p className="text-xs text-[var(--dust-gray)] italic font-mono uppercase tracking-widest border-t border-[var(--spider-red)]/20 pt-2">
+                                    Strategic Parameters
+                                </p>
+                            </div>
+                            <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <div className="p-4 bg-white/5 rounded-lg border border-[var(--spider-red)]/20">
+                                    <span className="text-white block font-bold text-xs mb-1 uppercase tracking-wider">Assets Audit</span>
+                                    <span className="text-[var(--dust-gray)] text-xs">Nifty 50, GOLDBEES, USD/INR</span>
+                                </div>
+                                <div className="p-4 bg-white/5 rounded-lg border border-[var(--spider-red)]/20">
+                                    <span className="text-white block font-bold text-xs mb-1 uppercase tracking-wider">Validation</span>
+                                    <span className="text-[var(--dust-gray)] text-xs">Out-of-Sample (2024–2025)</span>
+                                </div>
+                                <div className="p-4 bg-white/5 rounded-lg border border-[var(--spider-red)]/20">
+                                    <span className="text-white block font-bold text-xs mb-1 uppercase tracking-wider">Friction</span>
+                                    <span className="text-[var(--dust-gray)] text-xs">5 bps Per Round-Trip</span>
                                 </div>
                             </div>
                         </div>
