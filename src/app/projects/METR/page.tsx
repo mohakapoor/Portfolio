@@ -92,7 +92,7 @@ export default function METRProjectPage() {
                 {/* Project Overview Section */}
                 <section id="project-details" className="max-w-5xl mx-auto mb-16">
                     <h2 className="newspaper-headline text-3xl my-8 animate-slide-right">Project Overview</h2>
-                    
+
                     {/* Card 1: The Idea */}
                     <div className="glass-card p-6 md:p-8 mb-8 animate-slide-up">
                         <div className="grid md:grid-cols-3 gap-8 items-start">
@@ -135,7 +135,7 @@ export default function METRProjectPage() {
                     <div className="grid md:grid-cols-3 gap-6">
                         {/* GoldBees Card */}
                         <div className="glass-card p-6 border-t-4 border-[var(--spider-red)] relative overflow-hidden group">
-                           <div className="absolute top-2 right-4 text-[10px] font-mono text-[var(--spider-red)] opacity-60">STAT-SIG ALPHA</div>
+                            <div className="absolute top-2 right-4 text-[10px] font-mono text-[var(--spider-red)] opacity-60">STAT-SIG ALPHA</div>
                             <h3 className="text-2xl font-bold text-white mb-6">GOLDBEES</h3>
                             <div className="space-y-6">
                                 <div className="flex justify-between items-baseline border-b border-white/5 pb-2">
@@ -244,11 +244,11 @@ export default function METRProjectPage() {
                             <div className="grid grid-cols-1 gap-3">
                                 <div className="flex justify-between items-center p-3 bg-white/5 rounded border-l-2 border-green-500">
                                     <span className="text-xs font-mono">UPPER BARRIER</span>
-                                    <span className="text-white text-xs">+kσ (Profit Target)</span>
+                                    <span className="text-white text-xs">+k * Sigma (Profit Target)</span>
                                 </div>
                                 <div className="flex justify-between items-center p-3 bg-white/5 rounded border-l-2 border-red-500">
                                     <span className="text-xs font-mono">LOWER BARRIER</span>
-                                    <span className="text-white text-xs">-kσ (Stop Loss)</span>
+                                    <span className="text-white text-xs">-k * Sigma (Stop Loss)</span>
                                 </div>
                                 <div className="flex justify-between items-center p-3 bg-white/5 rounded border-l-2 border-blue-500">
                                     <span className="text-xs font-mono">VERTICAL BARRIER</span>
@@ -291,7 +291,7 @@ export default function METRProjectPage() {
                         <h2 className="newspaper-headline text-3xl animate-slide-left">Statistical Rigor</h2>
                         <span className="text-[var(--spider-red)] font-mono text-xs tracking-widest uppercase">Skill over Luck</span>
                     </div>
-                    
+
                     <div className="grid md:grid-cols-5 gap-6">
                         {/* Monte Carlo Results */}
                         <div className="md:col-span-3 glass-card p-8">
@@ -327,8 +327,8 @@ export default function METRProjectPage() {
                                             <span className="text-[var(--spider-red)]">{feat.val} Gain</span>
                                         </div>
                                         <div className="w-full h-1 bg-white/5 rounded-full overflow-hidden">
-                                            <div 
-                                                className="h-full bg-[var(--spider-red)] group-hover:bg-white transition-colors duration-500" 
+                                            <div
+                                                className="h-full bg-[var(--spider-red)] group-hover:bg-white transition-colors duration-500"
                                                 style={{ width: `${(feat.val / 20) * 100}%` }}
                                             />
                                         </div>
@@ -346,13 +346,40 @@ export default function METRProjectPage() {
                     <div className="glass-card p-8">
                         <div className="grid md:grid-cols-2 gap-12">
                             <div>
-                                <h3 className="text-xl mb-6 text-[var(--vintage-white)]">Fractional Differentiation</h3>
+                                <h3 className="text-xl mb-6 text-[var(--vintage-white)]">Asset Configuration</h3>
                                 <p className="text-sm text-[var(--dust-gray)] mb-6 leading-relaxed">
-                                    To solve the stationarity-memory trade-off, METR implements Fractional Differentiation ($d=0.45$). This ensures that features are statistically stationary for the ML model while retaining ~81% of historical "memory"—a critical edge over standard integer differencing ($d=1$).
+                                    To balance the stationarity-memory trade-off, METR applies asset-specific differentiation (d) and profit-taking multipliers (k). This ensures each model is tuned to its instrument's unique volatility signature.
                                 </p>
-                                <div className="p-4 bg-black/40 rounded border border-[var(--spider-red)]/30 font-mono text-center">
-                                    <span className="text-[var(--spider-red)] text-lg">d = 0.45</span>
-                                    <span className="block text-[10px] text-[var(--dust-gray)] mt-1">OPTIMAL MEMORY PRESERVATION</span>
+                                <div className="overflow-hidden rounded-lg border border-[var(--spider-red)]/20 shadow-lg">
+                                    <table className="w-full text-left font-mono text-xs">
+                                        <thead className="bg-white/5 text-white/50 uppercase tracking-widest border-b border-[var(--spider-red)]/20">
+                                            <tr>
+                                                <th className="p-3">Asset</th>
+                                                <th className="p-3 text-center">Diff (d)</th>
+                                                <th className="p-3 text-center">Barrier (k)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="divide-y divide-white/5">
+                                            <tr className="hover:bg-[var(--spider-red)]/5 transition-colors">
+                                                <td className="p-3 text-white font-bold">GOLDBEES</td>
+                                                <td className="p-3 text-center text-[var(--spider-red)]">0.50</td>
+                                                <td className="p-3 text-center text-[var(--spider-red)]">1.25</td>
+                                            </tr>
+                                            <tr className="hover:bg-[var(--spider-red)]/5 transition-colors">
+                                                <td className="p-3 text-white font-bold">NIFTY 50</td>
+                                                <td className="p-3 text-center text-[var(--spider-red)]">0.45</td>
+                                                <td className="p-3 text-center text-[var(--spider-red)]">1.50</td>
+                                            </tr>
+                                            <tr className="hover:bg-[var(--spider-red)]/5 transition-colors">
+                                                <td className="p-3 text-white font-bold">USD / INR</td>
+                                                <td className="p-3 text-center text-[var(--spider-red)]">0.30</td>
+                                                <td className="p-3 text-center text-[var(--spider-red)]">1.50</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div className="mt-4 p-3 bg-white/5 rounded text-[10px] text-[var(--dust-gray)] text-center uppercase tracking-widest">
+                                    Horizon: T = 5 Days
                                 </div>
                             </div>
                             <div>
@@ -370,6 +397,20 @@ export default function METRProjectPage() {
                                         <p className="text-sm text-[var(--dust-gray)]">
                                             <strong className="text-white block">VIX_Relative_Regime</strong>
                                             Normalizes current implied volatility against its monthly trailing average to detect pricing shocks.
+                                        </p>
+                                    </li>
+                                    <li className="flex gap-4 items-start">
+                                        <div className="w-1.5 h-1.5 bg-[var(--spider-red)] rounded-full mt-1.5 shrink-0" />
+                                        <p className="text-sm text-[var(--dust-gray)]">
+                                            <strong className="text-white block">Usdinr_Vol_Ratio</strong>
+                                            Analyzes the relative volatility of the currency pair to identify macro stress regimes.
+                                        </p>
+                                    </li>
+                                    <li className="flex gap-4 items-start">
+                                        <div className="w-1.5 h-1.5 bg-[var(--spider-red)] rounded-full mt-1.5 shrink-0" />
+                                        <p className="text-sm text-[var(--dust-gray)]">
+                                            <strong className="text-white block">Momentum_Align</strong>
+                                            Identifies synchronized momentum signals across primary and secondary asset classes.
                                         </p>
                                     </li>
                                 </ul>
