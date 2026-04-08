@@ -259,28 +259,27 @@ export default function METRProjectPage() {
                     </div>
                 </section>
 
-                {/* Specs Card (Relocated) */}
-                <section className="max-w-5xl mx-auto mb-20 px-4 md:px-0">
-                    <div className="glass-card p-6 md:p-8 animate-slide-up">
-                        <div className="grid md:grid-cols-4 gap-8 items-center">
-                            <div className="md:col-span-1 border-r border-[var(--spider-red)]/20 pr-4">
-                                <h3 className="text-2xl text-[var(--vintage-white)] mb-2 uppercase tracking-widest font-bold">Framework :</h3>
-                                <div className="h-[2px] w-45 bg-[var(--spider-red)] mb-4 shadow-[0_0_8px_rgba(204,41,54,0.5)]" />
-                            </div>
-                            <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-4">
-                                <div className="p-4 bg-white/5 rounded-lg border border-[var(--spider-red)]/20 transition-all duration-300 hover:bg-white/[0.03] hover:border-[var(--spider-red)]/40 hover:shadow-[0_0_15px_rgba(204,41,54,0.1)]">
-                                    <span className="text-white block font-bold text-xs mb-2 uppercase tracking-wider opacity-60">Assets</span>
-                                    <span className="text-[var(--dust-gray)] text-sm font-mono italic">Nifty 50, Gold, FX (USD/INR)</span>
-                                </div>
-                                <div className="p-4 bg-white/5 rounded-lg border border-[var(--spider-red)]/20 transition-all duration-300 hover:bg-white/[0.03] hover:border-[var(--spider-red)]/40 hover:shadow-[0_0_15px_rgba(204,41,54,0.1)]">
-                                    <span className="text-white block font-bold text-xs mb-2 uppercase tracking-wider opacity-60">Validation</span>
-                                    <span className="text-[var(--dust-gray)] text-sm font-mono font-bold">OOS 2024–2025</span>
-                                </div>
-                                <div className="p-4 bg-white/5 rounded-lg border border-[var(--spider-red)]/20 transition-all duration-300 hover:bg-white/[0.03] hover:border-[var(--spider-red)]/40 hover:shadow-[0_0_15px_rgba(204,41,54,0.1)]">
-                                    <span className="text-white block font-bold text-xs mb-2 uppercase tracking-wider opacity-60">Friction</span>
-                                    <span className="text-[var(--dust-gray)] text-xs text-[var(--spider-red)] font-bold tracking-tighter">5 BPS</span>
-                                </div>
-                            </div>
+                {/* Strategic Specifications Section */}
+                <section id="specs" className="max-w-5xl mx-auto mb-24 px-4 md:px-0">
+                    <h2 className="newspaper-headline text-3xl mb-8 animate-slide-left">Specifications</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="glass-card p-6 border-l-2 border-[var(--spider-red)] transition-all duration-300 hover:bg-white/[0.03] hover:shadow-[0_0_20px_rgba(204,41,54,0.1)]">
+                            <span className="text-white block font-bold text-xs mb-3 uppercase tracking-[0.2em] opacity-60">Primary Assets</span>
+                            <span className="text-[var(--dust-gray)] text-base font-mono italic leading-relaxed">
+                                Nifty 50 Index <br />
+                                Gold (GOLDBEES) <br />
+                                USD / INR
+                            </span>
+                        </div>
+                        <div className="glass-card p-6 border-l-2 border-[var(--spider-red)] transition-all duration-300 hover:bg-white/[0.03] hover:shadow-[0_0_20px_rgba(204,41,54,0.1)]">
+                            <span className="text-white block font-bold text-xs mb-3 uppercase tracking-[0.2em] opacity-60">Testing Window</span>
+                            <span className="text-2xl font-bold font-mono text-white">2024–2025</span>
+                            <span className="block text-[10px] text-[var(--dust-gray)] mt-2 uppercase tracking-widest font-mono">Out-of-Sample Set</span>
+                        </div>
+                        <div className="glass-card p-6 border-l-2 border-[var(--spider-red)] transition-all duration-300 hover:bg-white/[0.03] hover:shadow-[0_0_20px_rgba(204,41,54,0.1)]">
+                            <span className="text-white block font-bold text-xs mb-3 uppercase tracking-[0.2em] opacity-60">Execution Friction</span>
+                            <span className="text-2xl font-bold font-mono text-[var(--spider-red)]">5 BPS</span>
+                            <span className="block text-[10px] text-[var(--dust-gray)] mt-2 uppercase tracking-widest font-mono">Per Round-Trip</span>
                         </div>
                     </div>
                 </section>
@@ -314,7 +313,7 @@ export default function METRProjectPage() {
 
                         {/* Feature Importance */}
                         <div className="md:col-span-2 glass-card p-8 bg-[var(--spider-red)]/[0.03]">
-                            <h3 className="text-xl mb-6 text-[var(--vintage-white)] border-b border-[var(--spider-red)]/30 pb-2 text-center">Gold Engine Drivers</h3>
+                            <h3 className="text-xl mb-6 text-[var(--vintage-white)] border-b border-[var(--spider-red)]/30 pb-2 text-center">Gold Drivers</h3>
                             <div className="space-y-4">
                                 {[
                                     { name: "Vol Efficiency", val: 19.63, sub: "Risk-adjusted momentum" },
