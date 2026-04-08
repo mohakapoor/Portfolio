@@ -216,20 +216,35 @@ export default function METRProjectPage() {
                     <div className="grid md:grid-cols-2 gap-8">
                         {/* Two-Layer Logic */}
                         <div className="glass-card p-8">
-                            <h3 className="text-xl mb-6 text-[var(--vintage-white)] border-b border-[var(--spider-red)]/30 pb-2">The Two-Layer Logic</h3>
-                            <div className="space-y-8">
+                            <h3 className="text-xl mb-6 text-[var(--vintage-white)] border-b border-[var(--spider-red)]/30 pb-2">Execution Pipeline</h3>
+                            <div className="space-y-6">
                                 <div className="relative pl-8">
                                     <div className="absolute left-0 top-1 w-5 h-5 bg-[var(--spider-red)]/20 border border-[var(--spider-red)] rounded-full flex items-center justify-center text-[10px] font-bold text-[var(--spider-red)]">1</div>
-                                    <h4 className="text-white font-bold mb-1">Layer 1: The Trigger</h4>
-                                    <p className="text-sm text-[var(--dust-gray)]">
-                                        A volatility-normalized 5-day momentum signal. It identifies potential "opportunities" but lacks directional conviction and macro-awareness.
+                                    <h4 className="text-white font-bold mb-1 border-b border-white/5 pb-1">Primary Signal Generator</h4>
+                                    <p className="text-xs text-[var(--dust-gray)] leading-relaxed">
+                                        Initial trade recommendations are generated via a volatility-normalized 5-day momentum trigger. This acts as the "Base Logic" that identifies raw price anomalies.
                                     </p>
                                 </div>
                                 <div className="relative pl-8">
                                     <div className="absolute left-0 top-1 w-5 h-5 bg-[var(--spider-red)]/20 border border-[var(--spider-red)] rounded-full flex items-center justify-center text-[10px] font-bold text-[var(--spider-red)]">2</div>
-                                    <h4 className="text-white font-bold mb-1">Layer 2: The Audit Engine</h4>
-                                    <p className="text-sm text-[var(--dust-gray)]">
-                                        A symmetric binary XGBoost classifier that validates the trigger signal. It confirms trade feasibility based on macro-regime stability and cross-asset stress signatures.
+                                    <h4 className="text-white font-bold mb-1 border-b border-white/5 pb-1">Meta Labeling Framework</h4>
+                                    <p className="text-xs text-[var(--dust-gray)] leading-relaxed">
+                                        Each signal is assigned a "Success" label only if the Triple Barrier profit target is hit before the stop-loss or horizontal time-out, creating a clean binary audit trail for the ML filter.
+                                    </p>
+                                </div>
+                                <div className="relative pl-8">
+                                    <div className="absolute left-0 top-1 w-5 h-5 bg-[var(--spider-red)]/20 border border-[var(--spider-red)] rounded-full flex items-center justify-center text-[10px] font-bold text-[var(--spider-red)]">3</div>
+                                    <h4 className="text-white font-bold mb-1 border-b border-white/5 pb-1">Conditional Model Training</h4>
+                                    <p className="text-xs text-[var(--dust-gray)] leading-relaxed font-mono">
+                                        Train: [Observations | Signal != 0]
+                                        <span className="block mt-1 normal-case font-sans">The XGBoost classifier is trained exclusively on active signal instances to isolate trade verification from signal discovery.</span>
+                                    </p>
+                                </div>
+                                <div className="relative pl-8">
+                                    <div className="absolute left-0 top-1 w-5 h-5 bg-[var(--spider-red)]/20 border border-[var(--spider-red)] rounded-full flex items-center justify-center text-[10px] font-bold text-[var(--spider-red)]">4</div>
+                                    <h4 className="text-white font-bold mb-1 border-b border-white/5 pb-1">Verification Pipeline</h4>
+                                    <p className="text-xs text-[var(--dust-gray)] leading-relaxed">
+                                        The combined logic undergoes probability threshold optimization, iterative backtesting, and finally a 10,000-pass Monte Carlo simulation for statistical validation.
                                     </p>
                                 </div>
                             </div>
@@ -254,6 +269,14 @@ export default function METRProjectPage() {
                                     <span className="text-xs font-mono">VERTICAL BARRIER</span>
                                     <span className="text-white text-xs">Time T expires (Timeout)</span>
                                 </div>
+                            </div>
+
+                            {/* Fractional Differentiation Subsection */}
+                            <div className="mt-10">
+                                <h4 className="text-xl mb-6 text-[var(--vintage-white)] border-b border-[var(--spider-red)]/30 pb-2">Feature Stationarity</h4>
+                                <p className="text-sm text-[var(--dust-gray)] mb-6">
+                                    To balance the stationarity-memory trade-off, METR implements <strong>Fractional Differentiation</strong>. This maintains statistical stationarity while preserving critical historical memory required for momentum discovery.
+                                </p>
                             </div>
                         </div>
                     </div>
