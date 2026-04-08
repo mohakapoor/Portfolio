@@ -1,18 +1,120 @@
 'use client';
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 export default function METRProjectPage() {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [lightboxOpen, setLightboxOpen] = useState(false);
+    const [lightboxVisible, setLightboxVisible] = useState(false);
+    const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+    const [activeGallery, setActiveGallery] = useState<'optimization' | 'performance'>('optimization');
+    const [imageTransition, setImageTransition] = useState<'none' | 'left' | 'right'>('none');
+
+    const optimizationPlots = [
+        { src: "/metr_plots/gold_d_value_analysis.png", title: "Gold D-Value Analysis", alt: "Gold Fractional Differentiation Analysis", desc: "Iterative search for the optimal differentiation parameter 'd' to maximize stationarity while preserving historical memory." },
+        { src: "/metr_plots/gold_grid_results_t5.png", title: "Gold Grid Search (T=5)", alt: "Gold Hyperparameter Grid Search", desc: "Heatmap results of the XGBoost hyperparameter optimization across a fixed 5-day time barrier." },
+        { src: "/metr_plots/nifty_d_value_analysis.png", title: "Nifty D-Value Analysis", alt: "Nifty Fractional Differentiation Analysis", desc: "Parameter tuning for the Nifty 50 index, balancing serial correlation removal with signal retention." },
+        { src: "/metr_plots/nifty_grid_results_t5.png", title: "Nifty Grid Search (T=5)", alt: "Nifty Hyperparameter Grid Search", desc: "Validation metrics for the Nifty model across varying tree depths and learning rates." },
+        { src: "/metr_plots/usdinr_d_value_analysis.png", title: "USDINR D-Value Analysis", alt: "USDINR Fractional Differentiation Analysis", desc: "Unique d-value derivation for the USD/INR currency pair, accounting for its specific volatility regime." },
+        { src: "/metr_plots/usdinr_grid_results_t5.png", title: "USDINR Grid Search (T=5)", alt: "USDINR Hyperparameter Grid Search", desc: "Cross-validation performance for the currency trade-filter model." }
+    ];
+
+    const performancePlots = [
+        { src: "/metr_plots/gold_friction_sensitivity.png", title: "Gold Friction Sensitivity", alt: "Gold Trading Friction Impact", desc: "Analysis of net profitability across varying transaction cost levels (bps), establishing the breakeven threshold." },
+        { src: "/metr_plots/gold_report.png", title: "Gold Strategy Report", alt: "Gold Performance Metrics", desc: "Comprehensive PnL statistics including Sharpe ratio, max drawdown, and hit rate for the Gold engine." },
+        { src: "/metr_plots/gold_monte_carlo.png", title: "Gold Monte Carlo Validation", alt: "Gold Statistical Verification", desc: "10,000-pass simulation results validating that the observed strategy edge is statistically significant compared to random chance." },
+        { src: "/metr_plots/nifty_friction_sensitivity.png", title: "Nifty Friction Sensitivity", alt: "Nifty Trading Friction Impact", desc: "Sensitivity analysis of the Nifty 50 model to slippage and execution costs." },
+        { src: "/metr_plots/nifty_report.png", title: "Nifty Strategy Report", alt: "Nifty Performance Metrics", desc: "Equity curve and risk metrics for the Nifty trade-filter layer." },
+        { src: "/metr_plots/nifty_monte_carlo.png", title: "Nifty Monte Carlo Validation", alt: "Nifty Statistical Verification", desc: "Stochastic validation of the Nifty strategy signals against an 'efficient market' null hypothesis." },
+        { src: "/metr_plots/usdinr_friction_sensitivity.png", title: "USDINR Friction Sensitivity", alt: "USDINR Trading Friction Impact", desc: "Determining the execution viability of currency trades under varying liquidity conditions." },
+        { src: "/metr_plots/usdinr_report.png", title: "USDINR Strategy Report", alt: "USDINR Performance Metrics", desc: "PnL distribution and trade-level reporting for the USD/INR model." },
+        { src: "/metr_plots/usdinr_monte_carlo.png", title: "USDINR Monte Carlo Validation", alt: "USDINR Statistical Verification", desc: "Monte Carlo simulation confirming the statistical robustness of the currency trade-filter." }
+    ];
+
+    const currentImages = activeGallery === 'optimization' ? optimizationPlots : performancePlots;
+
+    const openLightbox = (index: number, gallery: 'optimization' | 'performance') => {
+        setActiveGallery(gallery);
+        setSelectedImageIndex(index);
+        setLightboxOpen(true);
+        setTimeout(() => setLightboxVisible(true), 10);
+    };
+
+    const closeLightbox = useCallback(() => {
+        setLightboxVisible(false);
+        setTimeout(() => {
+            setLightboxOpen(false);
+            setSelectedImageIndex(0);
+        }, 300);
+    }, []);
+
+    const nextImage = useCallback(() => {
+        setImageTransition('right');
+        setTimeout(() => {
+            setSelectedImageIndex((prev) => (prev + 1) % currentImages.length);
+            setImageTransition('none');
+        }, 400);
+    }, [currentImages.length]);
+
+    const previousImage = useCallback(() => {
+        setImageTransition('left');
+        setTimeout(() => {
+            setSelectedImageIndex((prev) => (prev - 1 + currentImages.length) % currentImages.length);
+            setImageTransition('none');
+        }, 400);
+    }, [currentImages.length]);
+
+    // Keyboard navigation
+    useEffect(() => {
+        if (!lightboxOpen) return;
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'ArrowLeft') previousImage();
+            else if (e.key === 'ArrowRight') nextImage();
+            else if (e.key === 'Escape') closeLightbox();
+        };
+        document.addEventListener('keydown', handleKeyDown);
+        return () => document.removeEventListener('keydown', handleKeyDown);
+    }, [lightboxOpen, previousImage, nextImage, closeLightbox]);
+
 
     return (
         <>
             <style jsx>{`
-         .glass-card:hover {
-           transform: none !important;
-           scale: none !important;
-         }
-       `}</style>
+                .glass-card:hover {
+                    transform: none !important;
+                    scale: none !important;
+                }
+                .lightbox-fade-in {
+                    animation: fadeIn 0.4s ease-out forwards;
+                }
+                .lightbox-zoom-in {
+                    animation: zoomIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+                }
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+                @keyframes zoomIn {
+                    from { opacity: 0; transform: scale(0.95); }
+                    to { opacity: 1; transform: scale(1); }
+                }
+                .lightbox-image-transition-left {
+                    transform: translateX(-150%) scale(0.9) !important;
+                    opacity: 0 !important;
+                }
+                .lightbox-image-transition-right {
+                    transform: translateX(150%) scale(0.9) !important;
+                    opacity: 0 !important;
+                }
+                @media (max-width: 767px) {
+                    .lightbox-image-transition-left {
+                        transform: translateY(-150%) scale(0.9) !important;
+                    }
+                    .lightbox-image-transition-right {
+                        transform: translateY(150%) scale(0.9) !important;
+                    }
+                }
+            `}</style>
 
             <main className="min-h-screen px-6 py-16">
                 {/* Hamburger button */}
@@ -59,9 +161,11 @@ export default function METRProjectPage() {
                         <div className="mt-4 text-dust-gray">On this page</div>
                         <a href="#project-details" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Project Overview</a>
                         <a href="#backtest-results" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Backtest Results</a>
+                        <a href="#performance-validation" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Performance Plots</a>
                         <a href="#strategy-architecture" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Strategy Architecture</a>
                         <a href="#statistical-rigor" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Statistical Rigor</a>
                         <a href="#data-engineering" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Data Engineering</a>
+                        <a href="#optimization-research" className="block py-1 hover:underline" onClick={() => setMenuOpen(false)}>Optimization Plots</a>
                     </nav>
                 </aside>
 
@@ -208,6 +312,28 @@ export default function METRProjectPage() {
                     </div>
                 </section>
 
+                {/* Performance & Validation Gallery */}
+                <section id="performance-validation" className="max-w-5xl mx-auto mb-24 px-4 md:px-0">
+                    <h2 className="newspaper-headline text-2xl mb-8 flex items-center gap-4">
+                        <span className="w-8 h-[1px] bg-[var(--spider-red)]" />
+                        Performance & Backtesting Plots
+                    </h2>
+                    <div className="grid grid-cols-2 md:grid-cols-9 gap-2">
+                        {performancePlots.map((plot, i) => (
+                            <div 
+                                key={i} 
+                                className="glass-card p-1 cursor-pointer group relative overflow-hidden aspect-square border-none"
+                                onClick={() => openLightbox(i, 'performance')}
+                            >
+                                <img src={plot.src} alt={plot.alt} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-300 shadow-lg" />
+                                <div className="absolute inset-0 bg-[var(--spider-red)]/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                    <span className="text-[8px] text-white font-mono font-bold uppercase tracking-tighter">VIEW</span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
 
 
                 {/* Strategy Architecture Section */}
@@ -229,7 +355,7 @@ export default function METRProjectPage() {
                                     <div className="absolute left-0 top-1 w-5 h-5 bg-[var(--spider-red)]/20 border border-[var(--spider-red)] rounded-full flex items-center justify-center text-[10px] font-bold text-[var(--spider-red)]">2</div>
                                     <h4 className="text-white font-bold mb-1 border-b border-white/5 pb-1">Meta Labeling Framework</h4>
                                     <p className="text-xs text-[var(--dust-gray)] leading-relaxed">
-                                        Each signal is assigned a "Success" label only if the Triple Barrier profit target is hit before the stop-loss or horizontal time-out, creating a clean binary audit trail for the ML filter.
+                                        Each signal is assigned a "Success" label only if the Triple Barrier profit target is hit before the stop-loss or horizontal time-out, creating a clean binary verification log for the ML filter.
                                     </p>
                                 </div>
                                 <div className="relative pl-8">
@@ -363,6 +489,7 @@ export default function METRProjectPage() {
                     </div>
                 </section>
 
+
                 {/* Data Engineering Section */}
                 <section id="data-engineering" className="max-w-5xl mx-auto mb-20 pb-16">
                     <h2 className="newspaper-headline text-3xl my-8 animate-slide-right">Data Engineering</h2>
@@ -441,7 +568,93 @@ export default function METRProjectPage() {
                         </div>
                     </div>
                 </section>
+
+                {/* Optimization Research Gallery */}
+                <section id="optimization-research" className="max-w-5xl mx-auto mb-32 px-4 md:px-0">
+                    <h2 className="newspaper-headline text-2xl mb-8 flex items-center gap-4">
+                        <span className="w-8 h-[1px] bg-[var(--spider-red)]" />
+                        Optimization Plots
+                    </h2>
+                    <div className="grid grid-cols-2 md:grid-cols-6 gap-3">
+                        {optimizationPlots.map((plot, i) => (
+                            <div 
+                                key={i} 
+                                className="glass-card p-1 cursor-pointer group relative overflow-hidden aspect-video border-none"
+                                onClick={() => openLightbox(i, 'optimization')}
+                            >
+                                <img src={plot.src} alt={plot.alt} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-300 shadow-lg" />
+                                <div className="absolute inset-0 bg-[var(--spider-red)]/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                    <span className="text-[8px] text-white font-mono font-bold uppercase tracking-tighter">VIEW RESEARCH</span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
             </main>
+
+            {/* Lightbox Component */}
+            {lightboxOpen && (
+                <div
+                    className={`fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 transition-all duration-500 ease-out ${lightboxVisible ? 'opacity-100' : 'opacity-0'}`}
+                    onClick={closeLightbox}
+                >
+                    {/* Navigation Buttons */}
+                    <button
+                        onClick={(e) => { e.stopPropagation(); previousImage(); }}
+                        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-[var(--spider-red)]/80 text-white hover:bg-[var(--spider-red)] transition-all shadow-lg flex items-center justify-center text-xl z-10 hover:scale-110 active:scale-95"
+                        aria-label="Previous"
+                    >
+                        ←
+                    </button>
+                    <button
+                        onClick={(e) => { e.stopPropagation(); nextImage(); }}
+                        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-[var(--spider-red)]/80 text-white hover:bg-[var(--spider-red)] transition-all shadow-lg flex items-center justify-center text-xl z-10 hover:scale-110 active:scale-95"
+                        aria-label="Next"
+                    >
+                        →
+                    </button>
+                    <button
+                        onClick={(e) => { e.stopPropagation(); closeLightbox(); }}
+                        className="absolute top-4 md:top-8 right-4 md:right-8 w-12 h-12 rounded-full bg-[var(--spider-red)]/80 text-white hover:bg-[var(--spider-red)] transition-all shadow-lg flex items-center justify-center text-xl z-20 hover:scale-110 active:scale-95"
+                        aria-label="Close"
+                    >
+                        ✕
+                    </button>
+
+                    <div
+                        className={`relative max-w-6xl w-full bg-[var(--newsprint-gray)] rounded-lg shadow-2xl flex flex-col md:flex-row overflow-hidden transition-all duration-500 ease-out transform ${lightboxVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        {/* Image Canvas */}
+                        <div className="flex-1 flex items-center justify-center p-4 md:p-8 min-h-[50vh] bg-black/40">
+                            <img
+                                src={currentImages[selectedImageIndex].src}
+                                alt={currentImages[selectedImageIndex].alt}
+                                className={`max-w-full max-h-[75vh] object-contain rounded shadow-inner transition-all duration-400 ease-out ${imageTransition === 'left' ? 'lightbox-image-transition-left' : imageTransition === 'right' ? 'lightbox-image-transition-right' : 'opacity-100 scale-100'}`}
+                            />
+                        </div>
+
+                        {/* Description Sidebar */}
+                        <div className={`w-full md:w-80 bg-[var(--newsprint-gray)] border-t md:border-t-0 md:border-l border-[var(--spider-red)]/20 p-6 flex flex-col transition-all duration-500 delay-100 ${lightboxVisible ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'}`}>
+                            <div className="flex-1">
+                                <span className="text-[10px] text-[var(--spider-red)] font-mono uppercase tracking-[0.2em] mb-2 block">Technical Validation</span>
+                                <h3 className="text-xl font-bold text-[var(--vintage-white)] newspaper-headline mb-4 border-b border-[var(--spider-red)]/20 pb-2">
+                                    {currentImages[selectedImageIndex].title}
+                                </h3>
+                                <p className="text-sm text-[var(--dust-gray)] leading-relaxed">
+                                    {currentImages[selectedImageIndex].desc}
+                                </p>
+                            </div>
+                            <div className="mt-8 pt-4 border-t border-[var(--spider-red)]/10">
+                                <div className="flex justify-between items-center text-[10px] text-[var(--dust-gray)] font-mono uppercase tracking-widest">
+                                    <span>Image {selectedImageIndex + 1} / {currentImages.length}</span>
+                                    <span>METR CORE</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     );
 }
