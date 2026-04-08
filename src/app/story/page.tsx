@@ -187,6 +187,13 @@ export default function StoryPage() {
                 },
                 { 
                   id: 3, 
+                  title: "METR: Market Exposure Timing", 
+                  desc: "A multi-asset study using XGBoost Meta-Labeling to distinguish true alpha from random noise. Verified with 10,000 Monte Carlo simulations.",
+                  tags: ["XGBoost", "Polars", "Triple Barrier", "Monte Carlo", "FracDiff"],
+                  href: "/projects/METR"
+                },
+                { 
+                  id: 4, 
                   title: "Solar Power Generation Predictor", 
                   desc: "Weather‑aware ML to predict hourly generation, surfaced via a Django web front‑end for user inputs.",
                   tags: ["TensorFlow", "scikit‑learn", "Pandas", "Django", "OpenWeatherMap API"],
