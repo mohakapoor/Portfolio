@@ -98,13 +98,12 @@ export default function METRProjectPage() {
                         <div className="grid md:grid-cols-3 gap-8 items-start">
                             <div className="md:col-span-2">
                                 <h3 className="text-xl mb-4 text-[var(--vintage-white)] flex items-center gap-2">
-                                    <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
                                     The Idea
                                 </h3>
                                 <p className="text-[var(--dust-gray)] leading-relaxed text-lg mb-6">
-                                    Can machine learning truly distinguish between a high-probability market regime and simple statistical noise? METR is a controlled multi-asset empirical study designed to answer this fundamental question.
+                                    Can a machine learning model trained purely on historical price, volume, and publicly available implied volatility data — without any live sentiment, news, macro indicators, or order flow — actually beat random market entries in the long term?
                                     <br /><br />
-                                    By training an **XGBoost Meta-Filter** on price action, volume, and implied volatility (VIX), the study isolates true statistical predictive edge from market drift. Validated against **10,000 Monte Carlo simulations**, the results confirm that while benchmark indices are highly efficient, specific commodity instruments like Gold hold exploitable temporal windows.
+                                    By training an <strong>XGBoost Meta-Filter</strong> on price action, volume, and implied volatility (VIX), the study isolates true statistical predictive edge from market drift. Validated against <strong>10,000 Monte Carlo simulations</strong>, the results confirm that while benchmark indices are highly efficient, specific commodity instruments like Gold hold exploitable temporal windows.
                                 </p>
                             </div>
                             <div className="md:col-span-1">
@@ -128,31 +127,6 @@ export default function METRProjectPage() {
                         </div>
                     </div>
 
-                    {/* Card 2: Audit Engine */}
-                    <div className="glass-card p-6 md:p-8 animate-slide-up" style={{ animationDelay: '0.1s' }}>
-                        <div className="grid md:grid-cols-4 gap-8 items-center">
-                            <div className="md:col-span-1">
-                                <h3 className="text-xl text-[var(--vintage-white)] mb-2">Audit Specs</h3>
-                                <p className="text-xs text-[var(--dust-gray)] italic font-mono uppercase tracking-widest border-t border-[var(--spider-red)]/20 pt-2">
-                                    Strategic Parameters
-                                </p>
-                            </div>
-                            <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-4">
-                                <div className="p-4 bg-white/5 rounded-lg border border-[var(--spider-red)]/20">
-                                    <span className="text-white block font-bold text-xs mb-1 uppercase tracking-wider">Assets Audit</span>
-                                    <span className="text-[var(--dust-gray)] text-xs">Nifty 50, GOLDBEES, USD/INR</span>
-                                </div>
-                                <div className="p-4 bg-white/5 rounded-lg border border-[var(--spider-red)]/20">
-                                    <span className="text-white block font-bold text-xs mb-1 uppercase tracking-wider">Validation</span>
-                                    <span className="text-[var(--dust-gray)] text-xs">Out-of-Sample (2024–2025)</span>
-                                </div>
-                                <div className="p-4 bg-white/5 rounded-lg border border-[var(--spider-red)]/20">
-                                    <span className="text-white block font-bold text-xs mb-1 uppercase tracking-wider">Friction</span>
-                                    <span className="text-[var(--dust-gray)] text-xs">5 bps Per Round-Trip</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </section>
 
                 {/* Backtest Results Section */}
@@ -234,6 +208,8 @@ export default function METRProjectPage() {
                     </div>
                 </section>
 
+
+
                 {/* Strategy Architecture Section */}
                 <section id="strategy-architecture" className="max-w-5xl mx-auto mb-20">
                     <h2 className="newspaper-headline text-3xl my-8 animate-slide-right">Strategy Architecture</h2>
@@ -283,6 +259,33 @@ export default function METRProjectPage() {
                     </div>
                 </section>
 
+                {/* Specs Card (Relocated) */}
+                <section className="max-w-5xl mx-auto mb-20 px-4 md:px-0">
+                    <div className="glass-card p-6 md:p-8 animate-slide-up">
+                        <div className="grid md:grid-cols-4 gap-8 items-center">
+                            <div className="md:col-span-1 border-r border-[var(--spider-red)]/20 pr-4">
+                                <h3 className="text-2xl text-[var(--vintage-white)] mb-2 uppercase tracking-widest font-bold">Framework :</h3>
+                                <div className="h-[2px] w-45 bg-[var(--spider-red)] mb-4 shadow-[0_0_8px_rgba(204,41,54,0.5)]" />
+                            </div>
+                            <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <div className="p-4 bg-white/5 rounded-lg border border-[var(--spider-red)]/20 transition-all duration-300 hover:bg-white/[0.03] hover:border-[var(--spider-red)]/40 hover:shadow-[0_0_15px_rgba(204,41,54,0.1)]">
+                                    <span className="text-white block font-bold text-xs mb-2 uppercase tracking-wider opacity-60">Assets</span>
+                                    <span className="text-[var(--dust-gray)] text-sm font-mono italic">Nifty 50, Gold, FX (USD/INR)</span>
+                                </div>
+                                <div className="p-4 bg-white/5 rounded-lg border border-[var(--spider-red)]/20 transition-all duration-300 hover:bg-white/[0.03] hover:border-[var(--spider-red)]/40 hover:shadow-[0_0_15px_rgba(204,41,54,0.1)]">
+                                    <span className="text-white block font-bold text-xs mb-2 uppercase tracking-wider opacity-60">Validation</span>
+                                    <span className="text-[var(--dust-gray)] text-sm font-mono font-bold">OOS 2024–2025</span>
+                                </div>
+                                <div className="p-4 bg-white/5 rounded-lg border border-[var(--spider-red)]/20 transition-all duration-300 hover:bg-white/[0.03] hover:border-[var(--spider-red)]/40 hover:shadow-[0_0_15px_rgba(204,41,54,0.1)]">
+                                    <span className="text-white block font-bold text-xs mb-2 uppercase tracking-wider opacity-60">Friction</span>
+                                    <span className="text-[var(--dust-gray)] text-xs text-[var(--spider-red)] font-bold tracking-tighter">5 BPS</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
                 {/* Statistical Rigor Section */}
                 <section id="statistical-rigor" className="max-w-5xl mx-auto mb-20">
                     <div className="flex items-baseline justify-between mb-8">
@@ -293,7 +296,7 @@ export default function METRProjectPage() {
                     <div className="grid md:grid-cols-5 gap-6">
                         {/* Monte Carlo Results */}
                         <div className="md:col-span-3 glass-card p-8">
-                            <h3 className="text-xl mb-6 text-[var(--vintage-white)]">Monte Carlo Audit (10,000 Iterations)</h3>
+                            <h3 className="text-xl mb-6 text-[var(--vintage-white)]">Monte Carlo Simulation (10,000 Iterations)</h3>
                             <div className="grid grid-cols-2 gap-8 mb-8">
                                 <div className="text-center p-4 bg-white/5 rounded-lg">
                                     <span className="block text-[var(--dust-gray)] text-xs uppercase mb-2">Model Win Rate</span>
@@ -301,7 +304,7 @@ export default function METRProjectPage() {
                                 </div>
                                 <div className="text-center p-4 bg-white/5 rounded-lg">
                                     <span className="block text-[var(--dust-gray)] text-xs uppercase mb-2">P-Value</span>
-                                    <span className="text-4xl font-bold text-[var(--spider-red)]">0.0104</span>
+                                    <span className="text-4xl font-bold text-green-500">0.0104</span>
                                 </div>
                             </div>
                             <p className="text-sm text-[var(--dust-gray)] leading-relaxed italic">
