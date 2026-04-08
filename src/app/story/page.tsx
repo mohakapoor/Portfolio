@@ -192,13 +192,6 @@ export default function StoryPage() {
                   tags: ["XGBoost", "Polars", "Triple Barrier", "Monte Carlo", "FracDiff"],
                   href: "/projects/METR"
                 },
-                { 
-                  id: 4, 
-                  title: "Solar Power Generation Predictor", 
-                  desc: "Weather‑aware ML to predict hourly generation, surfaced via a Django web front‑end for user inputs.",
-                  tags: ["TensorFlow", "scikit‑learn", "Pandas", "Django", "OpenWeatherMap API"],
-                  href: "https://github.com/mohakapoor/Solar-Energy-Prediction"
-                }
               ].map((proj) => {
                 const isExternal = proj.href.startsWith('http');
                 const CardWrapper = isExternal ? 'a' : Link;
