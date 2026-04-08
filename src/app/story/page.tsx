@@ -166,32 +166,33 @@ export default function StoryPage() {
               {[
                 { 
                   id: 0, 
+                  title: "METR: Market Exposure Timing", 
+                  desc: "A multi-asset study using XGBoost Meta-Labeling to distinguish true alpha from random noise. Verified with 10,000 Monte Carlo simulations.",
+                  tags: ["XGBoost", "Polars", "Triple Barrier", "Monte Carlo", "FracDiff"],
+                  href: "/projects/METR"
+                },
+                { 
+                  id: 1, 
                   title: "Intrusion Detection System", 
                   desc: "Real-time network traffic analysis using hybrid machine learning (LightGBM + Deep Learning) to detect sophisticated cyber attacks on the CICIDS-2017 dataset.",
                   tags: ["Python", "PyTorch", "RAPIDS", "LightGBM", "CICIDS-2017"],
                   href: "/projects/IntrusionDetection"
                 },
                 { 
-                  id: 1, 
+                  id: 2, 
                   title: "CaptchaOCR", 
                   desc: "End-to-end CAPTCHA text recognition using custom CRNN architecture with CTC loss, achieving 96%+ character accuracy.",
                   tags: ["Python", "PyTorch", "CNN-LSTM", "CTC Loss", "Computer Vision"],
                   href: "/projects/CaptchaOCR"
                 },
                 { 
-                  id: 2, 
+                  id: 3, 
                   title: "HermesGPT", 
                   desc: "AI‑powered personalized cold emails with Gmail API, email verification, and PostgreSQL tracking.",
                   tags: ["Python", "Gmail API", "Gemini AI", "Automation", "PostgreSQL"],
                   href: "https://github.com/mohakapoor/HermesGPT"
                 },
-                { 
-                  id: 3, 
-                  title: "METR: Market Exposure Timing", 
-                  desc: "A multi-asset study using XGBoost Meta-Labeling to distinguish true alpha from random noise. Verified with 10,000 Monte Carlo simulations.",
-                  tags: ["XGBoost", "Polars", "Triple Barrier", "Monte Carlo", "FracDiff"],
-                  href: "/projects/METR"
-                },
+                
               ].map((proj) => {
                 const isExternal = proj.href.startsWith('http');
                 const CardWrapper = isExternal ? 'a' : Link;
