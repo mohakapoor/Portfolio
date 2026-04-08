@@ -584,7 +584,7 @@ export default function METRProjectPage() {
                             >
                                 <img src={plot.src} alt={plot.alt} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-300 shadow-lg" />
                                 <div className="absolute inset-0 bg-[var(--spider-red)]/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                    <span className="text-[8px] text-white font-mono font-bold uppercase tracking-tighter">VIEW RESEARCH</span>
+                                    <span className="text-[8px] text-white font-mono font-bold uppercase tracking-tighter">VIEW</span>
                                 </div>
                             </div>
                         ))}
