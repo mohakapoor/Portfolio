@@ -103,7 +103,7 @@ export default function METRProjectPage() {
                                 <p className="text-[var(--dust-gray)] leading-relaxed text-lg mb-6">
                                     Can a machine learning model trained purely on historical price, volume, and publicly available implied volatility data — without any live sentiment, news, macro indicators, or order flow — actually beat random market entries in the long term?
                                     <br /><br />
-                                    By training an <strong>XGBoost Meta-Filter</strong> on price action, volume, and implied volatility (VIX), the study isolates true statistical predictive edge from market drift. Validated against <strong>10,000 Monte Carlo simulations</strong>, the results confirm that while benchmark indices are highly efficient, specific commodity instruments like Gold hold exploitable temporal windows.
+                                    By training an <strong>XGBoost Trade-Filter</strong> on price action, volume, and implied volatility (VIX), the study isolates true statistical predictive edge from market drift. Validated against <strong>10,000 Monte Carlo simulations</strong>, the results confirm that while benchmark indices are highly efficient, specific commodity instruments like Gold hold exploitable temporal windows.
                                 </p>
                             </div>
                             <div className="md:col-span-1">
@@ -212,7 +212,7 @@ export default function METRProjectPage() {
 
                 {/* Strategy Architecture Section */}
                 <section id="strategy-architecture" className="max-w-5xl mx-auto mb-20">
-                    <h2 className="newspaper-headline text-3xl my-8 animate-slide-right">Strategy Architecture</h2>
+                    <h2 className="newspaper-headline text-3xl my-8 animate-slide-right">Architecture</h2>
                     <div className="grid md:grid-cols-2 gap-8">
                         {/* Two-Layer Logic */}
                         <div className="glass-card p-8">
