@@ -458,7 +458,7 @@ export default function IntrusionDetectionProjectPage() {
                             <div>
                                 <h3 className="text-xl mb-4 text-[var(--vintage-white)]">Tech Stack</h3>
                                 <div className="flex flex-wrap gap-2">
-                                    {['Python', 'Pandas & NumPy', 'Scikit-learn', 'RAPIDS cuML', 'LightGBM', 'PyTorch', 'CICIDS-2017'].map((tag) => (
+                                    {['Python', 'Pandas & NumPy', 'Scikit-learn', 'RAPIDS cuML', 'LightGBM', 'PyTorch', 'XGBoost','AutoEncoder','Isolation Forest','FastApi','WebSocket','CICIDS-2017'].map((tag) => (
                                         <span key={tag} className="px-3 py-1 text-sm bg-[var(--spider-red)]/20 text-[var(--spider-red)] border border-[var(--spider-red)]/40 rounded-full font-mono">
                                             {tag}
                                         </span>
