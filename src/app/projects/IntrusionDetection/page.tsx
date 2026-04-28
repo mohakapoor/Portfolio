@@ -1,6 +1,6 @@
 'use client';
 import Link from "next/link";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 export default function IntrusionDetectionProjectPage() {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -11,15 +11,45 @@ export default function IntrusionDetectionProjectPage() {
     const [selectedAttackType, setSelectedAttackType] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
 
-    interface PredictionResult {
-        prediction?: number;
-        row_index?: number;
+    interface HybridPredictionResult {
+        target_class: number;
+        status: string;
+        row_index: number;
+        unsupervised: {
+            autoencoder: number;
+            isolation_forest: number;
+        };
+        supervised: {
+            ffnn: number;
+            lightgbm: number;
+            logreg: number;
+        };
         error?: string;
     }
 
-    const [results, setResults] = useState<Record<string, PredictionResult> | null>(null);
+    const [results, setResults] = useState<HybridPredictionResult | null>(null);
     const [loading, setLoading] = useState(false);
     const [isSystemHealthy, setIsSystemHealthy] = useState<boolean>(true);
+    const [showSupervised, setShowSupervised] = useState(false);
+
+    // Stream States
+    const [isStreaming, setIsStreaming] = useState(false);
+    const [streamResults, setStreamResults] = useState<any[]>([]);
+    const [streamStats, setStreamStats] = useState({
+        total: 0,
+        anomalies: 0,
+        unsupervisedAnomalies: 0
+    });
+    const [streamSummary, setStreamSummary] = useState<any | null>(null);
+    const wsRef = useRef<WebSocket | null>(null);
+    const streamLogEndRef = useRef<HTMLDivElement>(null);
+
+    // Scroll to bottom of stream log
+    useEffect(() => {
+        if (streamLogEndRef.current) {
+            streamLogEndRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [streamResults]);
 
     useEffect(() => {
         const checkHealth = async () => {
@@ -45,6 +75,7 @@ export default function IntrusionDetectionProjectPage() {
         setLoading(true);
         setError(null);
         setResults(null);
+        setShowSupervised(false);
 
         try {
             const response = await fetch('/api/intrusion-detection', {
@@ -60,11 +91,103 @@ export default function IntrusionDetectionProjectPage() {
             }
 
             setResults(data);
+            
+            // Staggered animation: Wait 0.5s before showing supervised results
+            setTimeout(() => {
+                setShowSupervised(true);
+            }, 500);
+
         } catch (err) {
             console.error(err);
             setError("PREDICTION FAILED");
         } finally {
             setLoading(false);
+        }
+    };
+
+    const toggleStream = async () => {
+        if (isStreaming) {
+            if (wsRef.current) {
+                wsRef.current.close();
+            }
+            setIsStreaming(false);
+            setStreamSummary(null);
+            return;
+        }
+
+        try {
+            setStreamSummary(null);
+            setStreamResults([]);
+            setStreamStats({ total: 0, anomalies: 0, unsupervisedAnomalies: 0 });
+            
+            // Get token
+            const configRes = await fetch('/api/intrusion-detection/config');
+            const configData = await configRes.json();
+            const token = configData.token;
+            
+            console.log('Inference Engine: Auth Token Received?', !!token);
+
+            if (!token) {
+                console.error('Inference Engine: Token retrieval failed', configData);
+                throw new Error('Failed to retrieve authentication token');
+            }
+
+            console.log('Inference Engine: Initiating WebSocket Handshake...');
+            const ws = new WebSocket('wss://api.mohakapoor.in/intrusiondetection/ws/stream');
+            wsRef.current = ws;
+
+            ws.onopen = () => {
+                console.log('Inference Engine: Connection Established. Sending sequence start in 200ms...');
+                setIsStreaming(true);
+                
+                // Small delay to ensure handshake is fully settled on the server
+                setTimeout(() => {
+                    const startCommand = {
+                        command: "start",
+                        token: token.trim(),
+                        start_at: 0
+                    };
+                    console.log('Inference Engine: Sending Sequence Start command');
+                    ws.send(JSON.stringify(startCommand));
+                }, 200);
+            };
+
+            ws.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                console.log('Received WS Message:', data);
+                
+                if (data.type === 'batch') {
+                    const newBatch = data.data;
+                    setStreamResults(prev => [...prev, ...newBatch].slice(-50)); // Keep last 50 for performance
+                    
+                    const batchAnomalies = newBatch.filter((r: any) => r.status === 'Attack Detected').length;
+                    const batchUnsupervised = newBatch.filter((r: any) => 
+                        r.unsupervised && (r.unsupervised.autoencoder === 1 || r.unsupervised.isolation_forest === 1)
+                    ).length;
+
+                    setStreamStats(prev => ({
+                        total: prev.total + newBatch.length,
+                        anomalies: prev.anomalies + batchAnomalies,
+                        unsupervisedAnomalies: prev.unsupervisedAnomalies + batchUnsupervised
+                    }));
+                } else if (data.type === 'summary') {
+                    setStreamSummary(data.statistics);
+                    setIsStreaming(false);
+                }
+            };
+
+            ws.onerror = (e) => {
+                console.error('WebSocket connection error:', e);
+                setError('Inference server connection failed. Please verify if the server is online.');
+                setIsStreaming(false);
+            };
+
+            ws.onclose = () => {
+                setIsStreaming(false);
+            };
+
+        } catch (err: any) {
+            setError(err.message);
         }
     };
 
@@ -142,8 +265,43 @@ export default function IntrusionDetectionProjectPage() {
         return () => document.removeEventListener('keydown', handleKeyDown);
     }, [lightboxOpen, previousImage, nextImage, closeLightbox]);
 
+    // Isometric Background for the Demo section
+    const DemoBackground = () => (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 select-none opacity-20">
+            <div 
+                className="absolute inset-0 w-[200%] h-[200%] -left-1/2 -top-1/2"
+                style={{
+                    transform: 'perspective(1200px) rotateX(55deg) rotateZ(-45deg)',
+                    transformStyle: 'preserve-3d'
+                }}
+            >
+                <svg width="100%" height="100%" viewBox="0 0 1000 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <pattern id="isoGridDemo" width="40" height="40" patternUnits="userSpaceOnUse">
+                            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#isoGridDemo)" />
+                </svg>
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0d0d0d] via-transparent to-[#0d0d0d]" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0d0d0d] via-transparent to-[#0d0d0d]" />
+        </div>
+    );
+
+    const shimmerStyle = (
+        <style jsx>{`
+            @keyframes shimmer {
+                100% {
+                    transform: translateX(100%);
+                }
+            }
+        `}</style>
+    );
+
     return (
         <>
+            {shimmerStyle}
             <style jsx>{`
          .glass-card:hover {
            transform: none !important;
@@ -171,7 +329,7 @@ export default function IntrusionDetectionProjectPage() {
          }
        `}</style>
 
-            <main className="min-h-screen px-6 py-16">
+            <main className="min-h-screen py-16">
                 {/* Hamburger button */}
                 <button
                     aria-label="Open menu"
@@ -223,7 +381,7 @@ export default function IntrusionDetectionProjectPage() {
                 </aside>
 
                 {/* Back to Projects button */}
-                <div className="max-w-5xl mx-auto mb-8">
+                <div className="max-w-5xl mx-auto px-6 mb-8">
                     <Link
                         href="/projects"
                         className="inline-flex items-center gap-2 text-[var(--vintage-white)] hover:text-[var(--spider-red)] transition-colors duration-200"
@@ -234,7 +392,7 @@ export default function IntrusionDetectionProjectPage() {
                 </div>
 
                 {/* Project Header */}
-                <section className="max-w-5xl mx-auto mb-12">
+                <section className="max-w-5xl mx-auto px-6 mb-12">
                     <header className="text-center mb-10 animate-slide-down">
                         <h1 className="newspaper-headline text-5xl md:text-6xl text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] mb-4">
                             Intrusion Detection
@@ -246,7 +404,7 @@ export default function IntrusionDetectionProjectPage() {
                 </section>
 
                 {/* Project Details Section */}
-                <section id="project-details" className="max-w-5xl mx-auto mb-12">
+                <section id="project-details" className="max-w-5xl mx-auto px-6 mb-12">
                     <h2 className="newspaper-headline text-3xl my-8 animate-slide-right">Project Details</h2>
                     <div className="glass-card p-5">
                         <div className="grid md:grid-cols-2 gap-8">
@@ -283,136 +441,466 @@ export default function IntrusionDetectionProjectPage() {
                 </section >
 
                 {/* Live Demo Section */}
-                < section id="live-demo" className="max-w-5xl mx-auto mb-12" >
-                    <h2 className="newspaper-headline text-3xl mb-8 animate-slide-left">Live Demo</h2>
-                    <div className="glass-card p-[10px] relative overflow-hidden">
+                <section id="live-demo" className="w-full mb-20 relative border-y border-white/[0.05]">
+                    <div className="max-w-5xl mx-auto px-6">
+                        <h2 className="newspaper-headline text-3xl my-8 animate-slide-left">Live Inference Engine</h2>
+                    </div>
+                    
+                    <div className="relative overflow-hidden bg-[#090909]/80 backdrop-blur-xl border-y border-white/[0.05] shadow-2xl">
+                        <DemoBackground />
+                        
+                        {/* HUD Header */}
+                        <div className="relative z-10 border-b border-white/[0.05] px-6 py-3 flex items-center justify-between bg-black/40">
+                            <div className="flex items-center gap-6">
+                                <div className="flex items-center gap-2">
+                                    <div className={`w-2 h-2 rounded-full ${isSystemHealthy ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)] animate-pulse' : 'bg-red-500'}`} />
+                                    <span className="text-[9px] font-mono text-white/40 uppercase tracking-widest">
+                                        Status: {isSystemHealthy ? 'Operational' : 'Offline'}
+                                    </span>
+                                </div>
+                            </div>
+                            <div className="text-[9px] font-mono text-[var(--spider-red)] uppercase tracking-widest font-bold">
+                                {loading ? 'Processing_Packet_Batch...' : 'System_Ready'}
+                            </div>
+                        </div>
+
                         {/* Offline Overlay */}
                         {!isSystemHealthy && (
-                            <div className="absolute inset-0 z-50 bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center border border-[var(--spider-red)]/50 rounded-lg">
-                                <span className="text-4xl mb-4">⚠️</span>
-                                <h3 className="text-5xl font-bold text-[var(--spider-red)] tracking-widest uppercase mb-2">System Offline</h3>
-                                <p className="text-[var(--dust-gray)] font-mono text-lg max-w-3xl text-center px-4">
-                                    This is a self hosted system and is not available 24/7. Please contact me on <a href="mailto:contact.mohakapoor@gmail.com" className="text-[var(--spider-red)] hover:underline">contact.mohakapoor@gmail.com</a> if you want a demo.
-                                </p>
+                            <div className="absolute inset-0 z-50 bg-black/90 backdrop-blur-md flex flex-col items-center justify-center border border-[var(--spider-red)]/30 rounded-lg">
+                                <div className="p-8 border border-[var(--spider-red)]/20 bg-black/40 rounded-xl flex flex-col items-center max-w-md text-center">
+                                    <span className="text-4xl mb-6">⚠️</span>
+                                    <h3 className="newspaper-headline text-4xl text-[var(--spider-red)] mb-4">Connection Lost</h3>
+                                    <p className="text-white/60 font-mono text-xs leading-relaxed mb-6">
+                                        Inference server is currently self-hosted and periodically offline. 
+                                        For a live demonstration, please initiate contact.
+                                    </p>
+                                    <a href="mailto:contact.mohakapoor@gmail.com" className="spider-noir-button px-6 py-2 text-xs font-bold rounded-md">
+                                        Request Access
+                                    </a>
+                                </div>
                             </div>
                         )}
-                        {/* Demo Content */}
-                        {/* Demo Content */}
-                        <div className="w-full min-h-[400px] grid grid-cols-1 md:grid-cols-4 gap-6 p-4">
 
-                            {/* Column 1: Attack Type Input Buttons */}
-                            <div className="flex flex-col gap-3 justify-center md:col-span-1">
-                                <h3 className="text-[var(--dust-white)] text-base mb-2 uppercase tracking-wider text-center">Attack Type</h3>
-                                {['BENIGN', 'Bot', 'Brute Force', 'DDoS', 'DoS', 'Port Scan', 'Web Attack'].map((type, i) => (
+                        {/* Demo Content */}
+                        <div className="relative z-10 w-full min-h-[500px] grid grid-cols-1 md:grid-cols-12 gap-0">
+
+                            {/* Column 1: Input Control Panel */}
+                            <div className="p-8 md:col-span-3 border-r border-white/[0.05] bg-black/20">
+                                <div className="flex items-center gap-2 mb-6">
+                                    <div className="w-1.5 h-1.5 bg-[var(--spider-red)] rotate-45" />
+                                    <h3 className="text-[11px] text-white/60 uppercase tracking-[0.1em] font-bold font-mono">Control_Panel</h3>
+                                </div>
+                                
+                                <div className="flex flex-col gap-2 mb-8">
+                                    {['BENIGN', 'Bot', 'Brute Force', 'DDoS', 'DoS', 'Port Scan', 'Web Attack'].map((type, i) => (
+                                        <button
+                                            key={i}
+                                            onClick={() => {
+                                                setSelectedAttackType(prev => prev === type ? null : type);
+                                                setError(null);
+                                            }}
+                                            className={`group relative flex items-center justify-between px-4 py-2.5 border rounded-md text-[10px] font-mono transition-all duration-300 ${selectedAttackType === type
+                                                ? 'bg-[var(--spider-red)]/10 border-[var(--spider-red)] text-white shadow-[0_0_15px_rgba(204,41,54,0.1)]'
+                                                : 'bg-white/[0.02] border-white/10 text-white/40 hover:border-white/20 hover:text-white/60'
+                                                }`}
+                                        >
+                                            <span className="tracking-widest uppercase">{type}</span>
+                                            <div className={`w-1.5 h-1.5 rounded-full ${selectedAttackType === type ? 'bg-white animate-pulse' : 'bg-white/10 group-hover:bg-white/20'}`} />
+                                        </button>
+                                    ))}
+                                </div>
+                                
+                                <div className="mt-auto">
                                     <button
-                                        key={i}
-                                        onClick={() => {
-                                            setSelectedAttackType(prev => prev === type ? null : type);
-                                            setError(null);
-                                        }}
-                                        className={`spider-noir-button px-4 py-2 border rounded text-sm text-center transition-all duration-200 ${selectedAttackType === type
-                                            ? '!bg-[var(--spider-red)] !border-[var(--spider-red)] !text-white !shadow-[0_0_15px_rgba(204,41,54,0.6)]'
-                                            : 'border-[var(--spider-red)]/50 hover:border-[var(--spider-red)] hover:shadow-[0_0_10px_rgba(204,41,54,0.2)]'
+                                        onClick={handlePredict}
+                                        disabled={loading || !selectedAttackType}
+                                        className={`group relative w-full px-6 py-4 rounded-md border text-[12px] font-bold font-mono uppercase tracking-[0.2em] transition-all duration-500 ${loading || !selectedAttackType
+                                            ? 'border-white/5 text-white/10 cursor-not-allowed'
+                                            : 'border-[var(--spider-red)] text-white hover:bg-[var(--spider-red)] hover:shadow-[0_0_30px_rgba(204,41,54,0.3)]'
                                             }`}
                                     >
-                                        {type}
+                                        {loading ? (
+                                            <div className="flex items-center justify-center gap-3">
+                                                <div className="w-3 h-3 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                                                <span>Analyzing</span>
+                                            </div>
+                                        ) : (
+                                            <span>Inject_Packet</span>
+                                        )}
                                     </button>
-                                ))}
+                                    {error && (
+                                        <div className="mt-3 text-center">
+                                            <span className="text-[9px] font-mono text-[var(--spider-red)] uppercase tracking-tighter font-bold">
+                                                !! CRITICAL_ERROR: {error} !!
+                                            </span>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
 
-                            {/* Column 2: Predict Button */}
-                            <div className="flex flex-col items-center justify-center md:col-span-1 relative">
-                                <button
-                                    onClick={handlePredict}
-                                    disabled={loading}
-                                    className={`spider-noir-button px-8 py-8 rounded-xl border-2 border-[var(--spider-red)] text-xl font-bold transition-all duration-300 shadow-[0_0_30px_rgba(204,41,54,0.15)] ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:scale-110 hover:shadow-[0_0_50px_rgba(204,41,54,0.4)]'
-                                        }`}
-                                >
-                                    {loading ? (
-                                        <span className="inline-block w-6 h-6 border-2 border-t-transparent border-white rounded-full animate-spin"></span>
-                                    ) : 'PREDICT'}
-                                </button>
-                                {error && (
-                                    <div className="absolute -bottom-2 w-60 text-center animate-pulse z-20">
-                                        <p className="text-[var(--spider-red)] text-xs font-mono font-bold tracking-widest bg-black/90 px-2 py-1 border border-[var(--spider-red)] rounded shadow-[0_0_10px_rgba(204,41,54,0.3)]">
-                                            ⚠ {error}
-                                        </p>
+                            {/* Column 2: Pipeline Visuals */}
+                            <div className="md:col-span-9 grid grid-cols-1 md:grid-cols-2 gap-0 relative">
+                                
+                                {/* Background Flow Lines */}
+                                <div className="absolute inset-0 pointer-events-none opacity-10">
+                                    <div className="absolute top-1/2 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[var(--spider-red)] to-transparent" />
+                                </div>
+
+                                {/* Stage 1: Detection */}
+                                <div className="p-8 border-r border-white/[0.05] flex flex-col">
+                                    <div className="flex items-center gap-2 mb-8">
+                                        <span className="text-[10px] font-mono text-white/20">01</span>
+                                        <h3 className="text-[11px] text-white/60 uppercase tracking-[0.1em] font-bold font-mono">Anomaly_Detection_Core</h3>
                                     </div>
-                                )}
-                            </div>
 
-                            {/* Column 3: Model Cards */}
-                            <div className="flex flex-col gap-4 h-full md:col-span-2">
-                                <h3 className="text-[var(--dust-white)] text-base mb-2 uppercase tracking-wider text-center">Models</h3>
-                                <div className="flex flex-col gap-4 flex-1">
-                                    {['logreg', 'lightgbm', 'ffnn'].map((model, i) => {
-                                        const result = results?.[model];
-                                        const prediction = result?.prediction;
-                                        const rowIndex = result?.row_index;
+                                    <div className="flex flex-col gap-4 flex-1 justify-center max-w-sm mx-auto w-full">
+                                        {[
+                                            { id: 'autoencoder', name: 'Autoencoder' },
+                                            { id: 'isolation_forest', name: 'Isolation Forest' }
+                                        ].map((model, i) => {
+                                            const val = results?.unsupervised?.[model.id as keyof typeof results.unsupervised];
+                                            const isActive = results !== null;
+                                            const isAnomaly = val === 1;
+                                            const isCorrect = (selectedAttackType === 'BENIGN' && !isAnomaly) || (selectedAttackType !== 'BENIGN' && isAnomaly);
 
-                                        let predictionText = '...';
-                                        let isMatch = false;
+                                            return (
+                                                <div
+                                                    key={i}
+                                                    className={`relative p-5 border rounded-lg transition-all duration-500 overflow-hidden ${isActive
+                                                        ? isCorrect ? 'border-green-500/30 bg-green-500/[0.02]' : 'border-[var(--spider-red)]/30 bg-[var(--spider-red)]/[0.02]'
+                                                        : 'border-white/5 bg-white/[0.01]'
+                                                        }`}
+                                                >
+                                                    <div className="flex justify-between items-center relative z-10">
+                                                        <div>
+                                                            <div className="text-xs text-white/80 font-bold uppercase tracking-wider">{model.name}</div>
+                                                        </div>
+                                                        {isActive && (
+                                                            <div className={`px-3 py-1 rounded text-[10px] font-mono font-bold border ${isAnomaly ? 'border-[var(--spider-red)]/50 text-[var(--spider-red)] bg-[var(--spider-red)]/5' : 'border-green-500/50 text-green-500 bg-green-500/5'}`}>
+                                                                {isAnomaly ? 'ANOMALY_FOUND' : 'CLEAN_PACKET'}
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                    {/* Technical stats placeholder */}
+                                                    <div className="mt-3 flex gap-4">
+                                                        <div className="h-1 flex-1 bg-white/5 rounded-full overflow-hidden">
+                                                            <div className={`h-full transition-all duration-1000 ${isActive ? 'w-[85%] bg-white/20' : 'w-0'}`} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
 
-                                        if (result && !result.error && prediction !== undefined) {
-                                            if (model === 'logreg') {
-                                                predictionText = prediction === 0 ? 'BENIGN' : 'Attack';
-                                                // LogReg Match Logic: Input 'BENIGN' -> 0, Input *Attack* -> 1
-                                                isMatch = (selectedAttackType === 'BENIGN' && prediction === 0) ||
-                                                    (selectedAttackType !== 'BENIGN' && prediction === 1);
-                                            } else {
-                                                const types = ['BENIGN', 'Bot', 'Brute Force', 'DDoS', 'DoS', 'Port Scan', 'Web Attack'];
-                                                predictionText = types[prediction] || 'Unknown';
-                                                isMatch = predictionText === selectedAttackType;
+                                {/* Stage 2: Classification */}
+                                <div className="p-8 flex flex-col bg-black/10">
+                                    <div className="flex items-center gap-2 mb-8">
+                                        <span className="text-[10px] font-mono text-white/20">02</span>
+                                        <h3 className="text-[11px] text-white/60 uppercase tracking-[0.1em] font-bold font-mono">Classifier_Matrix</h3>
+                                    </div>
+
+                                    <div className="flex flex-col gap-4 flex-1 justify-center max-w-sm mx-auto w-full">
+                                        {[
+                                            { id: 'logreg', name: 'LogRegression' },
+                                            { id: 'lightgbm', name: 'LightGBM_Boost' },
+                                            { id: 'ffnn', name: 'Neural_Network' }
+                                        ].map((model, i) => {
+                                            const prediction = results?.supervised?.[model.id as keyof typeof results.supervised];
+                                            const isVisible = showSupervised && results;
+                                            const ATTACK_TYPES = ['BENIGN', 'Bot', 'Brute Force', 'DDoS', 'DoS', 'Port Scan', 'Web Attack'];
+                                            
+                                            let predictionText = '...';
+                                            let isMatch = false;
+
+                                            if (prediction !== undefined) {
+                                                if (model.id === 'logreg') {
+                                                    // LogReg is Binary (0: Benign, 1: Attack)
+                                                    predictionText = prediction === 0 ? 'BENIGN' : 'ATTACK';
+                                                    isMatch = (selectedAttackType === 'BENIGN' && prediction === 0) || (selectedAttackType !== 'BENIGN' && prediction === 1);
+                                                } else {
+                                                    // Others are Multiclass
+                                                    predictionText = ATTACK_TYPES[prediction] || 'UNKNOWN';
+                                                    isMatch = predictionText === selectedAttackType;
+                                                }
                                             }
-                                        }
 
-                                        // Dynamic Border & Shadow Class
-                                        let borderClass = 'border-[var(--spider-red)]/30 shadow-[inset_0_0_20px_rgba(0,0,0,0.5)]';
-                                        if (results && !result?.error) {
-                                            borderClass = isMatch
-                                                ? '!border-green-500/30 !shadow-[0_0_20px_rgba(34,197,94,0.2)]'
-                                                : '!border-[var(--spider-red)]/30 !shadow-[0_0_20px_rgba(204,41,54,0.2)]';
-                                        }
-
-                                        return (
-                                            <div
-                                                key={i}
-                                                className={`glass-card flex-1 flex flex-col justify-center p-4 border rounded-lg text-[var(--vintage-white)] transition-all duration-500 relative overflow-hidden ${borderClass} ${loading ? 'animate-pulse opacity-50' : 'opacity-100'
-                                                    }`}
-                                            >
-                                                {/* Top Row: Model Name (Left) and Prediction (Right) */}
-                                                <div className="flex justify-between items-center w-full">
-                                                    <span className="text-base text-white font-bold uppercase tracking-wider">
-                                                        {model === 'logreg' ? 'Logistic Regression' : model === 'lightgbm' ? 'LightGBM' : 'FFNN'}
-                                                    </span>
-                                                    {result?.error ? (
-                                                        <span className="text-[var(--spider-red)] text-sm font-bold">Error</span>
-                                                    ) : (
-                                                        <span className={`text-lg font-mono font-bold ${isMatch ? 'text-green-500' : 'text-[var(--spider-red)]'}`}>
-                                                            {results ? predictionText : ''}
-                                                        </span>
+                                            return (
+                                                <div
+                                                    key={i}
+                                                    className={`relative p-5 border rounded-lg transition-all duration-700 overflow-hidden ${isVisible
+                                                        ? isMatch ? 'border-green-500/40 bg-green-500/[0.03]' : 'border-[var(--spider-red)]/40 bg-[var(--spider-red)]/[0.03]'
+                                                        : 'border-white/5 bg-white/[0.01]'
+                                                        }`}
+                                                >
+                                                    <div className="flex justify-between items-center relative z-10">
+                                                        <div>
+                                                            <div className="text-xs text-white/80 font-bold uppercase tracking-wider">{model.name}</div>
+                                                        </div>
+                                                        {isVisible ? (
+                                                            <div className={`px-3 py-1 rounded text-[10px] font-mono font-bold animate-in fade-in zoom-in duration-500 ${isMatch ? 'text-green-500 border-green-500/20 bg-green-500/10' : 'text-[var(--spider-red)] border-[var(--spider-red)]/20 bg-[var(--spider-red)]/10'}`}>
+                                                                {predictionText.toUpperCase()}
+                                                            </div>
+                                                        ) : (
+                                                            <div className="text-[8px] font-mono text-white/20 tracking-widest flex items-center gap-2">
+                                                                {results && !showSupervised ? (
+                                                                    <>
+                                                                        <div className="w-1.5 h-1.5 bg-[var(--spider-red)] rounded-full animate-ping" />
+                                                                        ANALYZING
+                                                                    </>
+                                                                ) : 'AWAITING_SIGNAL'}
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                    
+                                                    {/* Shimmer pulse effect when scanning */}
+                                                    {results && !showSupervised && (
+                                                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[var(--spider-red)]/5 to-transparent -translate-x-full animate-[shimmer_2s_infinite] pointer-events-none" />
                                                     )}
                                                 </div>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
 
-                                                {!results && !loading && (
-                                                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-10">
-                                                        <span className="text-4xl font-bold uppercase tracking-widest text-[var(--spider-red)] rotate-12">
-                                                            Ready
-                                                        </span>
-                                                    </div>
-                                                )}
+                            </div>
+                        </div>
+
+                        {/* Footer HUD line */}
+                        <div className="relative z-10 border-t border-white/[0.05] px-6 py-2 flex items-center justify-between bg-black/20">
+                            <div className="flex gap-4">
+                                <span className="text-[8px] font-mono text-white/20 uppercase tracking-widest">© 2026_MOHAK_KAPOOR</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Sequential Dataset Stream Section */}
+                <section id="dataset-stream" className="w-full mb-20 relative border-y border-white/[0.05]">
+                    <div className="max-w-5xl mx-auto px-6">
+                        <h2 className="newspaper-headline text-3xl my-8 animate-slide-right">Sequential Dataset Stream</h2>
+                    </div>
+
+                    <div className="relative overflow-hidden bg-[#090909]/80 backdrop-blur-xl border-y border-white/[0.05] shadow-2xl">
+                        <DemoBackground />
+                        
+                        {/* HUD Header */}
+                        <div className="relative z-10 border-b border-white/[0.05] px-6 py-3 flex items-center justify-between bg-black/40">
+                            <div className="flex items-center gap-6">
+                                <div className="flex items-center gap-2">
+                                    <div className={`w-2 h-2 rounded-full ${isStreaming ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)] animate-pulse' : 'bg-white/10'}`} />
+                                    <span className="text-[9px] font-mono text-white/40 uppercase tracking-widest">
+                                        Stream_Status: {isStreaming ? 'Receiving_Data' : 'Standby'}
+                                    </span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <div className={`w-2 h-2 rounded-full ${isSystemHealthy ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)] animate-pulse' : 'bg-red-500'}`} />
+                                    <span className="text-[9px] font-mono text-white/40 uppercase tracking-widest">
+                                        Server_Link: {isSystemHealthy ? 'Established' : 'Offline'}
+                                    </span>
+                                </div>
+                            </div>
+                            <button 
+                                onClick={toggleStream}
+                                className={`text-[10px] font-mono px-4 py-1 rounded border transition-all duration-300 ${isStreaming 
+                                    ? 'border-[var(--spider-red)] text-[var(--spider-red)] hover:bg-[var(--spider-red)] hover:text-white' 
+                                    : 'border-green-500 text-green-500 hover:bg-green-500 hover:text-white'}`}
+                            >
+                                {isStreaming ? 'ABORT_STREAM' : 'INITIALIZE_SEQUENCE'}
+                            </button>
+                        </div>
+
+                        {/* Offline Overlay for Sequential Stream */}
+                        {!isSystemHealthy && (
+                            <div className="absolute inset-0 z-50 bg-black/90 backdrop-blur-md flex flex-col items-center justify-center border border-[var(--spider-red)]/30">
+                                <div className="p-8 border border-[var(--spider-red)]/20 bg-black/40 rounded-xl flex flex-col items-center max-w-md text-center">
+                                    <span className="text-4xl mb-6">📡</span>
+                                    <h3 className="newspaper-headline text-4xl text-[var(--spider-red)] mb-4">Signal Lost</h3>
+                                    <p className="text-white/60 font-mono text-xs leading-relaxed mb-6">
+                                        Inference server is currently self-hosted and periodically offline. 
+                                        The sequential stream requires a stable high-bandwidth link.
+                                    </p>
+                                    <a href="mailto:contact.mohakapoor@gmail.com" className="spider-noir-button px-6 py-2 text-xs font-bold rounded-md">
+                                        Request Access
+                                    </a>
+                                </div>
+                            </div>
+                        )}
+
+                        <div className="relative z-10 w-full min-h-[500px] grid grid-cols-1 md:grid-cols-12 gap-0">
+                            
+                            {/* Column 1: Stream Stats */}
+                            <div className="p-8 md:col-span-3 border-r border-white/[0.05] bg-black/20 flex flex-col gap-8">
+                                <div>
+                                    <h3 className="text-[10px] text-white/20 uppercase tracking-widest font-mono mb-4">Batch_Metrics</h3>
+                                    <div className="space-y-6">
+                                        <div>
+                                            <div className="text-[9px] text-white/40 uppercase font-mono mb-1">Total_Packets</div>
+                                            <div className="text-3xl font-bold font-mono text-white tracking-tighter">
+                                                {streamStats.total.toLocaleString()}
                                             </div>
-                                        );
-                                    })}
+                                        </div>
+                                        <div>
+                                            <div className="text-[9px] text-white/40 uppercase font-mono mb-1">Threats_Detected</div>
+                                            <div className="text-3xl font-bold font-mono text-[var(--spider-red)] tracking-tighter">
+                                                {streamStats.anomalies.toLocaleString()}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div className="text-[9px] text-white/40 uppercase font-mono mb-1">Anomaly_Rate</div>
+                                            <div className="text-3xl font-bold font-mono text-white tracking-tighter">
+                                                {streamStats.total > 0 ? ((streamStats.anomalies / streamStats.total) * 100).toFixed(2) : '0.00'}%
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="mt-auto border-t border-white/5 pt-6">
+                                    <div className="text-[9px] text-white/20 uppercase font-mono mb-3">System_Heat</div>
+                                    <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                                        <div 
+                                            className="h-full bg-gradient-to-r from-green-500 via-yellow-500 to-red-500 transition-all duration-1000" 
+                                            style={{ width: `${Math.min((streamStats.anomalies / (streamStats.total || 1)) * 500, 100)}%` }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Column 2: Live Log Feed */}
+                            <div className="md:col-span-9 bg-black/40 relative flex flex-col">
+                                <div className="p-4 border-b border-white/5 bg-black/20 flex items-center justify-between">
+                                    <span className="text-[9px] font-mono text-white/20 uppercase tracking-widest">Inference_Log_v4.2</span>
+                                    <div className="flex gap-2">
+                                        <div className="w-2 h-2 bg-white/5 rounded-full" />
+                                        <div className="w-2 h-2 bg-white/5 rounded-full" />
+                                        <div className="w-2 h-2 bg-white/5 rounded-full" />
+                                    </div>
+                                </div>
+
+                                <div className="flex-1 p-6 font-mono text-[11px] overflow-y-auto max-h-[450px] scrollbar-hide relative">
+                                    {!isStreaming && streamResults.length === 0 && !streamSummary && (
+                                        <div className="h-full flex items-center justify-center text-white/10 uppercase tracking-[0.3em] animate-pulse">
+                                            Awaiting_Signal...
+                                        </div>
+                                    )}
+                                    
+                                    {streamSummary && (
+                                        <div className="absolute inset-0 z-20 bg-[#090909]/95 backdrop-blur-md p-8 animate-in fade-in zoom-in duration-500 overflow-y-auto">
+                                            <div className="flex items-center gap-3 mb-8">
+                                                <div className="w-1.5 h-6 bg-green-500" />
+                                                <h3 className="text-xl text-white uppercase tracking-widest font-bold">Inference_Summary_Report</h3>
+                                            </div>
+
+                                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                                                <div className="p-4 border border-white/10 bg-white/[0.02] rounded-lg">
+                                                    <div className="text-[10px] text-white/40 uppercase mb-2">Final_Accuracy</div>
+                                                    <div className="text-4xl font-bold text-green-500 tracking-tighter">
+                                                        {(streamSummary.accuracy * 100).toFixed(2)}%
+                                                    </div>
+                                                </div>
+                                                <div className="p-4 border border-white/10 bg-white/[0.02] rounded-lg">
+                                                    <div className="text-[10px] text-white/40 uppercase mb-2">Total_Processed</div>
+                                                    <div className="text-4xl font-bold text-white tracking-tighter">
+                                                        {streamSummary.total_processed.toLocaleString()}
+                                                    </div>
+                                                </div>
+                                                <div className="p-4 border border-white/10 bg-white/[0.02] rounded-lg">
+                                                    <div className="text-[10px] text-white/40 uppercase mb-2">Precision_Hit</div>
+                                                    <div className="text-4xl font-bold text-white tracking-tighter">
+                                                        {streamSummary.correct_predictions.toLocaleString()}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                                <div>
+                                                    <h4 className="text-[10px] text-white/40 uppercase tracking-widest mb-4 border-b border-white/5 pb-2">Class_Distribution (Actual)</h4>
+                                                    <div className="space-y-2">
+                                                        {Object.entries(streamSummary.actual_counts).map(([cls, count]: [string, any]) => (
+                                                            <div key={cls} className="flex items-center justify-between">
+                                                                <span className="text-white/60">Class_{cls}</span>
+                                                                <div className="flex items-center gap-4 flex-1 mx-4">
+                                                                    <div className="h-1 bg-white/5 flex-1 rounded-full overflow-hidden">
+                                                                        <div className="h-full bg-white/20" style={{ width: `${(count / streamSummary.total_processed) * 100}%` }} />
+                                                                    </div>
+                                                                </div>
+                                                                <span className="text-white font-mono">{count}</span>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <h4 className="text-[10px] text-white/40 uppercase tracking-widest mb-4 border-b border-white/5 pb-2">Model_Inference (Predicted)</h4>
+                                                    <div className="space-y-2">
+                                                        {Object.entries(streamSummary.predicted_counts).map(([cls, count]: [string, any]) => (
+                                                            <div key={cls} className="flex items-center justify-between">
+                                                                <span className="text-white/60">Class_{cls}</span>
+                                                                <div className="flex items-center gap-4 flex-1 mx-4">
+                                                                    <div className="h-1 bg-white/5 flex-1 rounded-full overflow-hidden">
+                                                                        <div className="h-full bg-[var(--spider-red)]/40" style={{ width: `${(count / streamSummary.total_processed) * 100}%` }} />
+                                                                    </div>
+                                                                </div>
+                                                                <span className="text-white font-mono">{count}</span>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div className="mt-12 flex justify-center">
+                                                <button 
+                                                    onClick={() => setStreamSummary(null)}
+                                                    className="px-8 py-2 border border-white/20 text-white/60 hover:text-white hover:border-white transition-all uppercase text-[10px] tracking-widest font-mono"
+                                                >
+                                                    Dismiss_Report
+                                                </button>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    <div className="space-y-2">
+                                        {streamResults.map((row, idx) => {
+                                            const isAttack = row.status === 'Attack Detected';
+                                            return (
+                                                <div key={idx} className={`flex items-start gap-4 border-l-2 pl-3 transition-all duration-300 ${isAttack ? 'border-[var(--spider-red)] bg-[var(--spider-red)]/5' : 'border-green-500/20 bg-green-500/[0.02]'}`}>
+                                                    <span className="text-white/20 w-16">[{row.row_index.toString().padStart(6, '0')}]</span>
+                                                    <span className={`font-bold w-32 ${isAttack ? 'text-[var(--spider-red)]' : 'text-green-500/60'}`}>
+                                                        {isAttack ? '!! THREAT !!' : 'OK_SECURE'}
+                                                    </span>
+                                                    <span className="text-white/40 flex-1 truncate">
+                                                        SEQ_DATA_BATCH::{row.row_index} // ENCODING_UTF8 // {isAttack ? 'MITIGATION_ACTIVE' : 'MONITORING'}
+                                                    </span>
+                                                    <div className="flex gap-2">
+                                                        <span className={`text-[8px] px-1.5 border rounded ${row.unsupervised?.autoencoder === 1 ? 'border-[var(--spider-red)]/50 text-[var(--spider-red)]' : 'border-white/10 text-white/10'}`}>AE</span>
+                                                        <span className={`text-[8px] px-1.5 border rounded ${row.supervised?.lightgbm !== 0 ? 'border-[var(--spider-red)]/50 text-[var(--spider-red)]' : 'border-white/10 text-white/10'}`}>GBM</span>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                        <div ref={streamLogEndRef} />
+                                    </div>
                                 </div>
                             </div>
 
                         </div>
+
+                        {/* Footer HUD line */}
+                        <div className="relative z-10 border-t border-white/[0.05] px-6 py-2 flex items-center justify-between bg-black/20">
+                            <div className="flex gap-4">
+                                <span className="text-[8px] font-mono text-white/20 uppercase tracking-widest">DATASET_INDEX: {streamStats.total} / 2,830,743</span>
+                            </div>
+                            <div className="flex items-center gap-4">
+                                <div className="flex items-center gap-2">
+                                    <div className="w-1 h-1 bg-green-500 rounded-full animate-ping" />
+                                    <span className="text-[8px] font-mono text-green-500/50 uppercase">Socket_Live</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </section >
+                </section>
 
                 {/* Technical Architecture Section */}
-                < section id="technical-architecture" className="max-w-5xl mx-auto mb-12" >
+                <section id="technical-architecture" className="max-w-5xl mx-auto px-6 mb-12">
                     <h2 className="newspaper-headline text-3xl my-8 animate-slide-left">Technical Architecture</h2>
                     <div className="glass-card p-5">
                         <div className="grid md:grid-cols-2 gap-8">
@@ -472,7 +960,7 @@ export default function IntrusionDetectionProjectPage() {
                 </section >
 
                 {/* Performance & Results Section */}
-                <section id="performance-results" className="max-w-5xl mx-auto mb-12">
+                <section id="performance-results" className="max-w-5xl mx-auto px-6 mb-12">
                     <h2 className="newspaper-headline text-3xl mb-8 animate-slide-right">Performance Metrics</h2>
                     <div className="grid md:grid-cols-2 gap-6">
                         {/* LightGBM Card */}
@@ -530,7 +1018,7 @@ export default function IntrusionDetectionProjectPage() {
                 </section>
 
                 {/* Gallery Section */}
-                <section id="gallery" className="max-w-5xl mx-auto mb-12">
+                <section id="gallery" className="max-w-5xl mx-auto px-6 mb-12">
                     <h2 className="newspaper-headline text-3xl mb-8 animate-slide-left">Classification Reports</h2>
                     <div className="glass-card p-6">
                         <p className="text-[var(--dust-gray)] mb-6 max-w-3xl">
@@ -561,7 +1049,7 @@ export default function IntrusionDetectionProjectPage() {
                 </section>
 
                 {/* Dataset & Training Section */}
-                <section id="dataset-training" className="max-w-5xl mx-auto mb-12">
+                <section id="dataset-training" className="max-w-5xl mx-auto px-6 mb-12">
                     <h2 className="newspaper-headline text-3xl my-8 animate-slide-left">Dataset & Training</h2>
                     <div className="glass-card p-5">
                         <div className="grid md:grid-cols-2 gap-8">

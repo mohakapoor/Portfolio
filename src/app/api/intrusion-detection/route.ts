@@ -57,49 +57,30 @@ export async function POST(request: Request) {
             );
         }
 
-        // Prepare parallel requests for all models
-        const promises = MODELS.map(async (model) => {
-            try {
-                const response = await fetch(`${BASE_URL}/predict/${model}`, {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        target_class: targetClassIndex
-                    }),
-                });
-
-                if (!response.ok) {
-                    console.error(`Model ${model} failed: ${response.status}`);
-                    return { model, error: `Status ${response.status}` };
-                }
-
-                const data = await response.json();
-                return { model, data };
-            } catch (error) {
-                console.error(`Model ${model} error:`, error);
-                return { model, error: 'Request failed' };
-            }
+        // Call the new hybrid endpoint
+        const response = await fetch(`${BASE_URL}/predict/hybrid`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                target_class: targetClassIndex
+            }),
         });
 
-        const results = await Promise.all(promises);
-
-        // Transform array into an object { logreg: ..., lightgbm: ..., ffnn: ... }
-        interface ModelResult {
-            prediction?: number;
-            row_index?: number;
-            error?: string;
+        if (!response.ok) {
+            console.error(`Hybrid prediction failed: ${response.status}`);
+            return NextResponse.json(
+                { error: `API error: ${response.status}` },
+                { status: response.status }
+            );
         }
 
-        const responseData = results.reduce((acc, result) => {
-            acc[result.model] = result.data || { error: result.error };
-            return acc;
-        }, {} as Record<string, ModelResult>);
+        const data = await response.json();
+        return NextResponse.json(data);
 
-        return NextResponse.json(responseData);
     } catch (error) {
         console.error('API Route Error:', error);
         return NextResponse.json(
