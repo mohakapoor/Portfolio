@@ -221,7 +221,28 @@ export default function IntrusionDetectionProjectPage() {
             src: "/intrusion_detection_plots/ffnn_test_cr.png",
             alt: "FFNN Classification Report",
             title: "FFNN Results"
-        }
+        },
+        
+        {
+            src: "/intrusion_detection_plots/xgboost_test_cr.png",
+            alt: "XGBoost Confusion Matrix",
+            title: "XGBoost Results"
+        },
+        {
+            src: "/intrusion_detection_plots/autoencoder_per_attack_recall.png",
+            alt: "Denoising Autoencoder Per-Attack Recall",
+            title: "Autoencoder Recall"
+        },
+        {
+            src: "/intrusion_detection_plots/isolation_forestper_attack_recall.png",
+            alt: "Isolation Forest Per-Attack Recall",
+            title: "IsoForest Recall"
+        },
+        {
+            src: "/intrusion_detection_plots/ffnn_loss_plot.png",
+            alt: "FFNN Training Loss Curves",
+            title: "FFNN Loss"
+        },
     ];
 
     const openLightbox = (index: number) => {
@@ -954,7 +975,8 @@ export default function IntrusionDetectionProjectPage() {
                                         <ul className="space-y-2 text-sm text-[var(--dust-gray)]">
                                             <li><strong className="text-white">Logistic Regression:</strong> Baseline w/ L2 regularization for linear separability.</li>
                                             <li><strong className="text-white">SVM:</strong> RBF/Linear kernels for high-dimensional attack isolation.</li>
-                                            <li><strong className="text-white">LightGBM:</strong> Gradient boosting optimized for low-latency CPU inference.</li>
+                                            <li><strong className="text-white">LightGBM:</strong> Leaf-wise growth optimized for high speed.</li>
+                                            <li><strong className="text-white">XGBoost:</strong> Level-wise tree growth (multiclass) w/ balanced weights.</li>
                                             <li><strong className="text-white">Isolation Forest:</strong> Unsupervised anomaly detection via random partitioning.</li>
                                         </ul>
                                     </div>
@@ -1190,7 +1212,19 @@ export default function IntrusionDetectionProjectPage() {
                 {/* Performance & Results Section */}
                 <section id="performance-results" className="max-w-5xl mx-auto px-6 mb-12">
                     <h2 className="newspaper-headline text-3xl mb-8 animate-slide-right">Performance Metrics - SUPERVISED</h2>
-                    <div className="grid md:grid-cols-2 gap-6">
+                    <div className="grid md:grid-cols-3 gap-6">
+                        {/* XGBoost Card */}
+                        <div className="glass-card p-6 border-t-4 border-orange-500">
+                            <h3 className="text-2xl font-bold text-white mb-1">XGBoost</h3>
+                            <p className="text-sm text-orange-400 font-mono mb-4 text-center">LEVEL-WISE GROWTH</p>
+                            <div className="text-center space-y-2">
+                                <div className="text-5xl font-bold text-white">~97%</div>
+                                <div className="text-[var(--dust-gray)] text-sm uppercase tracking-widest">Accuracy</div>
+                            </div>
+                            <p className="mt-4 text-[var(--dust-gray)] text-sm text-center">
+                                Exceptional multiclass stability using level-wise expansion and balanced sample weighting.
+                            </p>
+                        </div>
                         {/* LightGBM Card */}
                         <div className="glass-card p-6 border-t-4 border-green-500">
                             <h3 className="text-2xl font-bold text-white mb-1">LightGBM</h3>
