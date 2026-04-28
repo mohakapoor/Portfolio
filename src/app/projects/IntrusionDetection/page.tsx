@@ -24,6 +24,14 @@ export default function IntrusionDetectionProjectPage() {
             lightgbm: number;
             logreg: number;
         };
+        latencies?: {
+            autoencoder: number;
+            isolation_forest: number;
+            ffnn: number;
+            lightgbm: number;
+            logreg: number;
+        };
+        total_detection_time?: number;
         error?: string;
     }
 
@@ -43,11 +51,12 @@ export default function IntrusionDetectionProjectPage() {
     const [streamSummary, setStreamSummary] = useState<any | null>(null);
     const wsRef = useRef<WebSocket | null>(null);
     const streamLogEndRef = useRef<HTMLDivElement>(null);
+    const logContainerRef = useRef<HTMLDivElement>(null);
 
     // Scroll to bottom of stream log
     useEffect(() => {
-        if (streamLogEndRef.current) {
-            streamLogEndRef.current.scrollIntoView({ behavior: 'smooth' });
+        if (logContainerRef.current) {
+            logContainerRef.current.scrollTop = logContainerRef.current.scrollHeight;
         }
     }, [streamResults]);
 
@@ -91,7 +100,7 @@ export default function IntrusionDetectionProjectPage() {
             }
 
             setResults(data);
-            
+
             // Staggered animation: Wait 0.5s before showing supervised results
             setTimeout(() => {
                 setShowSupervised(true);
@@ -119,27 +128,27 @@ export default function IntrusionDetectionProjectPage() {
             setStreamSummary(null);
             setStreamResults([]);
             setStreamStats({ total: 0, anomalies: 0, unsupervisedAnomalies: 0 });
-            
+
             // Get token
             const configRes = await fetch('/api/intrusion-detection/config');
             const configData = await configRes.json();
             const token = configData.token;
-            
-            console.log('Inference Engine: Auth Token Received?', !!token);
+
+            console.log('Inference : Auth Token Received?', !!token);
 
             if (!token) {
-                console.error('Inference Engine: Token retrieval failed', configData);
+                console.error('Inference : Token retrieval failed', configData);
                 throw new Error('Failed to retrieve authentication token');
             }
 
-            console.log('Inference Engine: Initiating WebSocket Handshake...');
+            console.log('Inference : Initiating WebSocket Handshake...');
             const ws = new WebSocket('wss://api.mohakapoor.in/intrusiondetection/ws/stream');
             wsRef.current = ws;
 
             ws.onopen = () => {
-                console.log('Inference Engine: Connection Established. Sending sequence start in 200ms...');
+                console.log('Inference : Connection Established. Sending sequence start in 200ms...');
                 setIsStreaming(true);
-                
+
                 // Small delay to ensure handshake is fully settled on the server
                 setTimeout(() => {
                     const startCommand = {
@@ -147,7 +156,7 @@ export default function IntrusionDetectionProjectPage() {
                         token: token.trim(),
                         start_at: 0
                     };
-                    console.log('Inference Engine: Sending Sequence Start command');
+                    console.log('Inference : Sending Sequence Start command');
                     ws.send(JSON.stringify(startCommand));
                 }, 200);
             };
@@ -155,13 +164,13 @@ export default function IntrusionDetectionProjectPage() {
             ws.onmessage = (event) => {
                 const data = JSON.parse(event.data);
                 console.log('Received WS Message:', data);
-                
+
                 if (data.type === 'batch') {
                     const newBatch = data.data;
                     setStreamResults(prev => [...prev, ...newBatch].slice(-50)); // Keep last 50 for performance
-                    
+
                     const batchAnomalies = newBatch.filter((r: any) => r.status === 'Attack Detected').length;
-                    const batchUnsupervised = newBatch.filter((r: any) => 
+                    const batchUnsupervised = newBatch.filter((r: any) =>
                         r.unsupervised && (r.unsupervised.autoencoder === 1 || r.unsupervised.isolation_forest === 1)
                     ).length;
 
@@ -268,7 +277,7 @@ export default function IntrusionDetectionProjectPage() {
     // Isometric Background for the Demo section
     const DemoBackground = () => (
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 select-none opacity-20">
-            <div 
+            <div
                 className="absolute inset-0 w-[200%] h-[200%] -left-1/2 -top-1/2"
                 style={{
                     transform: 'perspective(1200px) rotateX(55deg) rotateZ(-45deg)',
@@ -443,12 +452,12 @@ export default function IntrusionDetectionProjectPage() {
                 {/* Live Demo Section */}
                 <section id="live-demo" className="w-full mb-20 relative border-y border-white/[0.05]">
                     <div className="max-w-5xl mx-auto px-6">
-                        <h2 className="newspaper-headline text-3xl my-8 animate-slide-left">Live Inference Engine</h2>
+                        <h2 className="newspaper-headline text-3xl my-8 animate-slide-left">Live Inference </h2>
                     </div>
-                    
+
                     <div className="relative overflow-hidden bg-[#090909]/80 backdrop-blur-xl border-y border-white/[0.05] shadow-2xl">
                         <DemoBackground />
-                        
+
                         {/* HUD Header */}
                         <div className="relative z-10 border-b border-white/[0.05] px-6 py-3 flex items-center justify-between bg-black/40">
                             <div className="flex items-center gap-6">
@@ -459,8 +468,15 @@ export default function IntrusionDetectionProjectPage() {
                                     </span>
                                 </div>
                             </div>
-                            <div className="text-[9px] font-mono text-[var(--spider-red)] uppercase tracking-widest font-bold">
-                                {loading ? 'Processing_Packet_Batch...' : 'System_Ready'}
+                            <div className="flex items-center gap-6">
+                                {results?.total_detection_time !== undefined && (
+                                    <div className="text-[9px] font-mono text-white/40 uppercase tracking-widest animate-in fade-in slide-in-from-right duration-500">
+                                        TOTAL LATENCY: <span className="text-[var(--spider-red)]">{(results.total_detection_time! * 1000).toFixed(3)}ms</span>
+                                    </div>
+                                )}
+                                <div className="text-[9px] font-mono text-[var(--spider-red)] uppercase tracking-widest font-bold">
+                                    {loading ? 'Processing_Packet_Batch...' : 'System_Ready'}
+                                </div>
                             </div>
                         </div>
 
@@ -471,7 +487,7 @@ export default function IntrusionDetectionProjectPage() {
                                     <span className="text-4xl mb-6">⚠️</span>
                                     <h3 className="newspaper-headline text-4xl text-[var(--spider-red)] mb-4">Connection Lost</h3>
                                     <p className="text-white/60 font-mono text-xs leading-relaxed mb-6">
-                                        Inference server is currently self-hosted and periodically offline. 
+                                        Inference server is currently self-hosted and periodically offline.
                                         For a live demonstration, please initiate contact.
                                     </p>
                                     <a href="mailto:contact.mohakapoor@gmail.com" className="spider-noir-button px-6 py-2 text-xs font-bold rounded-md">
@@ -490,7 +506,7 @@ export default function IntrusionDetectionProjectPage() {
                                     <div className="w-1.5 h-1.5 bg-[var(--spider-red)] rotate-45" />
                                     <h3 className="text-[11px] text-white/60 uppercase tracking-[0.1em] font-bold font-mono">Control_Panel</h3>
                                 </div>
-                                
+
                                 <div className="flex flex-col gap-2 mb-8">
                                     {['BENIGN', 'Bot', 'Brute Force', 'DDoS', 'DoS', 'Port Scan', 'Web Attack'].map((type, i) => (
                                         <button
@@ -509,7 +525,7 @@ export default function IntrusionDetectionProjectPage() {
                                         </button>
                                     ))}
                                 </div>
-                                
+
                                 <div className="mt-auto">
                                     <button
                                         onClick={handlePredict}
@@ -540,7 +556,7 @@ export default function IntrusionDetectionProjectPage() {
 
                             {/* Column 2: Pipeline Visuals */}
                             <div className="md:col-span-9 grid grid-cols-1 md:grid-cols-2 gap-0 relative">
-                                
+
                                 {/* Background Flow Lines */}
                                 <div className="absolute inset-0 pointer-events-none opacity-10">
                                     <div className="absolute top-1/2 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[var(--spider-red)] to-transparent" />
@@ -581,6 +597,14 @@ export default function IntrusionDetectionProjectPage() {
                                                             </div>
                                                         )}
                                                     </div>
+                                                    <div className="mt-3 flex justify-between items-center relative z-10">
+                                                        <div className="text-[9px] font-mono text-white/20 uppercase">Latency</div>
+                                                        <div className="text-[10px] font-mono text-white/60">
+                                                            {isActive && results?.latencies?.[model.id as keyof typeof results.latencies] !== undefined 
+                                                                ? `${(results.latencies[model.id as keyof typeof results.latencies]! * 1000).toFixed(2)}ms` 
+                                                                : '---'}
+                                                        </div>
+                                                    </div>
                                                     {/* Technical stats placeholder */}
                                                     <div className="mt-3 flex gap-4">
                                                         <div className="h-1 flex-1 bg-white/5 rounded-full overflow-hidden">
@@ -609,7 +633,7 @@ export default function IntrusionDetectionProjectPage() {
                                             const prediction = results?.supervised?.[model.id as keyof typeof results.supervised];
                                             const isVisible = showSupervised && results;
                                             const ATTACK_TYPES = ['BENIGN', 'Bot', 'Brute Force', 'DDoS', 'DoS', 'Port Scan', 'Web Attack'];
-                                            
+
                                             let predictionText = '...';
                                             let isMatch = false;
 
@@ -637,7 +661,13 @@ export default function IntrusionDetectionProjectPage() {
                                                         <div>
                                                             <div className="text-xs text-white/80 font-bold uppercase tracking-wider">{model.name}</div>
                                                         </div>
-                                                        {isVisible ? (
+                                                        <div className="flex items-center gap-4">
+                                                            {isVisible && results?.latencies?.[model.id as keyof typeof results.latencies] !== undefined && (
+                                                                <div className="text-[9px] font-mono text-white/30 uppercase tracking-tighter">
+                                                                    LAT: {(results.latencies[model.id as keyof typeof results.latencies]! * 1000).toFixed(2)}ms
+                                                                </div>
+                                                            )}
+                                                            {isVisible ? (
                                                             <div className={`px-3 py-1 rounded text-[10px] font-mono font-bold animate-in fade-in zoom-in duration-500 ${isMatch ? 'text-green-500 border-green-500/20 bg-green-500/10' : 'text-[var(--spider-red)] border-[var(--spider-red)]/20 bg-[var(--spider-red)]/10'}`}>
                                                                 {predictionText.toUpperCase()}
                                                             </div>
@@ -652,7 +682,8 @@ export default function IntrusionDetectionProjectPage() {
                                                             </div>
                                                         )}
                                                     </div>
-                                                    
+                                                </div>
+
                                                     {/* Shimmer pulse effect when scanning */}
                                                     {results && !showSupervised && (
                                                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[var(--spider-red)]/5 to-transparent -translate-x-full animate-[shimmer_2s_infinite] pointer-events-none" />
@@ -683,7 +714,7 @@ export default function IntrusionDetectionProjectPage() {
 
                     <div className="relative overflow-hidden bg-[#090909]/80 backdrop-blur-xl border-y border-white/[0.05] shadow-2xl">
                         <DemoBackground />
-                        
+
                         {/* HUD Header */}
                         <div className="relative z-10 border-b border-white/[0.05] px-6 py-3 flex items-center justify-between bg-black/40">
                             <div className="flex items-center gap-6">
@@ -700,10 +731,10 @@ export default function IntrusionDetectionProjectPage() {
                                     </span>
                                 </div>
                             </div>
-                            <button 
+                            <button
                                 onClick={toggleStream}
-                                className={`text-[10px] font-mono px-4 py-1 rounded border transition-all duration-300 ${isStreaming 
-                                    ? 'border-[var(--spider-red)] text-[var(--spider-red)] hover:bg-[var(--spider-red)] hover:text-white' 
+                                className={`text-[10px] font-mono px-4 py-1 rounded border transition-all duration-300 ${isStreaming
+                                    ? 'border-[var(--spider-red)] text-[var(--spider-red)] hover:bg-[var(--spider-red)] hover:text-white'
                                     : 'border-green-500 text-green-500 hover:bg-green-500 hover:text-white'}`}
                             >
                                 {isStreaming ? 'ABORT_STREAM' : 'INITIALIZE_SEQUENCE'}
@@ -717,7 +748,7 @@ export default function IntrusionDetectionProjectPage() {
                                     <span className="text-4xl mb-6">📡</span>
                                     <h3 className="newspaper-headline text-4xl text-[var(--spider-red)] mb-4">Signal Lost</h3>
                                     <p className="text-white/60 font-mono text-xs leading-relaxed mb-6">
-                                        Inference server is currently self-hosted and periodically offline. 
+                                        Inference server is currently self-hosted and periodically offline.
                                         The sequential stream requires a stable high-bandwidth link.
                                     </p>
                                     <a href="mailto:contact.mohakapoor@gmail.com" className="spider-noir-button px-6 py-2 text-xs font-bold rounded-md">
@@ -728,7 +759,7 @@ export default function IntrusionDetectionProjectPage() {
                         )}
 
                         <div className="relative z-10 w-full min-h-[500px] grid grid-cols-1 md:grid-cols-12 gap-0">
-                            
+
                             {/* Column 1: Stream Stats */}
                             <div className="p-8 md:col-span-3 border-r border-white/[0.05] bg-black/20 flex flex-col gap-8">
                                 <div>
@@ -756,11 +787,16 @@ export default function IntrusionDetectionProjectPage() {
                                 </div>
 
                                 <div className="mt-auto border-t border-white/5 pt-6">
-                                    <div className="text-[9px] text-white/20 uppercase font-mono mb-3">System_Heat</div>
+                                    <div className="flex justify-between items-center mb-3">
+                                        <div className="text-[9px] text-white/20 uppercase font-mono">Stream_Progress</div>
+                                        <div className="text-[9px] text-white/40 font-mono">
+                                            {Math.min((streamStats.total / 23324) * 100, 100).toFixed(1)}%
+                                        </div>
+                                    </div>
                                     <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                                        <div 
-                                            className="h-full bg-gradient-to-r from-green-500 via-yellow-500 to-red-500 transition-all duration-1000" 
-                                            style={{ width: `${Math.min((streamStats.anomalies / (streamStats.total || 1)) * 500, 100)}%` }}
+                                        <div
+                                            className="h-full bg-[var(--spider-red)]/60 transition-all duration-500"
+                                            style={{ width: `${Math.min((streamStats.total / 23324) * 100, 100)}%` }}
                                         />
                                     </div>
                                 </div>
@@ -776,85 +812,87 @@ export default function IntrusionDetectionProjectPage() {
                                         <div className="w-2 h-2 bg-white/5 rounded-full" />
                                     </div>
                                 </div>
-
-                                <div className="flex-1 p-6 font-mono text-[11px] overflow-y-auto max-h-[450px] scrollbar-hide relative">
-                                    {!isStreaming && streamResults.length === 0 && !streamSummary && (
-                                        <div className="h-full flex items-center justify-center text-white/10 uppercase tracking-[0.3em] animate-pulse">
-                                            Awaiting_Signal...
+                                {streamSummary && (
+                                    <div className="absolute inset-0 z-50 bg-[#090909]/95 backdrop-blur-md p-8 animate-in fade-in zoom-in duration-500 overflow-y-auto">
+                                        <div className="flex items-center gap-3 mb-8">
+                                            <div className="w-1.5 h-6 bg-green-500" />
+                                            <h3 className="text-xl text-white uppercase tracking-widest font-bold">Inference_Summary_Report</h3>
                                         </div>
-                                    )}
-                                    
-                                    {streamSummary && (
-                                        <div className="absolute inset-0 z-20 bg-[#090909]/95 backdrop-blur-md p-8 animate-in fade-in zoom-in duration-500 overflow-y-auto">
-                                            <div className="flex items-center gap-3 mb-8">
-                                                <div className="w-1.5 h-6 bg-green-500" />
-                                                <h3 className="text-xl text-white uppercase tracking-widest font-bold">Inference_Summary_Report</h3>
-                                            </div>
 
-                                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-                                                <div className="p-4 border border-white/10 bg-white/[0.02] rounded-lg">
-                                                    <div className="text-[10px] text-white/40 uppercase mb-2">Final_Accuracy</div>
-                                                    <div className="text-4xl font-bold text-green-500 tracking-tighter">
-                                                        {(streamSummary.accuracy * 100).toFixed(2)}%
-                                                    </div>
-                                                </div>
-                                                <div className="p-4 border border-white/10 bg-white/[0.02] rounded-lg">
-                                                    <div className="text-[10px] text-white/40 uppercase mb-2">Total_Processed</div>
-                                                    <div className="text-4xl font-bold text-white tracking-tighter">
-                                                        {streamSummary.total_processed.toLocaleString()}
-                                                    </div>
-                                                </div>
-                                                <div className="p-4 border border-white/10 bg-white/[0.02] rounded-lg">
-                                                    <div className="text-[10px] text-white/40 uppercase mb-2">Precision_Hit</div>
-                                                    <div className="text-4xl font-bold text-white tracking-tighter">
-                                                        {streamSummary.correct_predictions.toLocaleString()}
-                                                    </div>
+                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                                            <div className="p-4 border border-white/10 bg-white/[0.02] rounded-lg">
+                                                <div className="text-[10px] text-white/40 uppercase mb-2">Final_Accuracy</div>
+                                                <div className="text-4xl font-bold text-green-500 tracking-tighter">
+                                                    {(streamSummary.accuracy * 100).toFixed(2)}%
                                                 </div>
                                             </div>
+                                            <div className="p-4 border border-white/10 bg-white/[0.02] rounded-lg">
+                                                <div className="text-[10px] text-white/40 uppercase mb-2">Total_Processed</div>
+                                                <div className="text-4xl font-bold text-white tracking-tighter">
+                                                    {streamSummary.total_processed.toLocaleString()}
+                                                </div>
+                                            </div>
+                                            <div className="p-4 border border-white/10 bg-white/[0.02] rounded-lg">
+                                                <div className="text-[10px] text-white/40 uppercase mb-2">Precision_Hit</div>
+                                                <div className="text-4xl font-bold text-white tracking-tighter">
+                                                    {streamSummary.correct_predictions.toLocaleString()}
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                                <div>
-                                                    <h4 className="text-[10px] text-white/40 uppercase tracking-widest mb-4 border-b border-white/5 pb-2">Class_Distribution (Actual)</h4>
-                                                    <div className="space-y-2">
-                                                        {Object.entries(streamSummary.actual_counts).map(([cls, count]: [string, any]) => (
-                                                            <div key={cls} className="flex items-center justify-between">
-                                                                <span className="text-white/60">Class_{cls}</span>
-                                                                <div className="flex items-center gap-4 flex-1 mx-4">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                            <div>
+                                                <h4 className="text-[10px] text-white/40 uppercase tracking-widest mb-4 border-b border-white/5 pb-2">Class_Distribution (Actual)</h4>
+                                                <div className="space-y-2">
+                                                    {Object.entries(streamSummary.actual_counts).map(([cls, count]: [string, any]) => (
+                                                        <div key={cls} className="flex items-center justify-between">
+                                                            <span className="text-white/60">Class_{cls}</span>
+                                                            <div className="flex items-center gap-4 flex-1 mx-4">
                                                                     <div className="h-1 bg-white/5 flex-1 rounded-full overflow-hidden">
                                                                         <div className="h-full bg-white/20" style={{ width: `${(count / streamSummary.total_processed) * 100}%` }} />
                                                                     </div>
-                                                                </div>
-                                                                <span className="text-white font-mono">{count}</span>
                                                             </div>
-                                                        ))}
-                                                    </div>
+                                                            <span className="text-white font-mono">{count}</span>
+                                                        </div>
+                                                    ))}
                                                 </div>
-                                                <div>
-                                                    <h4 className="text-[10px] text-white/40 uppercase tracking-widest mb-4 border-b border-white/5 pb-2">Model_Inference (Predicted)</h4>
-                                                    <div className="space-y-2">
-                                                        {Object.entries(streamSummary.predicted_counts).map(([cls, count]: [string, any]) => (
-                                                            <div key={cls} className="flex items-center justify-between">
-                                                                <span className="text-white/60">Class_{cls}</span>
-                                                                <div className="flex items-center gap-4 flex-1 mx-4">
+                                            </div>
+                                            <div>
+                                                <h4 className="text-[10px] text-white/40 uppercase tracking-widest mb-4 border-b border-white/5 pb-2">Model_Inference (Predicted)</h4>
+                                                <div className="space-y-2">
+                                                    {Object.entries(streamSummary.predicted_counts).map(([cls, count]: [string, any]) => (
+                                                        <div key={cls} className="flex items-center justify-between">
+                                                            <span className="text-white/60">Class_{cls}</span>
+                                                            <div className="flex items-center gap-4 flex-1 mx-4">
                                                                     <div className="h-1 bg-white/5 flex-1 rounded-full overflow-hidden">
                                                                         <div className="h-full bg-[var(--spider-red)]/40" style={{ width: `${(count / streamSummary.total_processed) * 100}%` }} />
                                                                     </div>
-                                                                </div>
-                                                                <span className="text-white font-mono">{count}</span>
                                                             </div>
-                                                        ))}
-                                                    </div>
+                                                            <span className="text-white font-mono">{count}</span>
+                                                        </div>
+                                                    ))}
                                                 </div>
                                             </div>
-                                            
-                                            <div className="mt-12 flex justify-center">
-                                                <button 
-                                                    onClick={() => setStreamSummary(null)}
-                                                    className="px-8 py-2 border border-white/20 text-white/60 hover:text-white hover:border-white transition-all uppercase text-[10px] tracking-widest font-mono"
-                                                >
-                                                    Dismiss_Report
-                                                </button>
-                                            </div>
+                                        </div>
+
+                                        <div className="mt-12 flex justify-center">
+                                            <button
+                                                onClick={() => setStreamSummary(null)}
+                                                className="px-8 py-2 border border-white/20 text-white/60 hover:text-white hover:border-white transition-all uppercase text-[10px] tracking-widest font-mono"
+                                            >
+                                                Dismiss_Report
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+
+                                <div 
+                                    ref={logContainerRef}
+                                    className="flex-1 p-6 font-mono text-[11px] overflow-y-auto max-h-[450px] scrollbar-hide relative"
+                                >
+                                    {!isStreaming && streamResults.length === 0 && !streamSummary && (
+                                        <div className="h-full flex items-center justify-center text-white/10 uppercase tracking-[0.3em] animate-pulse">
+                                            Awaiting_Signal...
                                         </div>
                                     )}
 
@@ -862,7 +900,7 @@ export default function IntrusionDetectionProjectPage() {
                                         {streamResults.map((row, idx) => {
                                             const isAttack = row.status === 'Attack Detected';
                                             return (
-                                                <div key={idx} className={`flex items-start gap-4 border-l-2 pl-3 transition-all duration-300 ${isAttack ? 'border-[var(--spider-red)] bg-[var(--spider-red)]/5' : 'border-green-500/20 bg-green-500/[0.02]'}`}>
+                                                <div key={idx} className={`flex items-center gap-4 border-l-2 pl-4 py-4 transition-all duration-300 ${isAttack ? 'border-[var(--spider-red)] bg-[var(--spider-red)]/5' : 'border-green-500/20 bg-green-500/[0.02]'}`}>
                                                     <span className="text-white/20 w-16">[{row.row_index.toString().padStart(6, '0')}]</span>
                                                     <span className={`font-bold w-32 ${isAttack ? 'text-[var(--spider-red)]' : 'text-green-500/60'}`}>
                                                         {isAttack ? '!! THREAT !!' : 'OK_SECURE'}
@@ -872,7 +910,7 @@ export default function IntrusionDetectionProjectPage() {
                                                     </span>
                                                     <div className="flex gap-2">
                                                         <span className={`text-[8px] px-1.5 border rounded ${row.unsupervised?.autoencoder === 1 ? 'border-[var(--spider-red)]/50 text-[var(--spider-red)]' : 'border-white/10 text-white/10'}`}>AE</span>
-                                                        <span className={`text-[8px] px-1.5 border rounded ${row.supervised?.lightgbm !== 0 ? 'border-[var(--spider-red)]/50 text-[var(--spider-red)]' : 'border-white/10 text-white/10'}`}>GBM</span>
+                                                        <span className={`text-[8px] px-1.5 border rounded ${row.supervised?.lightgbm !== 0 ? 'border-[var(--spider-red)]/50 text-[var(--spider-red)]' : 'border-white/10 text-white/10'}`}>LIGHTGBM</span>
                                                     </div>
                                                 </div>
                                             );
@@ -887,7 +925,7 @@ export default function IntrusionDetectionProjectPage() {
                         {/* Footer HUD line */}
                         <div className="relative z-10 border-t border-white/[0.05] px-6 py-2 flex items-center justify-between bg-black/20">
                             <div className="flex gap-4">
-                                <span className="text-[8px] font-mono text-white/20 uppercase tracking-widest">DATASET_INDEX: {streamStats.total} / 2,830,743</span>
+                                <span className="text-[8px] font-mono text-white/20 uppercase tracking-widest">DATASET_INDEX: {streamStats.total.toLocaleString()} / 23,324</span>
                             </div>
                             <div className="flex items-center gap-4">
                                 <div className="flex items-center gap-2">
