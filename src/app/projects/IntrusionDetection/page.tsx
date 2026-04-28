@@ -23,6 +23,7 @@ export default function IntrusionDetectionProjectPage() {
             ffnn: number;
             lightgbm: number;
             logreg: number;
+            xgboost: number;
         };
         latencies?: {
             autoencoder: number;
@@ -30,6 +31,7 @@ export default function IntrusionDetectionProjectPage() {
             ffnn: number;
             lightgbm: number;
             logreg: number;
+            xgboost: number;
         };
         total_detection_time?: number;
         error?: string;
@@ -205,43 +207,50 @@ export default function IntrusionDetectionProjectPage() {
         {
             src: "/intrusion_detection_plots/logreg_test_cr.png",
             alt: "Logistic Regression Classification Report",
-            title: "LogReg Results"
+            title: "LogReg Results",
+            description: "Baseline performance using Logistic Regression. Shows stable detection for simple attack vectors but struggles with high-dimensional variance in complex multiclases."
         },
         {
             src: "/intrusion_detection_plots/svm_test_cr.png",
             alt: "SVM Classification Report",
-            title: "SVM Results"
+            title: "SVM Results",
+            description: "Support Vector Machine classification. Demonstrates superior margin separation for binary classes, maintaining high precision in identifying the 'Benign' vs. 'Attack' boundary."
         },
         {
             src: "/intrusion_detection_plots/lightgbm_test_cr.png",
             alt: "LightGBM Classification Report",
-            title: "LightGBM Results"
+            title: "LightGBM Results",
+            description: "State-of-the-art leaf-wise gradient boosting. Achieved the highest multiclass accuracy (~99%) with exceptional performance on imbalanced minority classes like Bot and Infiltration."
         },
         {
             src: "/intrusion_detection_plots/ffnn_test_cr.png",
             alt: "FFNN Classification Report",
-            title: "FFNN Results"
+            title: "FFNN Results",
+            description: "Neural network performance. Competitive results (~98% accuracy) showing the efficacy of deep learning in capturing non-linear relationships across 80+ network features."
         },
-        
         {
             src: "/intrusion_detection_plots/xgboost_test_cr.png",
             alt: "XGBoost Confusion Matrix",
-            title: "XGBoost Results"
+            title: "XGBoost Results",
+            description: "Confusion matrix for the level-wise gradient boosting model. High stability across all classes with 97% accuracy, serving as a robust comparative baseline to the LightGBM approach."
         },
         {
             src: "/intrusion_detection_plots/autoencoder_per_attack_recall.png",
             alt: "Denoising Autoencoder Per-Attack Recall",
-            title: "Autoencoder Recall"
+            title: "Autoencoder Recall",
+            description: "Detailed recall breakdown for the Denoising Autoencoder. Unsupervised anomaly detection focusing on reconstruction error to isolate unknown threat patterns."
         },
         {
             src: "/intrusion_detection_plots/isolation_forestper_attack_recall.png",
             alt: "Isolation Forest Per-Attack Recall",
-            title: "IsoForest Recall"
+            title: "IsoForest Recall",
+            description: "Isolation Forest performance per attack type. Excels at identifying structural anomalies like PortScans (99% recall) through recursive spatial partitioning."
         },
         {
             src: "/intrusion_detection_plots/ffnn_loss_plot.png",
             alt: "FFNN Training Loss Curves",
-            title: "FFNN Loss"
+            title: "FFNN Loss",
+            description: "Training vs. Validation loss over 50 epochs. Confirms model convergence with minimal overfitting, demonstrating robust generalization on the Friday holdout test set."
         },
     ];
 
@@ -562,7 +571,7 @@ export default function IntrusionDetectionProjectPage() {
                                                 <span>Analyzing</span>
                                             </div>
                                         ) : (
-                                            <span>Inject_Packet</span>
+                                            <span>RUN_TEST</span>
                                         )}
                                     </button>
                                     {error && (
@@ -587,7 +596,7 @@ export default function IntrusionDetectionProjectPage() {
                                 <div className="p-8 border-r border-white/[0.05] flex flex-col">
                                     <div className="flex items-center gap-2 mb-8">
                                         <span className="text-[10px] font-mono text-white/20">01</span>
-                                        <h3 className="text-[11px] text-white/60 uppercase tracking-[0.1em] font-bold font-mono">Anomaly_Detection_Core</h3>
+                                        <h2 className="text-[11px] text-white/60 uppercase tracking-[0.1em] font-bold font-mono">Anomaly Detection</h2>
                                     </div>
 
                                     <div className="flex flex-col gap-4 flex-1 justify-center max-w-sm mx-auto w-full">
@@ -642,14 +651,15 @@ export default function IntrusionDetectionProjectPage() {
                                 <div className="p-8 flex flex-col bg-black/10">
                                     <div className="flex items-center gap-2 mb-8">
                                         <span className="text-[10px] font-mono text-white/20">02</span>
-                                        <h3 className="text-[11px] text-white/60 uppercase tracking-[0.1em] font-bold font-mono">Classifier_Matrix</h3>
+                                        <h2 className="text-[11px] text-white/60 uppercase tracking-[0.1em] font-bold font-mono">Classifier</h2>
                                     </div>
 
                                     <div className="flex flex-col gap-4 flex-1 justify-center max-w-sm mx-auto w-full">
                                         {[
-                                            { id: 'logreg', name: 'LogRegression' },
-                                            { id: 'lightgbm', name: 'LightGBM_Boost' },
-                                            { id: 'ffnn', name: 'Neural_Network' }
+                                            { id: 'logreg', name: 'LogReg' },
+                                            { id: 'lightgbm', name: 'LightGBM' },
+                                            { id: 'xgboost', name: 'XGBoost' },
+                                            { id: 'ffnn', name: 'FFNN' }
                                         ].map((model, i) => {
                                             const prediction = results?.supervised?.[model.id as keyof typeof results.supervised];
                                             const isVisible = showSupervised && results;
@@ -730,7 +740,7 @@ export default function IntrusionDetectionProjectPage() {
                 {/* Sequential Dataset Stream Section */}
                 <section id="dataset-stream" className="w-full mb-20 relative border-y border-white/[0.05]">
                     <div className="max-w-5xl mx-auto px-6">
-                        <h2 className="newspaper-headline text-3xl my-8 animate-slide-right">Sequential Dataset Stream</h2>
+                        <h2 className="newspaper-headline text-3xl my-8 animate-slide-right">Sequential Inference Stream</h2>
                     </div>
 
                     <div className="relative overflow-hidden bg-[#090909]/80 backdrop-blur-xl border-y border-white/[0.05] shadow-2xl">
@@ -1502,7 +1512,9 @@ export default function IntrusionDetectionProjectPage() {
                                     className={`flex-1 transition-all duration-500 ease-out transform ${imageTransition !== 'none' ? 'opacity-0 translate-y-6 scale-95' : 'opacity-100 translate-y-0 scale-100'
                                         }`}
                                 >
-                                    {/* Image description placeholder */}
+                                    <p className="text-sm md:text-base text-[var(--dust-gray)] leading-relaxed italic border-l-2 border-[var(--spider-red)]/30 pl-4">
+                                        {(images[selectedImageIndex] as any).description || "Detailed technical breakdown of model performance and convergence metrics."}
+                                    </p>
                                 </div>
 
                                 {/* Footer */}
