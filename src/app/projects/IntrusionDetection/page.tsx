@@ -600,8 +600,8 @@ export default function IntrusionDetectionProjectPage() {
                                                     <div className="mt-3 flex justify-between items-center relative z-10">
                                                         <div className="text-[9px] font-mono text-white/20 uppercase">Latency</div>
                                                         <div className="text-[10px] font-mono text-white/60">
-                                                            {isActive && results?.latencies?.[model.id as keyof typeof results.latencies] !== undefined 
-                                                                ? `${(results.latencies[model.id as keyof typeof results.latencies]! * 1000).toFixed(2)}ms` 
+                                                            {isActive && results?.latencies?.[model.id as keyof typeof results.latencies] !== undefined
+                                                                ? `${(results.latencies[model.id as keyof typeof results.latencies]! * 1000).toFixed(2)}ms`
                                                                 : '---'}
                                                         </div>
                                                     </div>
@@ -668,21 +668,21 @@ export default function IntrusionDetectionProjectPage() {
                                                                 </div>
                                                             )}
                                                             {isVisible ? (
-                                                            <div className={`px-3 py-1 rounded text-[10px] font-mono font-bold animate-in fade-in zoom-in duration-500 ${isMatch ? 'text-green-500 border-green-500/20 bg-green-500/10' : 'text-[var(--spider-red)] border-[var(--spider-red)]/20 bg-[var(--spider-red)]/10'}`}>
-                                                                {predictionText.toUpperCase()}
-                                                            </div>
-                                                        ) : (
-                                                            <div className="text-[8px] font-mono text-white/20 tracking-widest flex items-center gap-2">
-                                                                {results && !showSupervised ? (
-                                                                    <>
-                                                                        <div className="w-1.5 h-1.5 bg-[var(--spider-red)] rounded-full animate-ping" />
-                                                                        ANALYZING
-                                                                    </>
-                                                                ) : 'AWAITING_SIGNAL'}
-                                                            </div>
-                                                        )}
+                                                                <div className={`px-3 py-1 rounded text-[10px] font-mono font-bold animate-in fade-in zoom-in duration-500 ${isMatch ? 'text-green-500 border-green-500/20 bg-green-500/10' : 'text-[var(--spider-red)] border-[var(--spider-red)]/20 bg-[var(--spider-red)]/10'}`}>
+                                                                    {predictionText.toUpperCase()}
+                                                                </div>
+                                                            ) : (
+                                                                <div className="text-[8px] font-mono text-white/20 tracking-widest flex items-center gap-2">
+                                                                    {results && !showSupervised ? (
+                                                                        <>
+                                                                            <div className="w-1.5 h-1.5 bg-[var(--spider-red)] rounded-full animate-ping" />
+                                                                            ANALYZING
+                                                                        </>
+                                                                    ) : 'AWAITING_SIGNAL'}
+                                                                </div>
+                                                            )}
+                                                        </div>
                                                     </div>
-                                                </div>
 
                                                     {/* Shimmer pulse effect when scanning */}
                                                     {results && !showSupervised && (
@@ -848,9 +848,9 @@ export default function IntrusionDetectionProjectPage() {
                                                         <div key={cls} className="flex items-center justify-between">
                                                             <span className="text-white/60">Class_{cls}</span>
                                                             <div className="flex items-center gap-4 flex-1 mx-4">
-                                                                    <div className="h-1 bg-white/5 flex-1 rounded-full overflow-hidden">
-                                                                        <div className="h-full bg-white/20" style={{ width: `${(count / streamSummary.total_processed) * 100}%` }} />
-                                                                    </div>
+                                                                <div className="h-1 bg-white/5 flex-1 rounded-full overflow-hidden">
+                                                                    <div className="h-full bg-white/20" style={{ width: `${(count / streamSummary.total_processed) * 100}%` }} />
+                                                                </div>
                                                             </div>
                                                             <span className="text-white font-mono">{count}</span>
                                                         </div>
@@ -864,9 +864,9 @@ export default function IntrusionDetectionProjectPage() {
                                                         <div key={cls} className="flex items-center justify-between">
                                                             <span className="text-white/60">Class_{cls}</span>
                                                             <div className="flex items-center gap-4 flex-1 mx-4">
-                                                                    <div className="h-1 bg-white/5 flex-1 rounded-full overflow-hidden">
-                                                                        <div className="h-full bg-[var(--spider-red)]/40" style={{ width: `${(count / streamSummary.total_processed) * 100}%` }} />
-                                                                    </div>
+                                                                <div className="h-1 bg-white/5 flex-1 rounded-full overflow-hidden">
+                                                                    <div className="h-full bg-[var(--spider-red)]/40" style={{ width: `${(count / streamSummary.total_processed) * 100}%` }} />
+                                                                </div>
                                                             </div>
                                                             <span className="text-white font-mono">{count}</span>
                                                         </div>
@@ -886,7 +886,7 @@ export default function IntrusionDetectionProjectPage() {
                                     </div>
                                 )}
 
-                                <div 
+                                <div
                                     ref={logContainerRef}
                                     className="flex-1 p-6 font-mono text-[11px] overflow-y-auto max-h-[450px] scrollbar-hide relative"
                                 >
@@ -952,9 +952,10 @@ export default function IntrusionDetectionProjectPage() {
                                             Classical & Hybrid
                                         </h4>
                                         <ul className="space-y-2 text-sm text-[var(--dust-gray)]">
-                                            <li><strong className="text-white">Logistic Regression (cuML):</strong> GPU-accelerated baseline w/ L2 reg.</li>
-                                            <li><strong className="text-white">SVM (cuML):</strong> Linear kernel for high-dimensional separation.</li>
-                                            <li><strong className="text-white">LightGBM (GPU):</strong> Gradient boosting w/ leaf-wise growth.</li>
+                                            <li><strong className="text-white">Logistic Regression:</strong> Baseline w/ L2 regularization for linear separability.</li>
+                                            <li><strong className="text-white">SVM:</strong> RBF/Linear kernels for high-dimensional attack isolation.</li>
+                                            <li><strong className="text-white">LightGBM:</strong> Gradient boosting optimized for low-latency CPU inference.</li>
+                                            <li><strong className="text-white">Isolation Forest:</strong> Unsupervised anomaly detection via random partitioning.</li>
                                         </ul>
                                     </div>
 
@@ -964,11 +965,23 @@ export default function IntrusionDetectionProjectPage() {
                                             <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full"></span>
                                             Deep Learning
                                         </h4>
-                                        <p className="text-sm text-[var(--dust-gray)] mb-2">
-                                            <strong className="text-white">Feedforward Neural Network (PyTorch)</strong>
-                                        </p>
-                                        <div className="text-xs text-[var(--dust-gray)] font-mono bg-black/30 p-2 rounded">
-                                            Input → Dense(128) → BN → ReLU → Dropout(0.2) → Dense(64) → Softmax
+                                        <div className="space-y-4">
+                                            <div>
+                                                <p className="text-sm text-[var(--dust-gray)] mb-2">
+                                                    <strong className="text-white font-mono text-xs">ANN // FEEDFORWARD</strong>
+                                                </p>
+                                                <div className="text-[10px] text-[var(--dust-gray)] font-mono bg-black/30 p-2 rounded border border-white/5">
+                                                    Input(69) → Dense(128) → BN → ReLU → Dropout(0.2) → Dense(64) → Softmax
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <p className="text-sm text-[var(--dust-gray)] mb-2">
+                                                    <strong className="text-white font-mono text-xs">DAE // DENOISING_AUTOENCODER</strong>
+                                                </p>
+                                                <div className="text-[10px] text-[var(--dust-gray)] font-mono bg-black/30 p-2 rounded border border-white/5">
+                                                    Encoder(69→128→64→32) → Decoder(32→64→128→69) → Sigmoid
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -979,12 +992,14 @@ export default function IntrusionDetectionProjectPage() {
                                 <div className="space-y-4">
                                     {[
                                         { title: "Time-Aware Splitting", desc: "Mon–Thu (Train) / Fri (Test) to simulate real-world deployment." },
+                                        { title: "Data Balancing", desc: "Random undersampling of benign class to 20% to handle extreme skew." },
+                                        { title: "Feature Selection", desc: "Automated removal of 8 constant-value columns (zero variance)." },
                                         { title: "Preprocessing", desc: "Median imputation, Standard Scaling, Incremental PCA (~99% var)." },
-                                        { title: "Imbalance Handling", desc: "Consolidated rare attacks & class-weighted loss functions." },
+                                        { title: "Attack Consolidation", desc: "Rare attacks (Heartbleed, etc.) grouped into high-level categories." },
                                         { title: "Optimization", desc: "RandomizedSearchCV (LightGBM) & Grid Search (SVM) on Macro-F1." }
                                     ].map((item, i) => (
                                         <div key={i} className="flex gap-3 items-start group">
-                                            <div className="mt-1.5 w-1.5 h-1.5 bg-[var(--spider-red)]/50 group-hover:bg-[var(--spider-red)] transform rotate-45 transition-colors"></div>
+                                            <div className="mt-1.5 w-1.5 h-1.5 bg-[var(--spider-red)]/50 group-hover:bg-[var(--spider-red)] transform rotate-45 transition-colors shadow-[0_0_5px_rgba(204,41,54,0.4)]"></div>
                                             <div>
                                                 <strong className="text-[var(--vintage-white)] block text-base mb-0.5">{item.title}</strong>
                                                 <p className="text-[var(--dust-gray)] text-sm leading-relaxed">{item.desc}</p>
@@ -994,12 +1009,187 @@ export default function IntrusionDetectionProjectPage() {
                                 </div>
                             </div>
                         </div>
+
+                        {/* Deployment & Acceleration Row */}
+                        <div className="mt-10 pt-10 border-t border-white/10 grid md:grid-cols-2 gap-8">
+                            <div className="bg-white/5 p-6 rounded-lg border border-[var(--spider-red)]/20">
+                                <h4 className="text-[var(--vintage-white)] font-bold mb-4 flex items-center gap-2 text-xl">
+                                    <span className="w-2.5 h-2.5 bg-[var(--spider-red)] rounded-full animate-pulse shadow-[0_0_8px_rgba(255,0,0,0.5)]"></span>
+                                    Edge Deployment (Pi 5)
+                                </h4>
+                                <div className="grid grid-cols-2 gap-4 mb-4">
+                                    <div className="space-y-1">
+                                        <span className="text-[11px] text-white/40 uppercase font-mono tracking-tighter">Hardware</span>
+                                        <p className="text-base text-white font-bold italic">Raspberry Pi 5</p>
+                                    </div>
+                                    <div className="space-y-1">
+                                        <span className="text-[11px] text-white/40 uppercase font-mono tracking-tighter">Architecture</span>
+                                        <p className="text-base text-white font-bold italic">ARM64 / Cortex-A76</p>
+                                    </div>
+                                </div>
+                                <p className="text-sm text-[var(--dust-gray)] leading-relaxed">
+                                    Optimized for <strong className="text-white/80">edge and personal monitoring</strong>. Uses ONNX Runtime to maintain sub-millisecond inference on live packet streams.
+                                </p>
+                            </div>
+                            <div className="bg-white/5 p-6 rounded-lg border border-[var(--spider-red)]/20">
+                                <h4 className="text-[var(--vintage-white)] font-bold mb-4 flex items-center gap-2 text-xl">
+                                    <span className="w-2.5 h-2.5 bg-[var(--spider-red)] rounded-full animate-pulse shadow-[0_0_8px_rgba(255,0,0,0.5)]"></span>
+                                    Live Inference Stack
+                                </h4>
+                                <ul className="space-y-4">
+                                    <li className="flex gap-3 text-sm text-[var(--dust-gray)] items-start">
+                                        <span className="text-[var(--spider-red)] font-bold text-base">»</span>
+                                        <span><strong className="text-white/70">FastAPI:</strong> High-performance async backend for model serving.</span>
+                                    </li>
+                                    <li className="flex gap-3 text-sm text-[var(--dust-gray)] items-start">
+                                        <span className="text-[var(--spider-red)] font-bold text-base">»</span>
+                                        <span><strong className="text-white/70">WebSockets:</strong> Bi-directional stream for real-time packet telemetry.</span>
+                                    </li>
+                                    <li className="flex gap-3 text-sm text-[var(--dust-gray)] items-start">
+                                        <span className="text-[var(--spider-red)] font-bold text-base">»</span>
+                                        <span><strong className="text-white/70">Sequential Buffer:</strong> Sliding-window inference logic for packet chains.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section >
+
+                {/* Unsupervised Anomaly Detection Section */}
+                <section id="unsupervised-detection" className="max-w-5xl mx-auto px-6 mb-12">
+                    <h2 className="newspaper-headline text-3xl my-8 animate-slide-right">Performance Metrics - Unsupervised</h2>
+                    <div className="glass-card p-6">
+                        <div className="grid md:grid-cols-2 gap-8 mb-10">
+                            {/* Autoencoder Details */}
+                            <div className="space-y-4">
+                                <div className="flex items-center gap-3 mb-2">
+                                    <div className="w-8 h-8 rounded bg-blue-500/20 border border-blue-500/40 flex items-center justify-center">
+                                        <svg className="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                        </svg>
+                                    </div>
+                                    <h3 className="text-xl font-bold text-white uppercase tracking-tight">Denoising Autoencoder</h3>
+                                </div>
+                                <p className="text-sm text-[var(--dust-gray)] leading-relaxed">
+                                    Trained exclusively on benign traffic to establish a "normalcy baseline." Detects novel, zero-day attacks by measuring reconstruction error—anomalous packets deviate from the learned latent representation.
+                                </p>
+                                <div className="bg-black/40 p-4 rounded border border-white/5 space-y-3">
+                                    <div>
+                                        <div className="text-[10px] text-white/40 uppercase font-mono mb-1">Architecture</div>
+                                        <div className="text-xs font-mono text-blue-400">Encoder (69→128→64→32) / Decoder (32→64→128→69)</div>
+                                    </div>
+                                    <div>
+                                        <div className="text-[10px] text-white/40 uppercase font-mono mb-1">Error Metric</div>
+                                        <div className="text-xs font-mono text-white/80">0.5 × MSE + 0.5 × Max per-feature error</div>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <div className="text-[10px] text-white/40 uppercase font-mono mb-1">ROC AUC</div>
+                                            <div className="text-xl font-bold text-white">0.7801</div>
+                                        </div>
+                                        <div>
+                                            <div className="text-[10px] text-white/40 uppercase font-mono mb-1">Output Layer</div>
+                                            <div className="text-sm font-mono text-white/60">Sigmoid</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p className="text-xs text-[var(--dust-gray)] italic">
+                                    Preferred detector for subtle attacks like Bot traffic (73.5% recall).
+                                </p>
+                            </div>
+
+                            {/* Isolation Forest Details */}
+                            <div className="space-y-4">
+                                <div className="flex items-center gap-3 mb-2">
+                                    <div className="w-8 h-8 rounded bg-green-500/20 border border-green-500/40 flex items-center justify-center">
+                                        <svg className="w-5 h-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                                        </svg>
+                                    </div>
+                                    <h3 className="text-xl font-bold text-white uppercase tracking-tight">Isolation Forest</h3>
+                                </div>
+                                <p className="text-sm text-[var(--dust-gray)] leading-relaxed">
+                                    Detects anomalies by isolating samples via random recursive splits. Anomalies are isolated significantly faster (shorter path lengths) than nominal samples.
+                                </p>
+                                <div className="bg-black/40 p-4 rounded border border-white/5 space-y-3">
+                                    <div>
+                                        <div className="text-[10px] text-white/40 uppercase font-mono mb-1">Best Config</div>
+                                        <div className="text-xs font-mono text-green-400">n_estimators=200, max_samples=2048</div>
+                                    </div>
+                                    <div>
+                                        <div className="text-[10px] text-white/40 uppercase font-mono mb-1">Tuning Strategy</div>
+                                        <div className="text-xs font-mono text-white/80">Manual Grid Search (48 combinations)</div>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <div className="text-[10px] text-white/40 uppercase font-mono mb-1">ROC AUC</div>
+                                            <div className="text-xl font-bold text-white">0.7156</div>
+                                        </div>
+                                        <div>
+                                            <div className="text-[10px] text-white/40 uppercase font-mono mb-1">Feature Max</div>
+                                            <div className="text-sm font-mono text-white/60">1.0 (Full)</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p className="text-xs text-[var(--dust-gray)] italic">
+                                    Excels at structural attacks like PortScan (99.3% recall).
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Comparison Table */}
+                        <div className="mt-8 border-t border-white/10 pt-8">
+                            <h3 className="text-base font-bold text-white uppercase tracking-widest mb-6 text-center">Unsupervised Performance Comparison</h3>
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-sm text-left font-mono">
+                                    <thead>
+                                        <tr className="border-b border-white/10 text-[var(--spider-red)]">
+                                            <th className="py-3 px-4 uppercase tracking-tighter">Metric</th>
+                                            <th className="py-3 px-4 uppercase tracking-tighter">Autoencoder</th>
+                                            <th className="py-3 px-4 uppercase tracking-tighter">Isolation Forest</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="text-[var(--dust-gray)]">
+                                        <tr className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+                                            <td className="py-3 px-4 font-bold text-white/60">ROC AUC</td>
+                                            <td className="py-3 px-4 text-white">0.7801</td>
+                                            <td className="py-3 px-4">0.7156</td>
+                                        </tr>
+                                        <tr className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+                                            <td className="py-3 px-4 font-bold text-white/60">F1 (Anomaly)</td>
+                                            <td className="py-3 px-4 text-white">0.66</td>
+                                            <td className="py-3 px-4">0.63</td>
+                                        </tr>
+                                        <tr className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+                                            <td className="py-3 px-4 font-bold text-white/60">Bot Recall</td>
+                                            <td className="py-3 px-4 text-blue-400">73.5%</td>
+                                            <td className="py-3 px-4">39.3%</td>
+                                        </tr>
+                                        <tr className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+                                            <td className="py-3 px-4 font-bold text-white/60">DDoS Recall</td>
+                                            <td className="py-3 px-4">83.1%</td>
+                                            <td className="py-3 px-4 text-green-400 font-bold">84.0%</td>
+                                        </tr>
+                                        <tr className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+                                            <td className="py-3 px-4 font-bold text-white/60">PortScan Recall</td>
+                                            <td className="py-3 px-4">96.6%</td>
+                                            <td className="py-3 px-4 text-green-400 font-bold">99.3%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div className="mt-6 p-4 bg-[var(--spider-red)]/5 rounded-lg border border-[var(--spider-red)]/20 text-center">
+                                <p className="text-xs text-[var(--dust-gray)] leading-relaxed">
+                                    The <strong className="text-[var(--spider-red)] text-sm">Denoising Autoencoder</strong> is the preferred anomaly detector due to its higher AUC and significantly better detection of subtle attacks like Bot traffic.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </section >
 
                 {/* Performance & Results Section */}
                 <section id="performance-results" className="max-w-5xl mx-auto px-6 mb-12">
-                    <h2 className="newspaper-headline text-3xl mb-8 animate-slide-right">Performance Metrics</h2>
+                    <h2 className="newspaper-headline text-3xl mb-8 animate-slide-right">Performance Metrics - SUPERVISED</h2>
                     <div className="grid md:grid-cols-2 gap-6">
                         {/* LightGBM Card */}
                         <div className="glass-card p-6 border-t-4 border-green-500">
@@ -1090,48 +1280,104 @@ export default function IntrusionDetectionProjectPage() {
                 <section id="dataset-training" className="max-w-5xl mx-auto px-6 mb-12">
                     <h2 className="newspaper-headline text-3xl my-8 animate-slide-left">Dataset & Training</h2>
                     <div className="glass-card p-5">
-                        <div className="grid md:grid-cols-2 gap-8">
-                            <div className="flex flex-col h-full">
-                                <h3 className="text-xl mb-4 text-[var(--vintage-white)]">Dataset Overview</h3>
-                                <div className="flex flex-col gap-4 flex-1">
-                                    <div className="p-6 rounded-lg border border-[var(--spider-red)]/20 flex-1 flex flex-col justify-center">
-                                        <h4 className="text-[var(--vintage-white)] font-bold mb-2 text-base">Source & Scale</h4>
-                                        <p className="text-[var(--dust-gray)] text-base leading-relaxed">
-                                            Leveraging the <strong>CICIDS-2017</strong> benchmark from the Canadian Institute for Cybersecurity.
-                                            Contains <strong>2.8M+ network flows</strong> with ~80 high-dimensional features.
-                                        </p>
+                        <div className="grid md:grid-cols-2 gap-8 mb-10">
+                            {/* Dataset Overview */}
+                            <div className="bg-white/5 p-6 rounded-lg border border-[var(--spider-red)]/20 shadow-none">
+                                <h3 className="text-xl mb-4 text-[var(--vintage-white)] flex items-center gap-2 font-bold">
+                                    <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full animate-pulse" />
+                                    Source & Scale
+                                </h3>
+                                <p className="text-[var(--dust-gray)] text-base leading-relaxed">
+                                    Leveraging the <strong>CICIDS-2017</strong> benchmark from the Canadian Institute for Cybersecurity. 
+                                    Contains <strong>2.8M+ network flows</strong> with ~80 high-dimensional features, representing a comprehensive set of modern attack vectors.
+                                </p>
+                            </div>
+
+                            {/* Time-Aware Partitioning */}
+                            <div className="bg-white/5 p-6 rounded-lg border border-[var(--spider-red)]/20 shadow-none">
+                                <h3 className="text-xl mb-4 text-[var(--vintage-white)] flex items-center gap-2 font-bold">
+                                    <span className="w-2 h-2 bg-[var(--spider-red)] rounded-full animate-pulse" />
+                                    Temporal Isolation
+                                </h3>
+                                <p className="text-[var(--dust-gray)] text-base leading-relaxed">
+                                    To prevent look-ahead bias, data is split temporally:
+                                    <br />
+                                    <span className="text-[var(--spider-red)] font-mono text-lg font-bold">Mon-Thu (Train)</span> <span className="text-white/20">vs</span> <span className="text-[var(--spider-red)] font-mono text-lg font-bold">Fri (Test)</span>.
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Processing Pipeline - Stage 1, 2, 3 */}
+                        <div className="pt-10 border-t border-white/10">
+                            <h3 className="text-xl mb-8 text-[var(--vintage-white)] text-center font-bold tracking-[0.2em] uppercase newspaper-headline">Processing Pipeline</h3>
+                            <div className="grid md:grid-cols-3 gap-6">
+                                {/* Stage 1 */}
+                                <div className="bg-black/40 p-6 rounded border border-white/5 hover:border-[var(--spider-red)]/20 transition-all space-y-4">
+                                    <div className="text-[10px] text-white/40 font-mono uppercase tracking-widest flex items-center gap-2">
+                                        <div className="w-1 h-1 bg-[var(--spider-red)] rounded-full" />
+                                        STAGE_01 // SPLIT
                                     </div>
-                                    <div className="p-6 rounded-lg border border-[var(--spider-red)]/20 flex-1 flex flex-col justify-center">
-                                        <h4 className="text-[var(--vintage-white)] font-bold mb-2 text-base">Time-Aware Partitioning</h4>
-                                        <p className="text-[var(--dust-gray)] text-base leading-relaxed">
-                                            To prevent look-ahead bias, data is split by time rather than random shuffling:
-                                            <br />
-                                            <span className="text-[var(--spider-red)] font-mono text-sm">Mon-Thu (Train)</span> vs <span className="text-[var(--spider-red)] font-mono text-sm">Fri (Test)</span>.
-                                        </p>
+                                    <h4 className="text-lg font-bold text-white tracking-tight">Data Splitting</h4>
+                                    <ul className="space-y-3">
+                                        {[
+                                            "Verifies column consistency",
+                                            "Rare attack consolidation",
+                                            "Label mapping logic",
+                                            "Parquet shard exports"
+                                        ].map((item, i) => (
+                                            <li key={i} className="flex gap-3 items-start group">
+                                                <div className="mt-1.5 w-1.5 h-1.5 bg-[var(--spider-red)]/50 group-hover:bg-[var(--spider-red)] transform rotate-45 transition-colors shadow-[0_0_5px_rgba(204,41,54,0.4)]"></div>
+                                                <span className="text-sm text-[var(--dust-gray)] group-hover:text-white/80 transition-colors">{item}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                                {/* Stage 2 */}
+                                <div className="bg-black/40 p-6 rounded border border-white/5 hover:border-[var(--spider-red)]/20 transition-all space-y-4">
+                                    <div className="text-[10px] text-white/40 font-mono uppercase tracking-widest flex items-center gap-2">
+                                        <div className="w-1 h-1 bg-[var(--spider-red)] rounded-full" />
+                                        STAGE_02 // CLEAN
+                                    </div>
+                                    <h4 className="text-lg font-bold text-white tracking-tight">Cleaning & EDA</h4>
+                                    <ul className="space-y-3">
+                                        {[
+                                            "NaN/Inf handling via utils",
+                                            "Header whitespace cleanup",
+                                            "Distribution balancing",
+                                            "Dtype optimization"
+                                        ].map((item, i) => (
+                                            <li key={i} className="flex gap-3 items-start group">
+                                                <div className="mt-1.5 w-1.5 h-1.5 bg-[var(--spider-red)]/50 group-hover:bg-[var(--spider-red)] transform rotate-45 transition-colors shadow-[0_0_5px_rgba(204,41,54,0.4)]"></div>
+                                                <span className="text-sm text-[var(--dust-gray)] group-hover:text-white/80 transition-colors">{item}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                                {/* Stage 3 */}
+                                <div className="bg-black/40 p-6 rounded border border-white/5 hover:border-[var(--spider-red)]/20 transition-all space-y-4">
+                                    <div className="text-[10px] text-white/40 font-mono uppercase tracking-widest flex items-center gap-2">
+                                        <div className="w-1 h-1 bg-[var(--spider-red)] rounded-full" />
+                                        STAGE_03 // PREPROCESS
+                                    </div>
+                                    <h4 className="text-lg font-bold text-white tracking-tight">Engineering</h4>
+                                    <div className="space-y-3 pt-2">
+                                        <div className="p-3 rounded bg-black/60 border border-white/5">
+                                            <span className="text-[10px] text-blue-400 font-bold block mb-1 uppercase tracking-widest">Supervised Path</span>
+                                            <span className="text-xs text-white/60 font-mono">StandardScaler + IPCA (69→34)</span>
+                                        </div>
+                                        <div className="p-3 rounded bg-black/60 border border-white/5">
+                                            <span className="text-[10px] text-green-400 font-bold block mb-1 uppercase tracking-widest">Unsupervised Path</span>
+                                            <span className="text-xs text-white/60 font-mono">MinMaxScaler (69 Features)</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div>
-                                <h3 className="text-xl mb-4 text-[var(--vintage-white)]">Training Pipeline</h3>
-                                <ul className="space-y-3">
-                                    {[
-                                        { title: "Noise Reduction", desc: "Removed constant/near-zero variance features and duplicate columns." },
-                                        { title: "Robust Imputation", desc: "Median-based strategy to handle missing values and infinity without outlier sensitivity." },
-                                        { title: "Feature Extraction", desc: "Incremental PCA reduced dimensionality while retaining 99% of total variance." },
-                                        { title: "Class Downsampling", desc: "Strategically undersampled majority classes to reduce training bias." },
-                                        { title: "Class Balancing", desc: "Applied class weights to penalize misclassification of rare attacks (e.g., Bot, Web Attack)." }
-                                    ].map((step, i) => (
-                                        <li key={i} className="flex gap-3 text-sm text-[var(--dust-gray)]">
-                                            <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[var(--spider-red)]/20 text-[var(--spider-red)] flex items-center justify-center font-mono text-xs border border-[var(--spider-red)]/40">
-                                                {i + 1}
-                                            </span>
-                                            <span>
-                                                <strong className="text-[var(--vintage-white)] block text-base">{step.title}</strong>
-                                                {step.desc}
-                                            </span>
-                                        </li>
-                                    ))}
-                                </ul>
+                            
+                            <div className="mt-8 p-5 bg-black/40 border-l-2 border-[var(--spider-red)] text-sm text-[var(--dust-gray)] italic rounded-r">
+                                <strong className="text-white/80 not-italic mr-2">Core Optimization:</strong> 
+                                Dtypes downcasted to float32/int32. Friday-only attacks dropped from training to ensure zero-leakage evaluation.
                             </div>
                         </div>
                     </div>
