@@ -2,6 +2,8 @@
 import Link from "next/link";
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { Line, Bar } from 'react-chartjs-2';
+import { GALLERY_IMAGES, MODEL_METADATA } from './constants';
+import { TechnicalIcons } from './Icons';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -271,68 +273,7 @@ export default function IntrusionDetectionProjectPage() {
     };
 
 
-    const images = [
-        {
-            src: "/intrusion_detection_plots/logreg_test_cr.png",
-            alt: "Logistic Regression Classification Report",
-            title: "LogReg Results",
-            description: "Baseline performance using Logistic Regression. Shows stable detection for simple attack vectors but struggles with high-dimensional variance in complex multiclases."
-        },
-        {
-            src: "/intrusion_detection_plots/svm_test_cr.png",
-            alt: "SVM Classification Report",
-            title: "SVM Results",
-            description: "Support Vector Machine classification. Demonstrates superior margin separation for binary classes, maintaining high precision in identifying the 'Benign' vs. 'Attack' boundary."
-        },
-        {
-            src: "/intrusion_detection_plots/lightgbm_test_cr.png",
-            alt: "LightGBM Classification Report",
-            title: "LightGBM Results",
-            description: "State-of-the-art leaf-wise gradient boosting. Achieved the highest multiclass accuracy (~99%) with exceptional performance on imbalanced minority classes like Bot and Infiltration."
-        },
-        {
-            src: "/intrusion_detection_plots/ffnn_test_cr.png",
-            alt: "FFNN Classification Report",
-            title: "FFNN Results",
-            description: "Neural network performance. Competitive results (~98% accuracy) showing the efficacy of deep learning in capturing non-linear relationships across 80+ network features."
-        },
-        {
-            src: "/intrusion_detection_plots/xgboost_test_cr.png",
-            alt: "XGBoost Confusion Matrix",
-            title: "XGBoost Results",
-            description: "Confusion matrix for the level-wise gradient boosting model. High stability across all classes with 97% accuracy, serving as a robust comparative baseline to the LightGBM approach."
-        },
-        {
-            src: "/intrusion_detection_plots/autoencoder_per_attack_recall.png",
-            alt: "Denoising Autoencoder Per-Attack Recall",
-            title: "Autoencoder Recall",
-            description: "Detailed recall breakdown for the Denoising Autoencoder. Unsupervised anomaly detection focusing on reconstruction error to isolate unknown threat patterns."
-        },
-        {
-            src: "/intrusion_detection_plots/isolation_forestper_attack_recall.png",
-            alt: "Isolation Forest Per-Attack Recall",
-            title: "IsoForest Recall",
-            description: "Isolation Forest performance per attack type. Excels at identifying structural anomalies like PortScans (99% recall) through recursive spatial partitioning."
-        },
-        {
-            src: "/intrusion_detection_plots/ffnn_loss_plot.png",
-            alt: "FFNN Training Loss Curves",
-            title: "FFNN Loss",
-            description: "Training vs. Validation loss over 50 epochs. Confirms model convergence with minimal overfitting, demonstrating robust generalization on the Friday holdout test set."
-        },
-        {
-            src: "/intrusion_detection_plots/hybrid_test_cr.png",
-            alt: "Hybrid Pipeline Classification Report",
-            title: "Hybrid Strategy: Classification",
-            description: "End-to-end classification report for the sequential Hybrid Pipeline. Demonstrates 99%+ recall on high-severity attacks while filtering benign noise with extreme precision."
-        },
-        {
-            src: "/intrusion_detection_plots/hybrid_test_cm.png",
-            alt: "Hybrid Pipeline Confusion Matrix",
-            title: "Hybrid Strategy: Confusion Matrix",
-            description: "Final confusion matrix for the combined AE+IF+LGBM pipeline. Confirms negligible false positives and robust multiclass stability across all holdout Friday test samples."
-        },
-    ];
+    const images = GALLERY_IMAGES;
 
     const openLightbox = (index: number) => {
         setSelectedImageIndex(index);
@@ -1310,15 +1251,12 @@ export default function IntrusionDetectionProjectPage() {
                     <h2 className="newspaper-headline text-3xl my-8 animate-slide-right">Performance Metrics - Unsupervised</h2>
                     <div className="glass-card p-6">
                         <div className="grid md:grid-cols-2 gap-8 mb-10">
-                            {/* Autoencoder Details */}
                             <div className="space-y-4">
                                 <div className="flex items-center gap-3 mb-2">
-                                    <div className="w-8 h-8 rounded bg-blue-500/20 border border-blue-500/40 flex items-center justify-center">
-                                        <svg className="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                        </svg>
-                                    </div>
-                                    <h3 className="text-xl font-bold text-white uppercase tracking-tight">Denoising Autoencoder</h3>
+                                     <div className="w-8 h-8 rounded bg-blue-500/20 border border-blue-500/40 flex items-center justify-center">
+                                         <TechnicalIcons.Autoencoder />
+                                     </div>
+                                     <h3 className="text-xl font-bold text-white uppercase tracking-tight">Denoising Autoencoder</h3>
                                 </div>
                                 <p className="text-sm text-[var(--dust-gray)] leading-relaxed">
                                     Trained exclusively on benign traffic to establish a "normalcy baseline." Detects novel, zero-day attacks by measuring reconstruction error—anomalous packets deviate from the learned latent representation.
@@ -1348,15 +1286,12 @@ export default function IntrusionDetectionProjectPage() {
                                 </p>
                             </div>
 
-                            {/* Isolation Forest Details */}
                             <div className="space-y-4">
                                 <div className="flex items-center gap-3 mb-2">
-                                    <div className="w-8 h-8 rounded bg-green-500/20 border border-green-500/40 flex items-center justify-center">
-                                        <svg className="w-5 h-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-                                        </svg>
-                                    </div>
-                                    <h3 className="text-xl font-bold text-white uppercase tracking-tight">Isolation Forest</h3>
+                                     <div className="w-8 h-8 rounded bg-green-500/20 border border-green-500/40 flex items-center justify-center">
+                                         <TechnicalIcons.IsolationForest />
+                                     </div>
+                                     <h3 className="text-xl font-bold text-white uppercase tracking-tight">Isolation Forest</h3>
                                 </div>
                                 <p className="text-sm text-[var(--dust-gray)] leading-relaxed">
                                     Detects anomalies by isolating samples via random recursive splits. Anomalies are isolated significantly faster (shorter path lengths) than nominal samples.
@@ -1441,69 +1376,19 @@ export default function IntrusionDetectionProjectPage() {
                 <section id="performance-results" className="max-w-5xl mx-auto px-6 mb-12">
                     <h2 className="newspaper-headline text-3xl mb-8 animate-slide-right">Performance Metrics - SUPERVISED</h2>
                     <div className="grid md:grid-cols-3 gap-6">
-                        {/* XGBoost Card */}
-                        <div className="glass-card p-6 border-t-4 border-orange-500">
-                            <h3 className="text-2xl font-bold text-white mb-1">XGBoost</h3>
-                            <p className="text-sm text-orange-400 font-mono mb-4 text-center">LEVEL-WISE GROWTH</p>
-                            <div className="text-center space-y-2">
-                                <div className="text-5xl font-bold text-white">~97%</div>
-                                <div className="text-[var(--dust-gray)] text-sm uppercase tracking-widest">Accuracy</div>
+                        {Object.values(MODEL_METADATA).map((model, idx) => (
+                            <div key={idx} className={`glass-card p-6 border-t-4 ${model.border}`}>
+                                <h3 className="text-2xl font-bold text-white mb-1">{model.title}</h3>
+                                <p className={`text-sm ${model.text} font-mono mb-4 text-center`}>{model.tag}</p>
+                                <div className="text-center space-y-2">
+                                    <div className="text-5xl font-bold text-white">{model.accuracy}</div>
+                                    <div className="text-[var(--dust-gray)] text-sm uppercase tracking-widest">Accuracy</div>
+                                </div>
+                                <p className="mt-4 text-[var(--dust-gray)] text-sm text-center">
+                                    {model.description}
+                                </p>
                             </div>
-                            <p className="mt-4 text-[var(--dust-gray)] text-sm text-center">
-                                Exceptional multiclass stability using level-wise expansion and balanced sample weighting.
-                            </p>
-                        </div>
-                        {/* LightGBM Card */}
-                        <div className="glass-card p-6 border-t-4 border-green-500">
-                            <h3 className="text-2xl font-bold text-white mb-1">LightGBM</h3>
-                            <p className="text-sm text-green-400 font-mono mb-4 text-center">BEST MULTICLASS</p>
-                            <div className="text-center space-y-2">
-                                <div className="text-5xl font-bold text-white">~99%</div>
-                                <div className="text-[var(--dust-gray)] text-sm uppercase tracking-widest">Accuracy</div>
-                            </div>
-                            <p className="mt-4 text-[var(--dust-gray)] text-sm text-center">
-                                Outperformed all models in multiclass detection with exceptional precision across major attack types.
-                            </p>
-                        </div>
-
-                        {/* SVM Card */}
-                        <div className="glass-card p-6 border-t-4 border-blue-500">
-                            <h3 className="text-2xl font-bold text-white mb-1">SVM</h3>
-                            <p className="text-sm text-blue-400 font-mono mb-4 text-center">BEST BINARY</p>
-                            <div className="text-center space-y-2">
-                                <div className="text-5xl font-bold text-white">96.7%</div>
-                                <div className="text-[var(--dust-gray)] text-sm uppercase tracking-widest">Accuracy</div>
-                            </div>
-                            <p className="mt-4 text-[var(--dust-gray)] text-sm text-center">
-                                Superior margin-based separation for binary (Attack vs. Benign) classification.
-                            </p>
-                        </div>
-
-                        {/* FFNN Card */}
-                        <div className="glass-card p-6 border-t-4 border-purple-500">
-                            <h3 className="text-2xl font-bold text-white mb-1">FFNN</h3>
-                            <p className="text-sm text-purple-400 font-mono mb-4 text-center">DEEP LEARNING</p>
-                            <div className="text-center space-y-2">
-                                <div className="text-5xl font-bold text-white">~98%</div>
-                                <div className="text-[var(--dust-gray)] text-sm uppercase tracking-widest">Accuracy</div>
-                            </div>
-                            <p className="mt-4 text-[var(--dust-gray)] text-sm text-center">
-                                Strong baseline for neural approaches, competitive with gradient boosting.
-                            </p>
-                        </div>
-
-                        {/* Logistic Regression Card */}
-                        <div className="glass-card p-6 border-t-4 border-yellow-500">
-                            <h3 className="text-2xl font-bold text-white mb-1">Logistic Regression</h3>
-                            <p className="text-sm text-yellow-500 font-mono mb-4 text-center">BASELINE</p>
-                            <div className="text-center space-y-2">
-                                <div className="text-5xl font-bold text-white">~93%</div>
-                                <div className="text-[var(--dust-gray)] text-sm uppercase tracking-widest">Accuracy</div>
-                            </div>
-                            <p className="mt-4 text-[var(--dust-gray)] text-sm text-center">
-                                Effective linear baseline, demonstrating the value of model complexity.
-                            </p>
-                        </div>
+                        ))}
                     </div>
                 </section>
                 {/* Hybrid Inference Pipeline Section */}
@@ -1565,9 +1450,7 @@ export default function IntrusionDetectionProjectPage() {
                                         </div>
                                         
                                         <div className="flex items-center gap-2 text-yellow-500 py-1">
-                                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                            </svg>
+                                            <TechnicalIcons.Alert />
                                             <span>IF flag_detected == 1:</span>
                                         </div>
 
