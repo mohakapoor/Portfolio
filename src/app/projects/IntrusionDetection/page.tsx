@@ -1,6 +1,33 @@
 'use client';
 import Link from "next/link";
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo } from "react";
+import { Line, Bar } from 'react-chartjs-2';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    LogarithmicScale,
+    PointElement,
+    LineElement,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+    Filler
+} from 'chart.js';
+
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    LogarithmicScale,
+    PointElement,
+    LineElement,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+    Filler
+);
 
 export default function IntrusionDetectionProjectPage() {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -48,9 +75,15 @@ export default function IntrusionDetectionProjectPage() {
     const [streamStats, setStreamStats] = useState({
         total: 0,
         anomalies: 0,
-        unsupervisedAnomalies: 0
+        unsupervisedAnomalies: 0,
+        avgLatency: 0,
+        peakLatency: 0
     });
     const [streamSummary, setStreamSummary] = useState<any | null>(null);
+    const [streamView, setStreamView] = useState<'log' | 'analytics'>('analytics');
+    const [latencyHistory, setLatencyHistory] = useState<number[]>([]);
+    const [anomalyHistory, setAnomalyHistory] = useState<number[]>([]);
+    const [attackDistribution, setAttackDistribution] = useState<Record<number, number>>({});
     const wsRef = useRef<WebSocket | null>(null);
     const streamLogEndRef = useRef<HTMLDivElement>(null);
     const logContainerRef = useRef<HTMLDivElement>(null);
@@ -129,7 +162,13 @@ export default function IntrusionDetectionProjectPage() {
         try {
             setStreamSummary(null);
             setStreamResults([]);
-            setStreamStats({ total: 0, anomalies: 0, unsupervisedAnomalies: 0 });
+            setStreamStats({ 
+                total: 0, 
+                anomalies: 0, 
+                unsupervisedAnomalies: 0,
+                avgLatency: 0,
+                peakLatency: 0
+            });
 
             // Get token
             const configRes = await fetch('/api/intrusion-detection/config');
@@ -176,11 +215,40 @@ export default function IntrusionDetectionProjectPage() {
                         r.unsupervised && (r.unsupervised.autoencoder === 1 || r.unsupervised.isolation_forest === 1)
                     ).length;
 
-                    setStreamStats(prev => ({
-                        total: prev.total + newBatch.length,
-                        anomalies: prev.anomalies + batchAnomalies,
-                        unsupervisedAnomalies: prev.unsupervisedAnomalies + batchUnsupervised
-                    }));
+                    // Update History for Charts
+                    const batchLatencies = newBatch.map((r: any) => r.total_detection_time || 0);
+                    const avgLatency = batchLatencies.reduce((a: number, b: number) => a + b, 0) / newBatch.length;
+                    const maxLatency = Math.max(...batchLatencies);
+                    
+                    setLatencyHistory(prev => [...prev, avgLatency * 1000].slice(-30));
+                    setAnomalyHistory(prev => [...prev, batchAnomalies].slice(-30));
+
+                    setStreamStats(prev => {
+                        const newTotal = prev.total + newBatch.length;
+                        const newAvg = (prev.avgLatency * prev.total + avgLatency * 1000 * newBatch.length) / newTotal;
+                        return {
+                            total: newTotal,
+                            anomalies: prev.anomalies + batchAnomalies,
+                            unsupervisedAnomalies: prev.unsupervisedAnomalies + batchUnsupervised,
+                            avgLatency: newAvg,
+                            peakLatency: Math.max(prev.peakLatency, maxLatency * 1000)
+                        };
+                    });
+
+                    // Update Attack Distribution
+                    setAttackDistribution(prev => {
+                        const next = { ...prev };
+                        newBatch.forEach((r: any) => {
+                            if (r.status === 'Attack Detected') {
+                                // If ground truth target_class is 0, use the predicted class from the models
+                                const predictedClass = r.target_class !== 0 ? r.target_class : (r.supervised?.xgboost || r.supervised?.lightgbm || 1);
+                                if (predictedClass !== 0) {
+                                    next[predictedClass] = (next[predictedClass] || 0) + 1;
+                                }
+                            }
+                        });
+                        return next;
+                    });
                 } else if (data.type === 'summary') {
                     setStreamSummary(data.statistics);
                     setIsStreaming(false);
@@ -789,7 +857,7 @@ export default function IntrusionDetectionProjectPage() {
                             </div>
                         )}
 
-                        <div className="relative z-10 w-full min-h-[500px] grid grid-cols-1 md:grid-cols-12 gap-0">
+                        <div className="relative z-10 w-full min-h-[650px] grid grid-cols-1 md:grid-cols-12 gap-0">
 
                             {/* Column 1: Stream Stats */}
                             <div className="p-8 md:col-span-3 border-r border-white/[0.05] bg-black/20 flex flex-col gap-8">
@@ -814,6 +882,21 @@ export default function IntrusionDetectionProjectPage() {
                                                 {streamStats.total > 0 ? ((streamStats.anomalies / streamStats.total) * 100).toFixed(2) : '0.00'}%
                                             </div>
                                         </div>
+                                        
+                                        <div className="pt-4 border-t border-white/5 space-y-4">
+                                            <div>
+                                                <div className="text-[9px] text-white/20 uppercase font-mono mb-1">Avg_Inference_Time</div>
+                                                <div className="text-xl font-bold font-mono text-white/60">
+                                                    {streamStats.avgLatency.toFixed(3)}ms
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div className="text-[9px] text-white/20 uppercase font-mono mb-1">Peak_Inference_Spike</div>
+                                                <div className="text-xl font-bold font-mono text-[var(--spider-red)]/60">
+                                                    {streamStats.peakLatency.toFixed(3)}ms
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -836,13 +919,136 @@ export default function IntrusionDetectionProjectPage() {
                             {/* Column 2: Live Log Feed */}
                             <div className="md:col-span-9 bg-black/40 relative flex flex-col">
                                 <div className="p-4 border-b border-white/5 bg-black/20 flex items-center justify-between">
-                                    <span className="text-[9px] font-mono text-white/20 uppercase tracking-widest">Inference_Log_v4.2</span>
+                                    <div className="flex items-center gap-4">
+                                        <span className="text-[9px] font-mono text-white/20 uppercase tracking-widest">Inference_Engine_v4.2</span>
+                                        <div className="flex bg-white/5 p-0.5 rounded-md">
+                                            <button
+                                                onClick={() => setStreamView('analytics')}
+                                                className={`px-3 py-1 text-[8px] font-mono uppercase rounded transition-all ${streamView === 'analytics' ? 'bg-[var(--spider-red)]/20 text-[var(--spider-red)]' : 'text-white/20 hover:text-white/40'}`}
+                                            >
+                                                Analytics
+                                            </button>
+                                            <button
+                                                onClick={() => setStreamView('log')}
+                                                className={`px-3 py-1 text-[8px] font-mono uppercase rounded transition-all ${streamView === 'log' ? 'bg-[var(--spider-red)]/20 text-[var(--spider-red)]' : 'text-white/20 hover:text-white/40'}`}
+                                            >
+                                                Live_Log
+                                            </button>
+                                        </div>
+                                    </div>
                                     <div className="flex gap-2">
                                         <div className="w-2 h-2 bg-white/5 rounded-full" />
                                         <div className="w-2 h-2 bg-white/5 rounded-full" />
                                         <div className="w-2 h-2 bg-white/5 rounded-full" />
                                     </div>
                                 </div>
+                                
+                                {streamView === 'analytics' && !streamSummary && (
+                                    <div className="flex-1 p-6 flex flex-col gap-6 animate-in fade-in duration-500 overflow-hidden">
+                                        {/* Latency Chart - 60% Height */}
+                                        <div className="flex-[6] min-h-[280px] relative">
+                                            <Line
+                                                data={{
+                                                    labels: Array.from({ length: latencyHistory.length }, (_, i) => i),
+                                                    datasets: [
+                                                        {
+                                                            label: 'Avg Latency (ms)',
+                                                            data: latencyHistory,
+                                                            borderColor: 'rgba(204, 41, 54, 0.8)',
+                                                            backgroundColor: 'rgba(204, 41, 54, 0.1)',
+                                                            fill: true,
+                                                            tension: 0.4,
+                                                            pointRadius: 0,
+                                                            borderWidth: 2,
+                                                        }
+                                                    ]
+                                                }}
+                                                options={{
+                                                    responsive: true,
+                                                    maintainAspectRatio: false,
+                                                    plugins: {
+                                                        legend: { display: false },
+                                                        tooltip: {
+                                                            backgroundColor: 'rgba(0,0,0,0.8)',
+                                                            titleFont: { family: 'monospace', size: 10 },
+                                                            bodyFont: { family: 'monospace', size: 10 },
+                                                            displayColors: false
+                                                        }
+                                                    },
+                                                    scales: {
+                                                        x: { display: false },
+                                                        y: {
+                                                            grid: { color: 'rgba(255,255,255,0.05)' },
+                                                            ticks: { color: 'rgba(255,255,255,0.2)', font: { size: 9, family: 'monospace' } }
+                                                        }
+                                                    },
+                                                    animation: { duration: 0 }
+                                                }}
+                                            />
+                                            <div className="absolute top-2 left-2 flex items-center gap-2">
+                                                <div className="w-1.5 h-1.5 bg-[var(--spider-red)] rounded-full animate-pulse" />
+                                                <span className="text-[10px] font-mono text-white/40 uppercase tracking-widest">Real_Time_Latency_ms</span>
+                                            </div>
+                                        </div>
+                                        
+                                        {/* Attack Distribution - 40% Height */}
+                                        <div className="flex-[4] border border-white/5 bg-white/[0.02] p-5 rounded-lg flex flex-col overflow-hidden">
+                                            <div className="flex items-center justify-between mb-3">
+                                                <div className="text-[10px] text-white/20 uppercase font-mono tracking-widest flex items-center gap-2">
+                                                    <div className="w-1.5 h-1.5 bg-[var(--spider-red)] rounded-full" />
+                                                    Threat_Distribution_Log_Scale
+                                                </div>
+                                                <span className="text-[8px] font-mono text-white/10 uppercase">Type: Logarithmic_Analysis</span>
+                                            </div>
+                                            <div className="flex-1 min-h-0">
+                                                <Bar
+                                                    data={{
+                                                        labels: ['Bot', 'BruteForce', 'DDoS', 'DoS', 'PortScan', 'WebAttack'],
+                                                        datasets: [{
+                                                            data: [1, 2, 3, 4, 5, 6].map(c => attackDistribution[c] || 0),
+                                                            backgroundColor: 'rgba(204, 41, 54, 0.4)',
+                                                            borderColor: 'rgba(204, 41, 54, 0.8)',
+                                                            borderWidth: 1,
+                                                            borderRadius: 2,
+                                                            hoverBackgroundColor: 'rgba(204, 41, 54, 0.6)',
+                                                        }]
+                                                    }}
+                                                    options={{
+                                                        responsive: true,
+                                                        maintainAspectRatio: false,
+                                                        plugins: {
+                                                            legend: { display: false },
+                                                            tooltip: {
+                                                                backgroundColor: 'rgba(0,0,0,0.8)',
+                                                                titleFont: { family: 'monospace', size: 10 },
+                                                                bodyFont: { family: 'monospace', size: 10 },
+                                                                displayColors: false
+                                                            }
+                                                        },
+                                                        scales: {
+                                                            x: {
+                                                                grid: { display: false },
+                                                                ticks: { color: 'rgba(255,255,255,0.3)', font: { size: 9, family: 'monospace' } }
+                                                            },
+                                                            y: {
+                                                                type: 'logarithmic',
+                                                                min: 0.1, // Set minimum to handle log(0) issues
+                                                                grid: { color: 'rgba(255,255,255,0.05)' },
+                                                                ticks: { 
+                                                                    color: 'rgba(255,255,255,0.2)', 
+                                                                    font: { size: 9, family: 'monospace' },
+                                                                    callback: function(value: any) {
+                                                                        return Number.isInteger(value) ? value : null;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
                                 {streamSummary && (
                                     <div className="absolute inset-0 z-50 bg-[#090909]/95 backdrop-blur-md p-8 animate-in fade-in zoom-in duration-500 overflow-y-auto">
                                         <div className="flex items-center gap-3 mb-8">
@@ -919,9 +1125,9 @@ export default function IntrusionDetectionProjectPage() {
 
                                 <div
                                     ref={logContainerRef}
-                                    className="flex-1 p-6 font-mono text-[11px] overflow-y-auto max-h-[450px] scrollbar-hide relative"
+                                    className={`flex-1 p-6 font-mono text-[11px] overflow-y-auto max-h-[450px] scrollbar-hide relative ${streamView !== 'log' && !streamSummary ? 'hidden' : ''}`}
                                 >
-                                    {!isStreaming && streamResults.length === 0 && !streamSummary && (
+                                    {streamView === 'log' && !isStreaming && streamResults.length === 0 && !streamSummary && (
                                         <div className="h-full flex items-center justify-center text-white/10 uppercase tracking-[0.3em] animate-pulse">
                                             Awaiting_Signal...
                                         </div>
