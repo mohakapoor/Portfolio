@@ -320,6 +320,18 @@ export default function IntrusionDetectionProjectPage() {
             title: "FFNN Loss",
             description: "Training vs. Validation loss over 50 epochs. Confirms model convergence with minimal overfitting, demonstrating robust generalization on the Friday holdout test set."
         },
+        {
+            src: "/intrusion_detection_plots/hybrid_test_cr.png",
+            alt: "Hybrid Pipeline Classification Report",
+            title: "Hybrid Strategy: Classification",
+            description: "End-to-end classification report for the sequential Hybrid Pipeline. Demonstrates 99%+ recall on high-severity attacks while filtering benign noise with extreme precision."
+        },
+        {
+            src: "/intrusion_detection_plots/hybrid_test_cm.png",
+            alt: "Hybrid Pipeline Confusion Matrix",
+            title: "Hybrid Strategy: Confusion Matrix",
+            description: "Final confusion matrix for the combined AE+IF+LGBM pipeline. Confirms negligible false positives and robust multiclass stability across all holdout Friday test samples."
+        },
     ];
 
     const openLightbox = (index: number) => {
@@ -1423,7 +1435,7 @@ export default function IntrusionDetectionProjectPage() {
                             </div>
                         </div>
                     </div>
-                </section >
+                </section>
 
                 {/* Performance & Results Section */}
                 <section id="performance-results" className="max-w-5xl mx-auto px-6 mb-12">
@@ -1494,6 +1506,155 @@ export default function IntrusionDetectionProjectPage() {
                         </div>
                     </div>
                 </section>
+                {/* Hybrid Inference Pipeline Section */}
+                <section id="hybrid-pipeline" className="max-w-5xl mx-auto px-6 mb-12">
+                    <h2 className="newspaper-headline text-3xl mb-8 animate-slide-left ">Hybrid Inference Pipeline</h2>
+                    <div className="glass-card p-8 border border-[var(--spider-red)]/20">
+                        <div className="grid md:grid-cols-12 gap-8 items-center">
+                            {/* Logic Explanation */}
+                            <div className="md:col-span-7 space-y-6">
+                                <p className="text-[var(--dust-gray)] text-lg leading-relaxed">
+                                    To balance <strong>real-time responsiveness</strong> on edge hardware with <strong>high detection accuracy</strong>, the system implements a two-phase sequential pipeline.
+                                </p>
+                                
+                                <div className="space-y-4">
+                                    <div className="flex gap-4">
+                                        <div className="w-10 h-10 rounded-full border border-[var(--spider-red)]/30 flex items-center justify-center flex-shrink-0 text-[var(--spider-red)] font-bold font-mono">01</div>
+                                        <div>
+                                            <h4 className="text-white font-bold uppercase tracking-widest text-sm mb-1">Unsupervised Check</h4>
+                                            <p className="text-[var(--dust-gray)] text-sm">
+                                                Every packet is first processed by the <strong>Autoencoder</strong> and <strong>Isolation Forest</strong>. This phase is computationally inexpensive and serves as a low-latency "first-pass" filter.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="flex gap-4">
+                                        <div className="w-10 h-10 rounded-full border border-[var(--spider-red)]/30 flex items-center justify-center flex-shrink-0 text-[var(--spider-red)] font-bold font-mono">02</div>
+                                        <div>
+                                            <h4 className="text-white font-bold uppercase tracking-widest text-sm mb-1">Supervised Trigger</h4>
+                                            <p className="text-[var(--dust-gray)] text-sm">
+                                                If <strong>either</strong> unsupervised model flags an anomaly, the packet is escalated. This prevents the high-compute supervised models from running on benign traffic, saving ~70% of processing power.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="flex gap-4">
+                                        <div className="w-10 h-10 rounded-full border border-[var(--spider-red)]/30 flex items-center justify-center flex-shrink-0 text-[var(--spider-red)] font-bold font-mono">03</div>
+                                        <div>
+                                            <h4 className="text-white font-bold uppercase tracking-widest text-sm mb-1">Final Authority</h4>
+                                            <p className="text-[var(--dust-gray)] text-sm">
+                                                Escalated packets are analyzed by the <strong>XGBoost / LightGBM / FFNN / Logreg</strong> ensemble. While multiple models provide input, the final classification decision is arbitrated by <strong>LightGBM</strong> for maximum precision.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Visual Logic Flow (Simulated Code/Flow) */}
+                            <div className="md:col-span-5 bg-black/40 rounded-xl p-6 border border-white/5 font-mono text-[10px] space-y-4">
+                                <div className="text-white/20 uppercase tracking-widest border-b border-white/5 pb-2 mb-4">Pipeline_Logic_Flow</div>
+                                
+                                <div className="space-y-3">
+                                    <div className="flex items-center gap-2 text-blue-400">
+                                        <div className="w-2 h-2 bg-blue-500 rounded-full" />
+                                        <span>INCOMING_PACKET_STREAM</span>
+                                    </div>
+                                    
+                                    <div className="ml-4 border-l border-white/10 pl-4 space-y-2">
+                                        <div className="bg-white/5 p-2 rounded">
+                                            <span className="text-white/40"># Phase 1</span><br/>
+                                            <span className="text-green-400">RUN_UNSUPERVISED(AE, IF)</span>
+                                        </div>
+                                        
+                                        <div className="flex items-center gap-2 text-yellow-500 py-1">
+                                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                            </svg>
+                                            <span>IF flag_detected == 1:</span>
+                                        </div>
+
+                                        <div className="bg-[var(--spider-red)]/10 p-2 rounded border border-[var(--spider-red)]/20">
+                                            <span className="text-white/40"># Phase 2</span><br/>
+                                            <span className="text-[var(--spider-red)]">ENGAGE_CLASSIFIER_ENSEMBLE()</span>
+                                            <div className="mt-1 pl-2 border-l border-[var(--spider-red)]/30 text-[9px] text-white/60">
+                                                - LightGBM_Final_Verdict<br/>
+                                                - XGBoost<br/>
+                                                - FFNN<br/>
+                                                - Logreg
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex items-center gap-2 text-white/20">
+                                        <div className="w-2 h-2 bg-white/20 rounded-full" />
+                                        <span>RESULT_DISPATCH</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Hybrid Performance Validation - Dedicated Mini Gallery */}
+                        <div className="mt-12 pt-8 border-t border-white/5">
+                            <h4 className="text-[var(--spider-red)] font-bold uppercase tracking-widest text-xs mb-6 flex items-center gap-2">
+                                <span className="w-1.5 h-1.5 bg-[var(--spider-red)] rounded-full animate-pulse" />
+                                Pipeline Performance Validation
+                            </h4>
+                            <div className="grid md:grid-cols-2 gap-6">
+                                {/* Classification Report Card */}
+                                <div 
+                                    className="glass-card p-2 border-[var(--spider-red)]/10 hover:border-[var(--spider-red)]/30 transition-all duration-500 group cursor-pointer overflow-hidden"
+                                    onClick={() => openLightbox(8)}
+                                >
+                                    <div className="relative aspect-video md:aspect-auto">
+                                        <img 
+                                            src="/intrusion_detection_plots/hybrid_test_cr.png" 
+                                            alt="Hybrid Pipeline Classification Report" 
+                                            className="w-full h-auto opacity-90 group-hover:opacity-100 transition-opacity"
+                                        />
+                                        <div className="absolute inset-0 bg-[var(--spider-red)]/0 group-hover:bg-[var(--spider-red)]/5 transition-colors duration-500 flex items-center justify-center">
+                                            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/80 p-2 rounded-full border border-[var(--spider-red)]/30">
+                                                <svg className="w-5 h-5 text-[var(--spider-red)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="mt-3 px-2 pb-2">
+                                        <div className="text-[10px] text-white/80 font-bold uppercase tracking-widest mb-1">Hybrid Strategy: Classification</div>
+                                        <div className="text-[9px] text-white/30 font-mono uppercase truncate">hybrid_test_cr.png</div>
+                                    </div>
+                                </div>
+
+                                {/* Confusion Matrix Card */}
+                                <div 
+                                    className="glass-card p-2 border-[var(--spider-red)]/10 hover:border-[var(--spider-red)]/30 transition-all duration-500 group cursor-pointer overflow-hidden"
+                                    onClick={() => openLightbox(9)}
+                                >
+                                    <div className="relative aspect-video md:aspect-auto">
+                                        <img 
+                                            src="/intrusion_detection_plots/hybrid_test_cm.png" 
+                                            alt="Hybrid Pipeline Confusion Matrix" 
+                                            className="w-full h-auto opacity-90 group-hover:opacity-100 transition-opacity"
+                                        />
+                                        <div className="absolute inset-0 bg-[var(--spider-red)]/0 group-hover:bg-[var(--spider-red)]/5 transition-colors duration-500 flex items-center justify-center">
+                                            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/80 p-2 rounded-full border border-[var(--spider-red)]/30">
+                                                <svg className="w-5 h-5 text-[var(--spider-red)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="mt-3 px-2 pb-2">
+                                        <div className="text-[10px] text-white/80 font-bold uppercase tracking-widest mb-1">Hybrid Strategy: Confusion Matrix</div>
+                                        <div className="text-[9px] text-white/30 font-mono uppercase truncate">hybrid_test_cm.png</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p className="mt-6 text-sm text-[var(--dust-gray)] italic text-center max-w-2xl mx-auto leading-relaxed">
+                                "The integration of unsupervised screening reduces processing overhead by <strong>~70%</strong>, allowing the high-fidelity ensemble to maintain sub-millisecond precision on critical threats."
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
 
                 {/* Gallery Section */}
                 <section id="gallery" className="max-w-5xl mx-auto px-6 mb-12">
@@ -1503,7 +1664,7 @@ export default function IntrusionDetectionProjectPage() {
                             Detailed performance breakdowns for each model, showing precision, recall, and F1-scores across all attack classes.
                         </p>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            {images.map((img, index) => (
+                            {images.slice(0, 8).map((img, index) => (
                                 <div
                                     key={index}
                                     className="relative group cursor-pointer overflow-hidden rounded-lg border border-[var(--spider-red)]/20 hover:border-[var(--spider-red)] transition-all duration-300"
