@@ -21,20 +21,23 @@ ML Engineer with 1+ year of production experience shipping end-to-end systems. E
 
 ## Projects
 
-### METR — Market Exposure Timing Research
-*Python, Polars, XGBoost, scikit-learn*
+| METR — Market Exposure Timing Research | [[GitHub](https://github.com/mohakapoor/METR)] [[Live](https://www.mohakapoor.in/projects/METR)] |
+| :--- | ---: |
+| *Python, Polars, XGBoost, scikit-learn* | |
 - Constructed a two-layer meta-labeling framework on 3,440+ days of multi-asset Indian market data (Nifty 50, GoldBees, USD/INR).
 - Validated against **10,000 Monte Carlo simulations**. The GoldBees filter achieved a **Sharpe 1.48** and **Calmar 1.87** with a 66.1% OOS win rate.
 - Applied **Fractional Differentiation (d=0.45)** preserving 81% memory with stationarity, Triple Barrier labeling, and SHAP feature importance analysis.
 
-### Network IDS Detection Engine
-*LightGBM, XGBoost, PyTorch, FastAPI, cuML*
+| Network IDS Detection Engine | [[GitHub](https://github.com/mohakapoor/Network_Anomaly_Detection_CICIDS2017)] [[Live](https://www.mohakapoor.in/projects/IntrusionDetection)] |
+| :--- | ---: |
+| *LightGBM, XGBoost, PyTorch, FastAPI, cuML* | |
 - Engineered a dual-detection intrusion detection system (signature-based + unsupervised anomaly detection) on **2.8M rows** of network traffic (CICIDS2017).
 - Benchmarked LightGBM at **99% accuracy** (F1: 0.99). Reduced feature space 51% (69 to 34 features) via IncrementalPCA while retaining 98.97% variance.
 - Deployed as a FastAPI service on **Raspberry Pi 5**, exposed publicly via Cloudflare Tunnel.
 
-### CaptchaOCR
-*Python, PyTorch, CNN + BiLSTM, CTC Loss*
+| CaptchaOCR | [[GitHub](https://github.com/mohakapoor/CaptchaOCR)] [[Live](https://www.mohakapoor.in/projects/CaptchaOCR)] |
+| :--- | ---: |
+| *Python, PyTorch, CNN + BiLSTM, CTC Loss* | |
 - Trained a recognition system achieving **96%+ character-level accuracy** on distorted sequences via synthetic training corpus generation.
 - Published to **Hugging Face Spaces** for public model deployment and inference.
 
