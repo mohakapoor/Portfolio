@@ -1,55 +1,71 @@
 <div align="center">
 
-# Mohak Kapoor | Digital Portfolio
+# Mohak Kapoor
 **A convergence of Machine Learning, Data Science, and High-Performance Web Engineering.**
 
 [![Next.js](https://img.shields.io/badge/Next.js-Framework-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
 [![Three.js](https://img.shields.io/badge/Three.js-Visuals-black?style=for-the-badge&logo=three.js&logoColor=white)](https://threejs.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-AI%2FML-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)](https://pytorch.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-Logic-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Vercel](https://img.shields.io/badge/Vercel-Live-black?style=for-the-badge&logo=vercel&logoColor=white)](https://www.mohakapoor.in)
 
-[**Live Experience**](https://www.mohakapoor.in) • [**GitHub Stats**](#-automated-intelligence) • [**Professional LinkedIn**](https://linkedin.com/in/mohak-kapoor)
+[**Live Experience**](https://mohakapoor.in) • [**LinkedIn**](https://linkedin.com/in/mohakapoor) • [**GitHub**](https://github.com/mohakapoor) • [**Email**](mailto:contact.mohakapoor@gmail.com)
 
 </div>
 
 ---
 
-## 👋 Professional Identity
-This site is more than a portfolio; it is a custom-engineered digital ecosystem designed to showcase the intersection of **quantitative analysis** and **immersive web technologies**. It reflects my journey across three core disciplines:
-
-### 🤖 ML Engineer
-**Architecting high-performance models.**
-Focusing on anomaly detection, time-series forecasting, and deploying robust neural architectures. I build systems that don't just predict—they scale.
-
-### 📊 Data Scientist
-**Signal extraction from noise.**
-Specializing in synthetic data generation, advanced feature engineering, and translating raw telemetry into actionable business intelligence through rigorous statistical analysis.
-
-### 🧠 AI Engineer
-**End-to-end intelligent systems.**
-From crafting LLM-powered orchestration pipelines to integrating real-time computer vision into responsive web applications. I bridge the gap between "it works in a notebook" and "it works in production."
+## 🏛️ The Digital Atelier
+This platform is a custom-engineered digital ecosystem designed to showcase the intersection of **quantitative analysis** and **immersive web technologies**. With 1+ year of production experience, I focus on shipping end-to-end systems—from edge-deployed inference engines on Raspberry Pi to LLM pipelines on serverless Cloudflare Workers.
 
 ---
 
-## ⚡ Technical Showcases
+## 🚀 Flagship Research & Engineering
 
-### 🎭 Interactive 3D Architecture
-The landing page features a **state-driven 3D Persona Selector** built with **React Three Fiber**. It allows visitors to interact with my different professional facets through a kinetic interface that adapts the entire site's theme in real-time.
+### 🧪 METR: Market Exposure Timing Research
+*Quantitative Framework | Python, Polars, XGBoost, scikit-learn*
+- **Framework**: Constructed a two-layer meta-labeling framework on 3,440+ days of multi-asset Indian market data (Nifty 50, GoldBees, USD/INR).
+- **Rigor**: Validated against **10,000 Monte Carlo simulations**. The GoldBees filter achieved a **Sharpe 1.48** and **Calmar 1.87** with a 66.1% OOS win rate.
+- **Methodology**: Applied **Fractional Differentiation (d=0.45)** to preserve 81% memory with stationarity, Triple Barrier labeling, and SHAP analysis to identify primary alpha drivers.
 
-### 📈 METR: Market Exposure Timing vs Randomness
-A featured research study visualized through a custom **isometric microstructure system**. This section demonstrates my ability to take complex financial theories and translate them into high-fidelity, interactive technical narratives using **GSAP** and **D3-level precision**.
+### 🛡️ Network IDS Detection Engine
+*Security & Edge Deployment | LightGBM, PyTorch, FastAPI, Raspberry Pi 5*
+- **Dual-Engine Architecture**: Engineered a signature-based and unsupervised anomaly detection system on **2.8M rows** of network traffic (CICIDS2017).
+- **Performance**: Benchmarked LightGBM at **99% accuracy** (F1: 0.99). Reduced feature space 51% via IncrementalPCA while retaining 98.97% variance.
+- **Edge Deployment**: Shipped the inference engine as a FastAPI service on **Raspberry Pi 5**, exposed via Cloudflare Tunnel for public inference.
 
-### 📱 Performance-First Experience
-Every interaction is optimized for speed. Leveraging a hybrid hero strategy, the site delivers a sub-2s Time-to-Interactive on mobile while providing a full WebGL experience on desktop.
+### 🧩 CaptchaOCR
+*Deep Learning & Computer Vision | CNN + BiLSTM, CTC Loss, Hugging Face*
+- **Architecture**: Trained a CRNN architecture with CTC loss, achieving **96%+ character-level accuracy** on distorted sequences.
+- **Deployment**: Published to **Hugging Face Spaces** for reproducible benchmarking and open community validation.
 
 ---
 
-## 🛡️ Automated Intelligence
-The "Projects" section of this site is entirely autonomous. It utilizes a secure proxy to interact with the GitHub API, performing:
-- **Real-time Sanitization**: Cleans and parses project READMEs for instant context.
-- **Dynamic Categorization**: Algorithms automatically group repositories into Web, AI/ML, and Quantitative buckets.
-- **Live Sync**: Ensures the portfolio stays up-to-date with my latest commits without manual intervention.
+## 🎭 Professional Expertise
+
+### 🤖 ML & Modeling
+**Specialization in Supervised Learning & Time-Series.**
+Expertise in SVMs, LightGBM, XGBoost, and Deep Learning (CNN, BiLSTM). Advanced proficiency in Feature Engineering, Cross-Validation, and Hyperparameter Tuning.
+
+### 🧠 LLMs & Generative AI
+**End-to-End Intelligent Orchestration.**
+Deep experience in LLM integration (GPT-4, Gemini), Multimodal Pipelines, and **Model Context Protocol (MCP)**. Built scalable RAG systems and asynchronous processing workflows.
+
+### 🚀 MLOps & Edge Deployment
+**Production-Ready Scaling.**
+Proficient in FastAPI, Docker, and CI/CD. Specialized in **Edge Deployment** (Raspberry Pi 5) and serverless orchestration via Cloudflare Workers and R2 storage.
+
+---
+
+## 💼 Experience & Education
+
+**HumanizeIQ | AI Intern**
+- Architected MCP servers on serverless Cloudflare Workers for multimodal document workflows.
+- Designed recruiter call analysis pipelines integrating LLMs, eliminating 100% of manual processing.
+- Built REST APIs for background job orchestration and scalable asynchronous processing.
+
+**Jaypee Institute of Information Technology**
+*B.Tech in Electronics and Communication Engineering (2022 – 2026)*
+- **Relevant Coursework**: Machine Learning (A+), Deep Learning (A+), Advanced Statistics (A), Multivariate Calculus.
 
 ---
 
