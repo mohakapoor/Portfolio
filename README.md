@@ -1,78 +1,75 @@
 <div align="center">
 
 # Mohak Kapoor
-**A convergence of Machine Learning, Data Science, and High-Performance Web Engineering.**
+**Machine Learning Engineer | AI Architect | Quantitative Researcher**
 
 [![Next.js](https://img.shields.io/badge/Next.js-Framework-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
 [![Three.js](https://img.shields.io/badge/Three.js-Visuals-black?style=for-the-badge&logo=three.js&logoColor=white)](https://threejs.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-AI%2FML-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)](https://pytorch.org/)
 [![Vercel](https://img.shields.io/badge/Vercel-Live-black?style=for-the-badge&logo=vercel&logoColor=white)](https://www.mohakapoor.in)
 
-[**Live Experience**](https://mohakapoor.in) • [**LinkedIn**](https://linkedin.com/in/mohakapoor) • [**GitHub**](https://github.com/mohakapoor) • [**Email**](mailto:contact.mohakapoor@gmail.com)
+[**Website**](https://mohakapoor.in) • [**LinkedIn**](https://linkedin.com/in/mohakapoor) • [**GitHub**](https://github.com/mohakapoor) • [**Email**](mailto:contact.mohakapoor@gmail.com)
 
 </div>
 
 ---
 
-## 🏛️ The Digital Atelier
-This platform is a custom-engineered digital ecosystem designed to showcase the intersection of **quantitative analysis** and **immersive web technologies**. With 1+ year of production experience, I focus on shipping end-to-end systems—from edge-deployed inference engines on Raspberry Pi to LLM pipelines on serverless Cloudflare Workers.
+## Summary
+ML Engineer with 1+ year of production experience shipping end-to-end systems. Expertise includes edge-deployed inference engines on Raspberry Pi, LLM pipelines on serverless Cloudflare Workers, and quantitative research frameworks validated across 10,000 Monte Carlo simulations. This website serves as a live portfolio showcasing my technical work across ML, AI, and full-stack development.
 
 ---
 
-## 🚀 Flagship Research & Engineering
+## Projects
 
-### 🧪 METR: Market Exposure Timing Research
-*Quantitative Framework | Python, Polars, XGBoost, scikit-learn*
-- **Framework**: Constructed a two-layer meta-labeling framework on 3,440+ days of multi-asset Indian market data (Nifty 50, GoldBees, USD/INR).
-- **Rigor**: Validated against **10,000 Monte Carlo simulations**. The GoldBees filter achieved a **Sharpe 1.48** and **Calmar 1.87** with a 66.1% OOS win rate.
-- **Methodology**: Applied **Fractional Differentiation (d=0.45)** to preserve 81% memory with stationarity, Triple Barrier labeling, and SHAP analysis to identify primary alpha drivers.
+### METR — Market Exposure Timing Research
+*Python, Polars, XGBoost, scikit-learn*
+- Constructed a two-layer meta-labeling framework on 3,440+ days of multi-asset Indian market data (Nifty 50, GoldBees, USD/INR).
+- Validated against **10,000 Monte Carlo simulations**. The GoldBees filter achieved a **Sharpe 1.48** and **Calmar 1.87** with a 66.1% OOS win rate.
+- Applied **Fractional Differentiation (d=0.45)** preserving 81% memory with stationarity, Triple Barrier labeling, and SHAP feature importance analysis.
 
-### 🛡️ Network IDS Detection Engine
-*Security & Edge Deployment | LightGBM, PyTorch, FastAPI, Raspberry Pi 5*
-- **Dual-Engine Architecture**: Engineered a signature-based and unsupervised anomaly detection system on **2.8M rows** of network traffic (CICIDS2017).
-- **Performance**: Benchmarked LightGBM at **99% accuracy** (F1: 0.99). Reduced feature space 51% via IncrementalPCA while retaining 98.97% variance.
-- **Edge Deployment**: Shipped the inference engine as a FastAPI service on **Raspberry Pi 5**, exposed via Cloudflare Tunnel for public inference.
+### Network IDS Detection Engine
+*LightGBM, XGBoost, PyTorch, FastAPI, cuML*
+- Engineered a dual-detection intrusion detection system (signature-based + unsupervised anomaly detection) on **2.8M rows** of network traffic (CICIDS2017).
+- Benchmarked LightGBM at **99% accuracy** (F1: 0.99). Reduced feature space 51% (69 to 34 features) via IncrementalPCA while retaining 98.97% variance.
+- Deployed as a FastAPI service on **Raspberry Pi 5**, exposed publicly via Cloudflare Tunnel.
 
-### 🧩 CaptchaOCR
-*Deep Learning & Computer Vision | CNN + BiLSTM, CTC Loss, Hugging Face*
-- **Architecture**: Trained a CRNN architecture with CTC loss, achieving **96%+ character-level accuracy** on distorted sequences.
-- **Deployment**: Published to **Hugging Face Spaces** for reproducible benchmarking and open community validation.
-
----
-
-## 🎭 Professional Expertise
-
-### 🤖 ML & Modeling
-**Specialization in Supervised Learning & Time-Series.**
-Expertise in SVMs, LightGBM, XGBoost, and Deep Learning (CNN, BiLSTM). Advanced proficiency in Feature Engineering, Cross-Validation, and Hyperparameter Tuning.
-
-### 🧠 LLMs & Generative AI
-**End-to-End Intelligent Orchestration.**
-Deep experience in LLM integration (GPT-4, Gemini), Multimodal Pipelines, and **Model Context Protocol (MCP)**. Built scalable RAG systems and asynchronous processing workflows.
-
-### 🚀 MLOps & Edge Deployment
-**Production-Ready Scaling.**
-Proficient in FastAPI, Docker, and CI/CD. Specialized in **Edge Deployment** (Raspberry Pi 5) and serverless orchestration via Cloudflare Workers and R2 storage.
+### CaptchaOCR
+*Python, PyTorch, CNN + BiLSTM, CTC Loss*
+- Trained a recognition system achieving **96%+ character-level accuracy** on distorted sequences via synthetic training corpus generation.
+- Published to **Hugging Face Spaces** for public model deployment and inference.
 
 ---
 
-## 💼 Experience & Education
+## Technical Skills
+
+- **Languages**: Python (Advanced), TypeScript, C++
+- **ML & Modeling**: Supervised Learning, SVMs, LightGBM, XGBoost, CNN, BiLSTM, Time-Series Forecasting, Anomaly Detection, Feature Engineering, Cross-Validation
+- **LLMs & GenAI**: LLM Integration (GPT-4, Gemini), Multimodal Pipelines, Model Context Protocol (MCP), RAG
+- **MLOps & Deployment**: FastAPI, REST APIs, Docker, GitHub Actions, MLflow, Cloudflare Workers, Cloudflare Tunnel, Edge Deployment (Raspberry Pi 5)
+- **Frameworks**: TensorFlow, PyTorch, scikit-learn, Hugging Face, Pandas, NumPy, Polars, PostgreSQL
+
+---
+
+## Experience
 
 **HumanizeIQ | AI Intern**
 - Architected MCP servers on serverless Cloudflare Workers for multimodal document workflows.
-- Designed recruiter call analysis pipelines integrating LLMs, eliminating 100% of manual processing.
+- Designed recruiter call analysis pipelines integrating LLMs, eliminating 100% of manual post-call processing.
 - Built REST APIs for background job orchestration and scalable asynchronous processing.
+
+---
+
+## Education
 
 **Jaypee Institute of Information Technology**
 *B.Tech in Electronics and Communication Engineering (2022 – 2026)*
-- **Relevant Coursework**: Machine Learning (A+), Deep Learning (A+), Advanced Statistics (A), Multivariate Calculus.
+- **Relevant Coursework**: Machine Learning (A+), Deep Learning (A+), Advanced Statistics (A), Multivariate & Differential Calculus.
 
 ---
 
 <div align="center">
 
-### Let's Build Something Meaningful.
-[Website](https://www.mohakapoor.in) • [LinkedIn](https://linkedin.com/in/mohak-kapoor) • [Email](mailto:mohak.kapoor@example.com)
+[Website](https://www.mohakapoor.in) • [LinkedIn](https://linkedin.com/in/mohak-kapoor) • [Email](mailto:contact.mohakapoor@gmail.com)
 
 **Mohak Kapoor** | 2026
 
