@@ -58,6 +58,6 @@ The "Projects" section of this site is entirely autonomous. It utilizes a secure
 ### Let's Build Something Meaningful.
 [Website](https://www.mohakapoor.in) • [LinkedIn](https://linkedin.com/in/mohak-kapoor) • [Email](mailto:mohak.kapoor@example.com)
 
-**Mohak Kapoor** | 2024
+**Mohak Kapoor** | 2026
 
 </div>
