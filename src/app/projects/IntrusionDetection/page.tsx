@@ -1065,6 +1065,22 @@ export default function IntrusionDetectionProjectPage() {
                                             </div>
                                         </div>
 
+                                        {streamSummary.average_latencies && (
+                                            <div className="mt-12 pt-8 border-t border-white/5">
+                                                <h4 className="text-[10px] text-white/40 uppercase tracking-widest mb-6">Pipeline_Latency_Breakdown</h4>
+                                                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+                                                    {Object.entries(streamSummary.average_latencies).map(([model, latency]: [string, any]) => (
+                                                        <div key={model} className={`p-3 border border-white/5 bg-white/[0.01] rounded ${model === 'pipeline' ? 'border-[var(--spider-red)]/30 bg-[var(--spider-red)]/5' : ''}`}>
+                                                            <div className="text-[8px] text-white/30 uppercase font-mono mb-1">{model.replace('_', ' ')}</div>
+                                                            <div className={`text-sm font-mono font-bold ${model === 'pipeline' ? 'text-[var(--spider-red)]' : 'text-white/80'}`}>
+                                                                {(latency as number * 1000).toFixed(3)}ms
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
+
                                         <div className="mt-12 flex justify-center">
                                             <button
                                                 onClick={() => setStreamSummary(null)}
