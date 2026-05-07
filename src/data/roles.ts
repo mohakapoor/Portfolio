@@ -33,7 +33,7 @@ export const rolesData: RoleData[] = [
     tags: ["Python", "PyTorch", "LightGBM", "cuML", "Time-Series"],
     rotationY: 0,
     pulseColor: "#ff6600",
-    satColors: ["#ffffff", "#ffcc00", "#00ffcc", "#ff0055"],
+    satColors: ["#ffffff", "#ff8c00", "#ff0000", "#ffd700"],
     tokens: {
       primary: "#cc2936",
       tertiary: "#e84050",
@@ -53,7 +53,7 @@ export const rolesData: RoleData[] = [
     tags: ["Pandas", "Feature Eng", "EDA", "Statistical Analysis"],
     rotationY: (120 * DEG_TO_RAD),
     pulseColor: "#ccff00",
-    satColors: ["#00f2ff", "#39ff14", "#ffffff", "#bc00ff"],
+    satColors: ["#ff00ff", "#bc00ff", "#ffffff", "#8a2be2"],
     tokens: {
       primary: "#ec4899",
       tertiary: "#ff7ab9",
@@ -73,7 +73,7 @@ export const rolesData: RoleData[] = [
     tags: ["LLMs", "Generative AI", "Computer Vision", "Next.js"],
     rotationY: (240 * DEG_TO_RAD),
     pulseColor: "#ffffff",
-    satColors: ["#ffcc00", "#00f2ff", "#bc00ff", "#39ff14"],
+    satColors: ["#00f2ff", "#ffffff", "#1e90ff", "#00ced1"],
     tokens: {
       primary: "#a1faff",
       tertiary: "#4dedff",
