@@ -78,7 +78,7 @@ const CONSTELLATIONS: ConstellationData[] = [
     ]
   },
   {
-    category: "LLMs & GenAI",
+    category: "GenAI",
     constellation: "CORVUS",
     color: "#f5c542",
     // Corvus: a slightly tilted quadrilateral (the Raven) — 4 bright stars
