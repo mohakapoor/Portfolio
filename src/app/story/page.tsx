@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Footer } from "@/components/Landing/Footer";
 import InteractiveGrid from "@/components/Story/InteractiveGrid";
+import Skills3DMap from "@/components/Story/Skills3DMap";
 
 export default function StoryPage() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -53,7 +54,7 @@ export default function StoryPage() {
                 cards.forEach((card) => {
                   card.classList.add('animate-in');
                 });
-              }, 250); 
+              }, 250);
             }
           }
         });
@@ -91,7 +92,7 @@ export default function StoryPage() {
   return (
     <main className="min-h-screen py-16 px-0 overflow-x-hidden">
       {/* Navigation Sidebar */}
-      <nav 
+      <nav
         className={`fixed top-0 left-0 z-60 h-full w-72 glass-nav transform transition-transform duration-300 ${menuOpen ? "translate-x-0" : "-translate-x-full"}`}
         role="dialog"
         aria-modal="true"
@@ -148,171 +149,154 @@ export default function StoryPage() {
             <h1 className="newspaper-headline text-6xl md:text-7xl text-white drop-shadow-[0_0_12px_rgba(var(--theme-accent-rgb),0.2)]">My Story</h1>
           </header>
 
-        <article className="space-y-20 leading-relaxed text-lg pb-8">
-          <section id="who-am-i" className="glass-card p-6">
-            <h2 className="newspaper-headline text-3xl mb-2">Who Am I</h2>
-            <p className="text-dust-gray">
-              I am an AI Integration Engineer & ML Enthusiast. I build production-grade AI systems that close the gap between models and applications, with a focus on MCP development, time-series forecasting, Computer Vision, and scalable ML Systems. I like to build quick prototypes and test new ideas.
-            </p>
-          </section>
+          <article className="space-y-20 leading-relaxed text-lg pb-8">
+            <section id="who-am-i" className="glass-card p-6">
+              <h2 className="newspaper-headline text-3xl mb-2">Who Am I</h2>
+              <p className="text-dust-gray">
+                I am an AI Integration Engineer & ML Enthusiast. I build production-grade AI systems that close the gap between models and applications, with a focus on MCP development, time-series forecasting, Computer Vision, and scalable ML Systems. I like to build quick prototypes and test new ideas.
+              </p>
+            </section>
 
-          <section id="featured">
-             <div className="flex items-baseline justify-between my-8">
-              <h2 className="newspaper-headline text-3xl">Featured Projects</h2>
-              <Link href="/projects" className="text-[var(--dust-gray)] hover:text-[var(--theme-accent)] transition-colors">VIEW ALL &rarr;</Link>
-            </div>
-            <div className="grid gap-6 md:grid-cols-2">
-              {/* Featured Project Cards */}
-              {[
-                { 
-                  id: 0, 
-                  title: "METR: Market Exposure Timing", 
-                  desc: "A multi-asset study using XGBoost Meta-Labeling to distinguish true alpha from random noise. Verified with 10,000 Monte Carlo simulations.",
-                  tags: ["XGBoost", "Polars", "Triple Barrier", "Monte Carlo", "FracDiff"],
-                  href: "/projects/METR"
-                },
-                { 
-                  id: 1, 
-                  title: "Intrusion Detection System", 
-                  desc: "Real-time network traffic analysis using hybrid machine learning (LightGBM + Deep Learning) to detect sophisticated cyber attacks on the CICIDS-2017 dataset.",
-                  tags: ["Python", "PyTorch", "RAPIDS", "LightGBM", "CICIDS-2017"],
-                  href: "/projects/IntrusionDetection"
-                },
-                { 
-                  id: 2, 
-                  title: "CaptchaOCR", 
-                  desc: "End-to-end CAPTCHA text recognition using custom CRNN architecture with CTC loss, achieving 96%+ character accuracy.",
-                  tags: ["Python", "PyTorch", "CNN-LSTM", "CTC Loss", "Computer Vision"],
-                  href: "/projects/CaptchaOCR"
-                },
-                { 
-                  id: 3, 
-                  title: "HermesGPT", 
-                  desc: "AI‑powered personalized cold emails with Gmail API, email verification, and PostgreSQL tracking.",
-                  tags: ["Python", "Gmail API", "Gemini AI", "Automation", "PostgreSQL"],
-                  href: "https://github.com/mohakapoor/HermesGPT"
-                },
-                
-              ].map((proj) => {
-                const isExternal = proj.href.startsWith('http');
-                const CardWrapper = isExternal ? 'a' : Link;
-                const wrapperProps = isExternal 
-                  ? { href: proj.href, target: "_blank", rel: "noopener noreferrer" } 
-                  : { href: proj.href };
+            <section id="featured">
+              <div className="flex items-baseline justify-between my-8">
+                <h2 className="newspaper-headline text-3xl">Featured Projects</h2>
+                <Link href="/projects" className="text-[var(--dust-gray)] hover:text-[var(--theme-accent)] transition-colors">VIEW ALL &rarr;</Link>
+              </div>
+              <div className="grid gap-6 md:grid-cols-2">
+                {/* Featured Project Cards */}
+                {[
+                  {
+                    id: 0,
+                    title: "METR: Market Exposure Timing",
+                    desc: "A multi-asset study using XGBoost Meta-Labeling to distinguish true alpha from random noise. Verified with 10,000 Monte Carlo simulations.",
+                    tags: ["XGBoost", "Polars", "Triple Barrier", "Monte Carlo", "FracDiff"],
+                    href: "/projects/METR"
+                  },
+                  {
+                    id: 1,
+                    title: "Intrusion Detection System",
+                    desc: "Real-time network traffic analysis using hybrid machine learning (LightGBM + Deep Learning) to detect sophisticated cyber attacks on the CICIDS-2017 dataset.",
+                    tags: ["Python", "PyTorch", "RAPIDS", "LightGBM", "CICIDS-2017"],
+                    href: "/projects/IntrusionDetection"
+                  },
+                  {
+                    id: 2,
+                    title: "CaptchaOCR",
+                    desc: "End-to-end CAPTCHA text recognition using custom CRNN architecture with CTC loss, achieving 96%+ character accuracy.",
+                    tags: ["Python", "PyTorch", "CNN-LSTM", "CTC Loss", "Computer Vision"],
+                    href: "/projects/CaptchaOCR"
+                  },
+                  {
+                    id: 3,
+                    title: "HermesGPT",
+                    desc: "AI‑powered personalized cold emails with Gmail API, email verification, and PostgreSQL tracking.",
+                    tags: ["Python", "Gmail API", "Gemini AI", "Automation", "PostgreSQL"],
+                    href: "https://github.com/mohakapoor/HermesGPT"
+                  },
 
-                return (
-                  <CardWrapper
-                    key={proj.id}
-                    {...wrapperProps}
-                    ref={(el: any) => { cardRefs.current[proj.id] = el; }}
-                    className={`relative overflow-hidden rounded-[12px] p-5 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group cursor-pointer border backdrop-blur-md block ${expandedCard === proj.id ? 'scale-105 z-10 bg-[var(--theme-accent)]/[0.07] border-[var(--theme-accent)]/[0.30]' : 'bg-[var(--theme-accent)]/[0.03] border-[var(--theme-accent)]/[0.12] hover:bg-[var(--theme-accent)]/[0.07] hover:border-[var(--theme-accent)]/[0.30] hover:scale-105 hover:z-10'}`}
-                    onClick={() => handleCardClick(proj.id)}
-                  >
-                    <div className={`absolute -top-6 -right-6 w-24 h-24 bg-[var(--theme-accent)]/20 rounded-full blur-[24px] pointer-events-none transition-opacity duration-700 ${expandedCard === proj.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
-                    <div className="flex justify-between items-start mb-2 relative z-10">
-                      <h3 className="text-xl">{proj.title}</h3>
-                      <div className={`text-[14px] text-[var(--theme-accent)]/40 transition-all duration-300 ml-3 shrink-0 ${expandedCard === proj.id ? 'text-[var(--theme-accent)]/90 translate-x-[2px] -translate-y-[2px]' : 'group-hover:text-[var(--theme-accent)]/90 group-hover:translate-x-[2px] group-hover:-translate-y-[2px]'}`}>↗</div>
+                ].map((proj) => {
+                  const isExternal = proj.href.startsWith('http');
+                  const CardWrapper = isExternal ? 'a' : Link;
+                  const wrapperProps = isExternal
+                    ? { href: proj.href, target: "_blank", rel: "noopener noreferrer" }
+                    : { href: proj.href };
+
+                  return (
+                    <CardWrapper
+                      key={proj.id}
+                      {...wrapperProps}
+                      ref={(el: any) => { cardRefs.current[proj.id] = el; }}
+                      className={`relative overflow-hidden rounded-[12px] p-5 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group cursor-pointer border backdrop-blur-md block ${expandedCard === proj.id ? 'scale-105 z-10 bg-[var(--theme-accent)]/[0.07] border-[var(--theme-accent)]/[0.30]' : 'bg-[var(--theme-accent)]/[0.03] border-[var(--theme-accent)]/[0.12] hover:bg-[var(--theme-accent)]/[0.07] hover:border-[var(--theme-accent)]/[0.30] hover:scale-105 hover:z-10'}`}
+                      onClick={() => handleCardClick(proj.id)}
+                    >
+                      <div className={`absolute -top-6 -right-6 w-24 h-24 bg-[var(--theme-accent)]/20 rounded-full blur-[24px] pointer-events-none transition-opacity duration-700 ${expandedCard === proj.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
+                      <div className="flex justify-between items-start mb-2 relative z-10">
+                        <h3 className="text-xl">{proj.title}</h3>
+                        <div className={`text-[14px] text-[var(--theme-accent)]/40 transition-all duration-300 ml-3 shrink-0 ${expandedCard === proj.id ? 'text-[var(--theme-accent)]/90 translate-x-[2px] -translate-y-[2px]' : 'group-hover:text-[var(--theme-accent)]/90 group-hover:translate-x-[2px] group-hover:-translate-y-[2px]'}`}>↗</div>
+                      </div>
+                      <p className="text-dust-gray mb-3 text-sm">{proj.desc}</p>
+                      <div className="flex flex-wrap gap-2 relative z-10">
+                        {proj.tags.map(tag => <span key={tag} className="tag">{tag}</span>)}
+                      </div>
+                    </CardWrapper>
+                  );
+                })}
+              </div>
+            </section>
+
+            <section id="experience">
+              <h2 className="newspaper-headline text-3xl my-8">Experience</h2>
+              <div className="grid gap-6 md:grid-cols-2">
+                <div
+                  ref={(el) => { cardRefs.current[4] = el; }}
+                  className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer ${expandedCard === 4 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'}`}
+                  onClick={() => handleCardClick(4)}
+                >
+                  <h3 className="text-xl mb-1">HumanizeIQ — AI Intern Integrations</h3>
+                  <p className="text-dust-gray text-sm mb-2">Developed MCP infrastructure and AI workflow orchestration for recruiter call analysis, building scalable systems with Cloudflare Workers.</p>
+                  <div className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-700 ${expandedCard === 4 ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0 group-hover:grid-rows-[1fr] group-hover:opacity-100'}`}>
+                    <div className="min-h-0 text-dust-gray text-xs leading-relaxed">
+                      <ul className="list-disc pl-4 space-y-1">
+                        <li>Developed specialized MCP servers for image and multimodal document generation.</li>
+                        <li>Designed AI-powered workflow orchestration using Gemini and GPT-4.</li>
+                        <li>Set up APIs for report storage, email distribution, and call event handling.</li>
+                      </ul>
                     </div>
-                    <p className="text-dust-gray mb-3 text-sm">{proj.desc}</p>
-                    <div className="flex flex-wrap gap-2 relative z-10">
-                      {proj.tags.map(tag => <span key={tag} className="tag">{tag}</span>)}
-                    </div>
-                  </CardWrapper>
-                );
-              })}
-            </div>
-          </section>
-
-          <section id="experience">
-            <h2 className="newspaper-headline text-3xl my-8">Experience</h2>
-            <div className="grid gap-6 md:grid-cols-2">
-              <div
-                ref={(el) => { cardRefs.current[4] = el; }}
-                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer ${expandedCard === 4 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'}`}
-                onClick={() => handleCardClick(4)}
-              >
-                <h3 className="text-xl mb-1">HumanizeIQ — AI Intern Integrations</h3>
-                <p className="text-dust-gray text-sm mb-2">Developed MCP infrastructure and AI workflow orchestration for recruiter call analysis, building scalable systems with Cloudflare Workers.</p>
-                <div className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-700 ${expandedCard === 4 ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0 group-hover:grid-rows-[1fr] group-hover:opacity-100'}`}>
-                  <div className="min-h-0 text-dust-gray text-xs leading-relaxed">
-                    <ul className="list-disc pl-4 space-y-1">
-                      <li>Developed specialized MCP servers for image and multimodal document generation.</li>
-                      <li>Designed AI-powered workflow orchestration using Gemini and GPT-4.</li>
-                      <li>Set up APIs for report storage, email distribution, and call event handling.</li>
-                    </ul>
                   </div>
                 </div>
-              </div>
-              <div
-                ref={(el) => { cardRefs.current[5] = el; }}
-                className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer ${expandedCard === 5 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'}`}
-                onClick={() => handleCardClick(5)}
-              >
-                <h3 className="text-xl mb-1">JPMorgan Chase & Co. — Quant Research Virtual</h3>
-                <p className="text-dust-gray text-sm mb-2">Analyzed a loan book to estimate probability of default; transformed FICO scores with dynamic programming.</p>
-                <div className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-700 ${expandedCard === 5 ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0 group-hover:grid-rows-[1fr] group-hover:opacity-100'}`}>
-                  <div className="min-h-0 text-dust-gray text-xs leading-relaxed">
-                    <ul className="list-disc pl-4 space-y-1">
-                      <li>Used dynamic programming to convert FICO scores into categorical data.</li>
-                      <li>Developed natural gas price prediction model using SARIMA analysis.</li>
-                    </ul>
+                <div
+                  ref={(el) => { cardRefs.current[5] = el; }}
+                  className={`glass-card p-5 transition-all duration-500 ease-in group cursor-pointer ${expandedCard === 5 ? 'scale-105 z-10' : 'hover:scale-105 hover:z-10'}`}
+                  onClick={() => handleCardClick(5)}
+                >
+                  <h3 className="text-xl mb-1">JPMorgan Chase & Co. — Quant Research Virtual</h3>
+                  <p className="text-dust-gray text-sm mb-2">Analyzed a loan book to estimate probability of default; transformed FICO scores with dynamic programming.</p>
+                  <div className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-700 ${expandedCard === 5 ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0 group-hover:grid-rows-[1fr] group-hover:opacity-100'}`}>
+                    <div className="min-h-0 text-dust-gray text-xs leading-relaxed">
+                      <ul className="list-disc pl-4 space-y-1">
+                        <li>Used dynamic programming to convert FICO scores into categorical data.</li>
+                        <li>Developed natural gas price prediction model using SARIMA analysis.</li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
+                <div className="glass-card p-5">
+                  <h3 className="text-xl mb-1">OSDC — Member</h3>
+                  <p className="text-dust-gray text-sm">Organized hackathons and open‑source events; collaborated on OSS contributions.</p>
+                </div>
+                <div className="glass-card p-5">
+                  <h3 className="text-xl mb-1">Social Media — Strategy & Marketing</h3>
+                  <p className="text-dust-gray text-sm">Led strategy for two Instagram pages (55k & 17k followers), increasing engagement by 167%.</p>
+                </div>
               </div>
-              <div className="glass-card p-5">
-                <h3 className="text-xl mb-1">OSDC — Member</h3>
-                <p className="text-dust-gray text-sm">Organized hackathons and open‑source events; collaborated on OSS contributions.</p>
-              </div>
-              <div className="glass-card p-5">
-                <h3 className="text-xl mb-1">Social Media — Strategy & Marketing</h3>
-                <p className="text-dust-gray text-sm">Led strategy for two Instagram pages (55k & 17k followers), increasing engagement by 167%.</p>
-              </div>
-            </div>
-          </section>
+            </section>
 
-          <section id="skills">
-            <h2 className="newspaper-headline text-3xl my-8">Skills & Technologies</h2>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              <div className="glass-card p-5">
-                <h3 className="text-xl mb-3">Machine Learning</h3>
-                <div className="flex flex-wrap gap-2">
-                  {["Deep Learning", "Time-Series", "CNN-LSTM", "Random Forest", "TensorFlow", "scikit-learn"].map(s => <span key={s} className="tag">{s}</span>)}
-                </div>
+            <section id="skills">
+              <div className="flex items-baseline justify-between my-8">
+                <h2 className="newspaper-headline text-3xl">Skills & Technologies</h2>
               </div>
-              <div className="glass-card p-5">
-                <h3 className="text-xl mb-3">Dev & Infrastructure</h3>
-                <div className="flex flex-wrap gap-2">
-                  {["Python", "C++", "TypeScript", "MCP", "Cloudflare", "PostgreSQL", "Django", "Docker"].map(s => <span key={s} className="tag">{s}</span>)}
-                </div>
-              </div>
-              <div className="glass-card p-5 md:col-span-2 lg:col-span-1">
-                <h3 className="text-xl mb-3">CI/CD & Ops</h3>
-                <div className="flex flex-wrap gap-2">
-                  {["GitHub Actions", "Pipelines", "Automation", "Workflow Orchestration"].map(s => <span key={s} className="tag">{s}</span>)}
-                </div>
-              </div>
-            </div>
-          </section>
+              <Skills3DMap />
+            </section>
 
-          <section id="github">
-            <h2 className="newspaper-headline text-3xl my-8">GitHub</h2>
-            <div className="glass-card p-6">
-              <div className="flex flex-col items-center text-center mb-8">
-                <img src="https://github.com/mohakapoor.png?size=240" className="w-40 h-40 rounded-lg border border-[var(--theme-accent)]/40 object-cover mb-4" />
-                <h3 className="text-xl font-semibold text-[var(--vintage-white)]">@mohakapoor</h3>
+            <section id="github">
+              <h2 className="newspaper-headline text-3xl my-8">GitHub</h2>
+              <div className="glass-card p-6">
+                <div className="flex flex-col items-center text-center mb-8">
+                  <img src="https://github.com/mohakapoor.png?size=240" className="w-40 h-40 rounded-lg border border-[var(--theme-accent)]/40 object-cover mb-4" />
+                  <h3 className="text-xl font-semibold text-[var(--vintage-white)]">@mohakapoor</h3>
+                </div>
+                <GitHubContributions username="mohakapoor" />
               </div>
-              <GitHubContributions username="mohakapoor" />
-            </div>
-          </section>
-        </article>
+            </section>
+          </article>
+        </div>
       </div>
-    </div>
 
-    <div className="w-full px-8 md:px-20">
-      {/* Footer Area */}
-      <div className="w-full h-[1px] bg-white/[0.05] mt-4" />
-      <Footer isFullWidth={true} />
-    </div>
-  </main>
+      <div className="w-full px-8 md:px-20">
+        {/* Footer Area */}
+        <div className="w-full h-[1px] bg-white/[0.05] mt-4" />
+        <Footer isFullWidth={true} />
+      </div>
+    </main>
   );
 }
