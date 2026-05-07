@@ -87,7 +87,7 @@ function HexLattice({ radius = 1.6, color = "#fff", pulseColor = "#fff", detail 
     <group scale={[radius, radius, radius]}>
       <lineSegments ref={meshRef}>
         <bufferGeometry>
-          <bufferAttribute attach="attributes-position" count={latticeVertices.length / 3} array={latticeVertices} itemSize={3} />
+          <bufferAttribute attach="attributes-position" args={[latticeVertices, 3]} />
         </bufferGeometry>
         <lineBasicMaterial color={color} transparent opacity={0.25} blending={THREE.AdditiveBlending} />
       </lineSegments>
@@ -162,6 +162,7 @@ function HexPulses({ vertices, neighbors, color }: HexPulsesProps) {
   return (
     <group>
       {pulses.map((p, i) => (
+        // @ts-ignore - Conflict with SVG line type
         <line key={i} ref={p.ref}>
           <bufferGeometry />
           <lineBasicMaterial color={color} transparent opacity={1} depthTest={false} blending={THREE.AdditiveBlending} />
@@ -290,7 +291,7 @@ export function ThreeScene(props: ThreeSceneProps) {
           <CyberpunkMesh {...props} />
         </Center>
 
-        <EffectComposer disableNormalPass>
+        <EffectComposer enableNormalPass={false}>
           <Bloom luminanceThreshold={0.1} mipmapBlur intensity={1.0} radius={0.4} />
           <Noise opacity={0.05} />
         </EffectComposer>
