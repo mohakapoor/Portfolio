@@ -15,6 +15,8 @@ export interface RoleData {
   tagline: string;
   tags: string[];
   tokens: RoleTokenSet;
+  pulseColor: string;
+  satColors: string[];
   rotationY: number; // The target angle in radians for the 3D model 
   backgroundImage: string;
 }
@@ -30,6 +32,8 @@ export const rolesData: RoleData[] = [
     tagline: "Architecting high-performance models for anomaly detection and forecasting. From statistical baselines to deep neural deployments.",
     tags: ["Python", "PyTorch", "LightGBM", "cuML", "Time-Series"],
     rotationY: 0,
+    pulseColor: "#ff6600",
+    satColors: ["#ffffff", "#ffcc00", "#00ffcc", "#ff0055"],
     tokens: {
       primary: "#cc2936",
       tertiary: "#e84050",
@@ -47,7 +51,9 @@ export const rolesData: RoleData[] = [
     counter: "02 / 03",
     tagline: "Transforming raw telemetry into actionable signals. Heavy focus on synthetic data generation, robust feature engineering, and analytics.",
     tags: ["Pandas", "Feature Eng", "EDA", "Statistical Analysis"],
-    rotationY: 0,
+    rotationY: (120 * DEG_TO_RAD),
+    pulseColor: "#ccff00",
+    satColors: ["#00f2ff", "#39ff14", "#ffffff", "#bc00ff"],
     tokens: {
       primary: "#ec4899",
       tertiary: "#ff7ab9",
@@ -65,7 +71,9 @@ export const rolesData: RoleData[] = [
     counter: "03 / 03",
     tagline: "Building end-to-end intelligent systems. From crafting LLM outreach pipelines to integrating real-time computer vision into web apps.",
     tags: ["LLMs", "Generative AI", "Computer Vision", "Next.js"],
-    rotationY: 0,
+    rotationY: (240 * DEG_TO_RAD),
+    pulseColor: "#ffffff",
+    satColors: ["#ffcc00", "#00f2ff", "#bc00ff", "#39ff14"],
     tokens: {
       primary: "#a1faff",
       tertiary: "#4dedff",
@@ -78,3 +86,4 @@ export const rolesData: RoleData[] = [
     backgroundImage: "/bg_landscape3.png",
   }
 ];
+
