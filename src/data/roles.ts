@@ -33,7 +33,7 @@ export const rolesData: RoleData[] = [
     tags: ["Python", "PyTorch", "LightGBM", "cuML", "Time-Series"],
     rotationY: 0,
     pulseColor: "#ff6600",
-    satColors: ["#ffffff", "#ff8c00", "#ff0000", "#ffd700"],
+    satColors: ["#ffffff", "#ff8400ff", "#ff0000", "#ffd700"],
     tokens: {
       primary: "#cc2936",
       tertiary: "#e84050",
@@ -52,7 +52,7 @@ export const rolesData: RoleData[] = [
     tagline: "Transforming raw telemetry into actionable signals. Heavy focus on synthetic data generation, robust feature engineering, and analytics.",
     tags: ["Pandas", "Feature Eng", "EDA", "Statistical Analysis"],
     rotationY: (120 * DEG_TO_RAD),
-    pulseColor: "#ccff00",
+    pulseColor: "#ff9a8b",
     satColors: ["#ff00ff", "#bc00ff", "#ffffff", "#8a2be2"],
     tokens: {
       primary: "#ec4899",
