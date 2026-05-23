@@ -2,6 +2,12 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
+  // ---------------------------------------------------------------------------
+  // TOGGLE MAINTENANCE MODE:
+  // - To DISABLE maintenance and restore normal behavior, UNCOMMENT the line below:
+  // return NextResponse.next();
+  // ---------------------------------------------------------------------------
+
   const { pathname } = request.nextUrl;
 
   // Bypass public assets, API routes, and standard favicon/image/pdf requests
