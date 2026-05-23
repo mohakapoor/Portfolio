@@ -5,7 +5,7 @@ export function middleware(request: NextRequest) {
   // ---------------------------------------------------------------------------
   // TOGGLE MAINTENANCE MODE:
   // - To DISABLE maintenance and restore normal behavior, UNCOMMENT the line below:
-  return NextResponse.next();
+  // return NextResponse.next();
   // ---------------------------------------------------------------------------
 
   const { pathname } = request.nextUrl;
