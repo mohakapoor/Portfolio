@@ -30,7 +30,7 @@ export function RoleSelector() {
   }, [activeIndex, activeRole]);
 
   return (
-    <div className="relative w-full min-h-[100dvh] flex flex-col overflow-hidden" style = {{zoom:0.9}}>
+    <div className="relative w-full min-h-[100dvh] flex flex-col overflow-hidden md:[zoom:0.9]">
       <BackgroundLandscape image={activeRole.backgroundImage} />
       <AmbientGlow activeColor={activeRole.tokens.primary} />
 
