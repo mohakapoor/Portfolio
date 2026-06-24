@@ -1,5 +1,4 @@
 import { RoleSelector } from "@/components/RoleSelector/RoleSelector";
-import { MobileHero } from "@/components/MobileHero";
 import { FeaturedProject } from "@/components/Landing/FeaturedProject";
 import { Philosophy } from "@/components/Landing/Philosophy";
 import { Stats } from "@/components/Landing/Stats";
@@ -11,12 +10,7 @@ export default function Home() {
 
       {/* Hero Section - Themed with noir background and responsive logic */}
       <section className="noir-hero min-h-screen relative w-full overflow-hidden">
-        <div className="md:hidden">
-          <MobileHero />
-        </div>
-        <div className="hidden md:block">
-          <RoleSelector />
-        </div>
+        <RoleSelector />
       </section>
 
       {/* Content Sections Below-the-Fold */}

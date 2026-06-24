@@ -38,7 +38,13 @@ export function RoleSelector() {
       <div className="flex-1 flex flex-col md:flex-row items-stretch justify-center relative z-10">
         {/* LEFT PANEL - 45% */}
         <div className="relative w-full md:w-[45%] flex flex-col items-center justify-center p-4 md:p-12">
-          <div className="w-full aspect-square max-h-[500px] md:max-h-[600px] flex items-center justify-center">
+          
+          {/* Mobile Only Title */}
+          <h1 className="md:hidden newspaper-headline text-6xl text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] tracking-tight mb-6 mt-8 text-center">
+            Mohak Kapoor
+          </h1>
+
+          <div className="w-[70%] md:w-full aspect-square max-h-[300px] md:max-h-[600px] flex items-center justify-center">
 
             <ThreeScene
               roles={rolesData}

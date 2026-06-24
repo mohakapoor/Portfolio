@@ -41,7 +41,7 @@ export function RoleDetail({ role }: { role: RoleData }) {
       ref={containerRef}
       className={`flex flex-col gap-6 max-w-lg transition-all duration-[350ms] ease-out will-change-transform ${fade}`}
     >
-      <h1 className="newspaper-headline text-5xl sm:text-6xl md:text-7xl text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] tracking-tight mb-8">
+      <h1 className="hidden md:block newspaper-headline text-5xl sm:text-6xl md:text-7xl text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] tracking-tight mb-8">
         Mohak Kapoor
       </h1>
 
