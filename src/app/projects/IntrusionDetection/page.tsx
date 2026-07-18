@@ -1264,7 +1264,7 @@ export default function IntrusionDetectionProjectPage() {
 
                 {/* Unsupervised Anomaly Detection Section */}
                 <section id="unsupervised-detection" className="max-w-5xl mx-auto px-6 mb-12">
-                    <h2 className="newspaper-headline text-3xl my-8 animate-slide-right">Performance Metrics - Unsupervised</h2>
+                    <h2 className="newspaper-headline text-3xl my-8 animate-slide-right">Performance Metrics : Unsupervised</h2>
                     <div className="glass-card p-6">
                         <div className="grid md:grid-cols-2 gap-8 mb-10">
                             <div className="space-y-4">
@@ -1275,7 +1275,7 @@ export default function IntrusionDetectionProjectPage() {
                                      <h3 className="text-xl font-bold text-white uppercase tracking-tight">Denoising Autoencoder</h3>
                                 </div>
                                 <p className="text-sm text-[var(--dust-gray)] leading-relaxed">
-                                    Trained exclusively on benign traffic to establish a "normalcy baseline." Detects novel, zero-day attacks by measuring reconstruction error—anomalous packets deviate from the learned latent representation.
+                                    Trained exclusively on benign traffic to establish a "normalcy baseline." Detects novel, zero-day attacks by measuring reconstruction error: anomalous packets deviate from the learned latent representation.
                                 </p>
                                 <div className="bg-black/40 p-4 rounded border border-white/5 space-y-3">
                                     <div>
@@ -1390,7 +1390,7 @@ export default function IntrusionDetectionProjectPage() {
 
                 {/* Performance & Results Section */}
                 <section id="performance-results" className="max-w-5xl mx-auto px-6 mb-12">
-                    <h2 className="newspaper-headline text-3xl mb-8 animate-slide-right">Performance Metrics - SUPERVISED</h2>
+                    <h2 className="newspaper-headline text-3xl mb-8 animate-slide-right">Performance Metrics : SUPERVISED</h2>
                     <div className="grid md:grid-cols-3 gap-6">
                         {Object.values(MODEL_METADATA).map((model, idx) => (
                             <div key={idx} className={`glass-card p-6 border-t-4 ${model.border}`}>

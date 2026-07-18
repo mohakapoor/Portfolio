@@ -205,7 +205,7 @@ export default function METRProjectPage() {
                                     The Idea
                                 </h3>
                                 <p className="text-[var(--dust-gray)] leading-relaxed text-lg mb-6">
-                                    Can a machine learning model trained purely on historical price, volume, and publicly available implied volatility data — without any live sentiment, news, macro indicators, or order flow — actually beat random market entries in the long term?
+                                    Can a machine learning model trained purely on historical price, volume, and publicly available implied volatility data without any live sentiment, news, macro indicators, or order flow, actually beat random market entries in the long term?
                                     <br /><br />
                                     By training an <strong>XGBoost Trade-Filter</strong> on price action, volume, and implied volatility (VIX), the study isolates true statistical predictive edge from market drift. Validated against <strong>10,000 Monte Carlo simulations</strong>, the results confirm that while benchmark indices are highly efficient, specific commodity instruments like Gold hold exploitable temporal windows.
                                 </p>
@@ -456,7 +456,7 @@ export default function METRProjectPage() {
                                 </div>
                             </div>
                             <p className="text-sm text-[var(--dust-gray)] leading-relaxed italic">
-                                "The null hypothesis—that model-selected trades perform no better than stochastic selection—is rejected at p &lt; 0.05. The meta-filter successfully converted a suboptimal baseline signal into a statistically significant alpha."
+                                "The null hypothesis that model-selected trades perform no better than stochastic selection is rejected at p &lt; 0.05. The meta-filter successfully converted a suboptimal baseline signal into a statistically significant alpha."
                             </p>
                         </div>
 

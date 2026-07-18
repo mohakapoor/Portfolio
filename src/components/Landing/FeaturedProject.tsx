@@ -350,7 +350,7 @@ export function FeaturedProject() {
           {/* Description */}
           <div className="space-y-6 text-[20px] leading-relaxed text-white/40 mb-10 max-w-lg">
             <p>
-              Can a machine learning model trained purely on historical price/volume data—without any live sentiment, news, macro indicators, or order flow—actually beat random market entries in the long term?
+              Can a machine learning model trained purely on historical price/volume data, without any live sentiment, news, macro indicators, or order flow, actually beat random market entries in the long term?
             </p>
           </div>
 
