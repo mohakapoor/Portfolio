@@ -21,6 +21,13 @@ ML Engineer with 1+ year of production experience shipping end-to-end systems. E
 
 ## Projects
 
+| CodeAtlas — Intelligent Codebase RAG & Agentic Assistant | [[GitHub](https://github.com/mohakapoor/CodeAtlas)] |
+| :--- | ---: |
+| *Python, LangChain, Qdrant, Gemini, Flask* | |
+- Engineered an agentic RAG assistant to index and retrieve context across an entire GitHub portfolio using a hybrid search and reranking architecture.
+- Designed a **Global Pooling Retrieval (GlobalRerankRetriever)** strategy with Cross-Encoder reranking, solving the distractor problem and boosting precision/recall.
+- Benchmarked at **Precision: 0.78, Recall: 0.83** with high generation correctness (0.82) utilizing AST and Markdown structural parsing.
+
 | METR — Market Exposure Timing Research | [[GitHub](https://github.com/mohakapoor/METR)] [[Live](https://www.mohakapoor.in/projects/METR)] |
 | :--- | ---: |
 | *Python, Polars, XGBoost, scikit-learn* | |
