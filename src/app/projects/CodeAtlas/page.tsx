@@ -76,15 +76,14 @@ export default function CodeAtlasProjectPage() {
                 </div>
 
                 {/* Project Header */}
-                <section className="max-w-5xl mx-auto mb-12">
-                    <header className="text-center mb-10 animate-slide-down">
-                        <h1 className="newspaper-headline text-5xl md:text-6xl text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] mb-4">
+                <section className="max-w-5xl mx-auto mb-8">
+                    <header className="text-center mb-6 animate-slide-down">
+                        <h1 className="newspaper-headline text-5xl md:text-7xl text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.2)] mb-4">
                             CODEATLAS
                         </h1>
-                        <p className="text-xl text-[var(--dust-gray)] max-w-3xl mx-auto italic">
+                        <p className="text-xl md:text-2xl text-[var(--dust-gray)] max-w-3xl mx-auto italic font-crimson">
                             Intelligent Codebase RAG & Agentic Engineering Assistant
                         </p>
-                        <div className="w-24 h-[1px] bg-[var(--spider-red)] mx-auto mt-6 opacity-60" />
                     </header>
                 </section>
 
@@ -122,6 +121,41 @@ export default function CodeAtlasProjectPage() {
                                     View Source Code
                                 </a>
                             </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Live Demo Terminal CTA */}
+                <section className="max-w-5xl mx-auto mb-16 px-4 md:px-0">
+                    <div className="relative glass-card border border-[var(--spider-red)]/40 overflow-hidden shadow-[0_0_40px_rgba(204,41,54,0.1)]">
+                        {/* Terminal Header */}
+                        <div className="bg-black/60 border-b border-[var(--spider-red)]/20 px-4 py-3 flex items-center gap-2">
+                            <div className="flex gap-1.5">
+                                <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                                <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+                                <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                            </div>
+                            <div className="ml-4 font-mono text-xs text-[var(--dust-gray)] opacity-60">root@codeatlas:~# start_terminal</div>
+                        </div>
+                        
+                        {/* Terminal Body */}
+                        <div className="p-8 md:p-12 bg-[url('/bg_landscape1.png')] bg-cover bg-center bg-blend-overlay bg-black/80 flex flex-col items-center justify-center text-center">
+                            <div className="mb-6 font-mono text-[10px] md:text-xs text-[#a1faff] inline-block px-4 py-2 bg-black/60 border border-[#a1faff]/30 rounded shadow-[0_0_10px_rgba(161,250,255,0.2)] uppercase tracking-[0.2em] animate-pulse">
+                                System Online :: Awaiting Query
+                            </div>
+                            <h2 className="text-3xl md:text-4xl text-white font-bold mb-4 font-sans tracking-tight">Access the Live Demo</h2>
+                            <p className="text-[var(--dust-gray)] max-w-2xl mb-8 leading-relaxed text-lg">
+                                Experience the agentic retrieval system in real-time. Ask questions about the codebase architecture, dependencies, or implementation details and watch the LLM synthesize answers using cross-encoder reranking.
+                            </p>
+                            <Link 
+                                href="/chat"
+                                className="relative overflow-hidden spider-noir-button px-10 py-4 border-2 border-[var(--spider-red)] bg-transparent text-white rounded font-bold tracking-[0.2em] uppercase transition-all duration-500 hover:shadow-[0_0_40px_rgba(204,41,54,0.6)] hover:bg-[var(--spider-red)] group"
+                            >
+                                <span className="relative z-10 flex items-center gap-3">
+                                    Launch Terminal
+                                    <span className="transition-transform duration-300 group-hover:translate-x-2">→</span>
+                                </span>
+                            </Link>
                         </div>
                     </div>
                 </section>
@@ -173,39 +207,37 @@ export default function CodeAtlasProjectPage() {
                 </section>
 
                 {/* Retrieval Architecture Evolution */}
-                <section id="retrieval-engineering" className="max-w-5xl mx-auto mb-20">
-                    <h2 className="newspaper-headline text-3xl my-8 animate-slide-left">Retrieval Engineering</h2>
-                    <p className="text-[var(--dust-gray)] mb-8 max-w-3xl">
-                        Retrieving context across a diverse codebase requires balancing raw code logic with high-level documentation. The retrieval architecture evolved through several iterations to solve "The Distractor Problem."
-                    </p>
+                <section id="retrieval-engineering" className="max-w-5xl mx-auto mb-24 px-4 md:px-0">
+                    <div className="flex items-baseline justify-between mb-8">
+                        <h2 className="newspaper-headline text-3xl animate-slide-left">Retrieval Engineering</h2>
+                        <span className="text-[var(--spider-red)] font-mono text-xs tracking-widest uppercase">Solving the Distractor Problem</span>
+                    </div>
                     
-                    <div className="space-y-6 relative border-l border-[var(--spider-red)]/30 ml-4 pl-8">
-                        <div className="relative">
-                            <div className="absolute -left-[37px] top-1 w-4 h-4 rounded-full bg-[var(--newsprint-gray)] border-2 border-[var(--spider-red)]"></div>
-                            <h3 className="text-xl font-bold text-white mb-2">Iteration 1: Static Quota Retrieval</h3>
-                            <p className="text-sm text-[var(--dust-gray)] mb-2">Executed isolated vector queries (top 3 Python, top 2 Markdown). Delivered high Relevancy but suffered from lower Recall due to inflexible constraints.</p>
+                    <div className="grid md:grid-cols-4 gap-4 mb-8">
+                        {/* Flow Steps */}
+                        <div className="glass-card p-6 flex flex-col justify-center text-center group hover:bg-white/[0.03] transition-colors border-t-2 border-white/10">
+                            <span className="font-mono text-4xl text-white/10 font-bold mb-2 group-hover:text-white/20 transition-colors">01</span>
+                            <h3 className="text-white font-bold text-sm uppercase tracking-widest mb-3">Static Quota</h3>
+                            <p className="text-[11px] text-[var(--dust-gray)]">Strict top-3 Python / top-2 Markdown limits. High relevancy but suffered from poor recall.</p>
                         </div>
-
-                        <div className="relative">
-                            <div className="absolute -left-[37px] top-1 w-4 h-4 rounded-full bg-[var(--newsprint-gray)] border-2 border-[var(--spider-red)]"></div>
-                            <h3 className="text-xl font-bold text-white mb-2">Iteration 2: Neural Hybrid Reranking</h3>
-                            <p className="text-sm text-[var(--dust-gray)] mb-2">Transitioned to Qdrant's Hybrid Search + Cross-Encoder reranking. Precision increased, but Cross-Encoder prioritized code chunks, starving the LLM of Markdown context.</p>
+                        <div className="glass-card p-6 flex flex-col justify-center text-center group hover:bg-white/[0.03] transition-colors border-t-2 border-white/10 relative">
+                            <div className="hidden md:block absolute -left-3 top-1/2 -translate-y-1/2 text-white/20">→</div>
+                            <span className="font-mono text-4xl text-white/10 font-bold mb-2 group-hover:text-white/20 transition-colors">02</span>
+                            <h3 className="text-white font-bold text-sm uppercase tracking-widest mb-3">Hybrid Rerank</h3>
+                            <p className="text-[11px] text-[var(--dust-gray)]">Cross-Encoder reprioritized code heavily, starving the LLM of necessary explanatory Markdown.</p>
                         </div>
-
-                        <div className="relative">
-                            <div className="absolute -left-[37px] top-1 w-4 h-4 rounded-full bg-[var(--newsprint-gray)] border-2 border-[var(--spider-red)]"></div>
-                            <h3 className="text-xl font-bold text-white mb-2">Iteration 3: Hybrid Split Reranking</h3>
-                            <p className="text-sm text-[var(--dust-gray)] mb-2">Separately fetched and reranked Code vs Doc chunks. Achieved highest MRR (0.50), but suffered from the <strong>Distractor Problem</strong> (irrelevant exact-keyword code matches confusing the LLM).</p>
+                        <div className="glass-card p-6 flex flex-col justify-center text-center group hover:bg-white/[0.03] transition-colors border-t-2 border-[var(--spider-red)]/40 relative">
+                            <div className="hidden md:block absolute -left-3 top-1/2 -translate-y-1/2 text-white/20">→</div>
+                            <span className="font-mono text-4xl text-[var(--spider-red)]/30 font-bold mb-2 group-hover:text-[var(--spider-red)]/50 transition-colors">03</span>
+                            <h3 className="text-[var(--spider-red)] font-bold text-sm uppercase tracking-widest mb-3">Hybrid Split</h3>
+                            <p className="text-[11px] text-[var(--dust-gray)]">Separated Code & Doc pipelines. Resulted in high MRR but introduced the fatal <strong>Distractor Problem</strong>.</p>
                         </div>
-
-                        <div className="relative glass-card p-6 mt-6 border-l-4 border-[var(--spider-red)]">
-                            <div className="absolute -left-[45px] top-6 w-5 h-5 rounded-full bg-[var(--spider-red)] shadow-[0_0_10px_rgba(204,41,54,0.8)]"></div>
-                            <h3 className="text-xl font-bold text-[var(--spider-red)] mb-3">Final: Global Pooling Retrieval</h3>
-                            <p className="text-sm text-[var(--dust-gray)] leading-relaxed">
-                                Executes dual Hybrid Searches (15 code + 15 doc candidates). Merges into a unified 30-chunk pool. Evaluates the pool holistically using the Cross-Encoder, selecting the absolute top 5 chunks.
-                                <br/><br/>
-                                <strong>Outcome:</strong> Dynamic context allocation resolving the distractor problem and dramatically recovering Generation metrics.
-                            </p>
+                        <div className="glass-card p-6 flex flex-col justify-center text-center bg-[var(--spider-red)]/10 border-t-2 border-[var(--spider-red)] relative shadow-[0_0_30px_rgba(204,41,54,0.15)]">
+                            <div className="hidden md:block absolute -left-3 top-1/2 -translate-y-1/2 text-[var(--spider-red)]/50">→</div>
+                            <span className="absolute top-2 right-3 text-[9px] font-mono text-[var(--spider-red)] animate-pulse">DEPLOYED</span>
+                            <span className="font-mono text-4xl text-white font-bold mb-2">04</span>
+                            <h3 className="text-white font-bold text-sm uppercase tracking-widest mb-3">Global Pooling</h3>
+                            <p className="text-[11px] text-[var(--dust-gray)] text-white/80">Dynamic context allocation resolving exact-match distractions, dramatically recovering generation metrics.</p>
                         </div>
                     </div>
                 </section>
